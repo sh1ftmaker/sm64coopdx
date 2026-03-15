@@ -29,6 +29,9 @@
 #include "audio/audio_api.h"
 #include "audio/audio_sdl.h"
 #include "audio/audio_null.h"
+#ifdef TARGET_WEB
+#include "audio/audio_web.h"
+#endif
 
 #include "rom_assets.h"
 #include "rom_checker.h"
@@ -237,30 +240,10 @@ static u32 get_target_refresh_rate() {
 
 void produce_interpolation_frames_and_delay(void) {
 #ifdef TARGET_WEB
-    // On web, rendering is handled by web_one_iteration's rAF loop.
-    // This function's internal render+delay loop would spin endlessly
-    // since we disabled all delay/sleep functions for web.
-    // Just render one frame and return.
-    {
-        gRenderingInterpolated = true;
-        gRenderingDelta = 1.0f;
-        gFramePercentage = 1.0f;
-
-        gfx_start_frame();
-        if (!gSkipInterpolationTitleScreen) { patch_interpolations(1.0f); }
-        send_display_list(gGfxSPTask);
-        gfx_end_frame_render();
-        ssgi_render();
-        ssgi_composite();
-        gfx_display_frame();
-        sDrawnFrames++;
-
-        gRenderingInterpolated = false;
-
-        f64 curTime = clock_elapsed_f64();
-        if (curTime >= sFpsTimeLast + 1.0) { compute_fps(curTime); }
-        sFrameTimeStart = curTime;
-    }
+    // On web, all rendering is handled by web_one_iteration()'s rAF loop.
+    // That loop renders exactly once per requestAnimationFrame with correct
+    // interpolation delta, matching the monitor refresh rate (60/120/240Hz).
+    // Do NOT render here — it would double-render on tick frames.
     return;
 #endif
     u32 refreshRate = get_target_refresh_rate();
@@ -653,11 +636,9 @@ void web_one_iteration(void) {
             CTX_EXTENT(CTX_SMLUA, smlua_update);
             PROF_LAP(sProf_smlua);
 
-#ifndef TARGET_WEB
             if (gAudioThread.state == INVALID) {
                 CTX_EXTENT(CTX_AUDIO, buffer_audio);
             }
-#endif
 
             CTX_END(CTX_TOTAL);
             sProf_ticks++;
@@ -671,7 +652,11 @@ void web_one_iteration(void) {
         web_game_tick_ready = true;
     }
 
-    // Render an interpolation frame every rAF call
+    // Render an interpolation frame on every rAF call.
+    // This runs at the monitor's native refresh rate (60/120/240Hz).
+    // Between 30Hz game ticks, delta_frac smoothly increases from 0→1,
+    // giving smooth visual interpolation at any refresh rate.
+    // Before the first tick, web_game_tick_ready is false (no display list yet).
     if (web_game_tick_ready) {
         double delta_frac = (now - web_last_tick_time) / sFrameTime;
         if (delta_frac < 0) delta_frac = 0;
@@ -886,11 +871,13 @@ int main(int argc, char *argv[]) {
 
     // initialize sound outside threads
 #ifdef TARGET_WEB
-    // Force null audio on web — the audio bank converter produces
-    // corrupt pointers that cause memory access out of bounds when
-    // loading music for new levels. SDL2 ScriptProcessorNode also
-    // crashes independently via HandleAudioProcess.
-    audio_api = &audio_null;
+    // Use web audio backend — sends synthesized PCM to JS Web Audio API
+    // via a shared ring buffer. The C audio engine runs normally.
+    if (audio_web.init()) {
+        audio_api = &audio_web;
+    } else {
+        audio_api = &audio_null;
+    }
 #else
     if (gCLIOpts.headless) audio_api = &audio_null;
 #if defined(AAPI_SDL1) || defined(AAPI_SDL2)
