@@ -1385,7 +1385,11 @@ static void noop_8031EEC8(void) {
 void audio_signal_game_loop_tick(void) {
     sGameLoopTicked = 1;
 #if defined(VERSION_EU) || defined(VERSION_SH)
+#ifndef TARGET_WEB
+    // On web (single-threaded), skip early consumption of sGameLoopTicked.
+    // Let create_next_audio_buffer() handle it in buffer_audio() instead.
     maybe_tick_game_sound();
+#endif
 #endif
     noop_8031EEC8();
 }

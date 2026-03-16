@@ -116,7 +116,7 @@ static u32 sDrawnFrames = 0;
 bool gGameInited = false;
 bool gGfxInited = false;
 
-f32 gMasterVolume;
+f32 gMasterVolume = 80.0f / 127.0f; // default until configfile_load sets it
 
 u8 gLuaVolumeMaster = 127;
 u8 gLuaVolumeLevel = 127;
@@ -636,9 +636,13 @@ void web_one_iteration(void) {
             CTX_EXTENT(CTX_SMLUA, smlua_update);
             PROF_LAP(sProf_smlua);
 
+#ifndef TARGET_WEB
+            // C audio synthesis is broken on WASM32 — skip on web.
+            // Web audio is handled via JS ROM extraction + Web Audio API.
             if (gAudioThread.state == INVALID) {
                 CTX_EXTENT(CTX_AUDIO, buffer_audio);
             }
+#endif
 
             CTX_END(CTX_TOTAL);
             sProf_ticks++;
@@ -871,13 +875,10 @@ int main(int argc, char *argv[]) {
 
     // initialize sound outside threads
 #ifdef TARGET_WEB
-    // Use web audio backend — sends synthesized PCM to JS Web Audio API
-    // via a shared ring buffer. The C audio engine runs normally.
-    if (audio_web.init()) {
-        audio_api = &audio_web;
-    } else {
-        audio_api = &audio_null;
-    }
+    // C audio synthesis produces silence on WASM32 — audio bank data structures
+    // have corrupt pointers under Emscripten. Audio is handled by a JS-based
+    // system that extracts samples from the ROM and plays via Web Audio API.
+    audio_api = &audio_null;
 #else
     if (gCLIOpts.headless) audio_api = &audio_null;
 #if defined(AAPI_SDL1) || defined(AAPI_SDL2)

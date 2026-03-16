@@ -28,3 +28,15 @@ fi
 
 echo "Building sm64coopdx for web (TARGET_WEB=1)..."
 emmake make TARGET_WEB=1 VERSION=us DEBUG=1 -j$(nproc) 2>&1
+
+# Kill old HTTP server and restart with fresh build
+echo ""
+echo "Restarting HTTP server on port 8083..."
+fuser -k 8083/tcp 2>/dev/null || true
+sleep 0.5
+cd "$SCRIPT_DIR/build/us_pc"
+python3 -m http.server 8083 --bind 0.0.0.0 &
+SERVER_PID=$!
+echo "  Server PID: $SERVER_PID"
+echo "  Game: http://localhost:8083/sm64coopdx.html"
+echo "  (also accessible on LAN via your IP:8083)"
