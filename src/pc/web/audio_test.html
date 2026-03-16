@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>SM64 VADPCM Audio Test</title>
+<style>
+body { font-family: monospace; background: #1a1a2e; color: #e0e0e0; padding: 20px; }
+h1 { color: #00d4ff; }
+.log { background: #0f0f23; padding: 10px; border-radius: 4px; max-height: 300px; overflow-y: auto; font-size: 12px; }
+.log .ok { color: #00ff88; }
+.log .err { color: #ff4444; }
+.log .info { color: #888; }
+button { background: #00d4ff; color: #000; border: none; padding: 8px 16px; margin: 4px; cursor: pointer; border-radius: 4px; font-family: monospace; }
+button:hover { background: #33e0ff; }
+button:disabled { background: #333; color: #666; cursor: not-allowed; }
+.samples { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 10px; }
+.sample-btn { font-size: 11px; padding: 4px 8px; }
+#status { margin: 10px 0; padding: 8px; border-radius: 4px; }
+.status-loading { background: #2a2a00; color: #ffcc00; }
+.status-ok { background: #002a00; color: #00ff88; }
+.status-err { background: #2a0000; color: #ff4444; }
+</style>
+</head>
+<body>
+<h1>SM64 VADPCM Audio Extraction Test</h1>
+<div id="status" class="status-loading">Initializing...</div>
+<div>
+  <button id="btnLoad" onclick="loadROM()">Load ROM from URL</button>
+  <button id="btnFile" onclick="document.getElementById('romFile').click()">Load ROM from file</button>
+  <input type="file" id="romFile" style="display:none" accept=".z64,.n64,.v64" onchange="loadROMFile(event)">
+  <button id="btnTest" onclick="runTests()" disabled>Run Tests</button>
+  <button id="btnPlayAll" onclick="playRandomSample()" disabled>Play Random Sample</button>
+</div>
+<div id="sampleButtons" class="samples"></div>
+<div class="log" id="log"></div>
+
+<script>
+// ============================================================
+// SM64 VADPCM Decoder — JavaScript implementation
+// Decodes N64 ADPCM samples to PCM using codebook prediction
+// ============================================================
+
+const SM64_ROM_URL = 'https://verygenericusername.github.io/test-test/Super%20Mario%2064%20(USA).z64';
+
+// Known ROM offsets for US version (from disassemble_sound.py analysis)
+const CTL_ROM_OFFSET = 0x57B720;
+const TBL_ROM_OFFSET = 0x593560;
+const CTL_SIZE = TBL_ROM_OFFSET - CTL_ROM_OFFSET; // 97856 bytes
+
+let romData = null;
+let audioCtx = null;
+let decodedSamples = {};
+let sampleManifest = [];
+
+function log(msg, cls = '') {
+  const el = document.getElementById('log');
+  const line = document.createElement('div');
+  line.className = cls;
+  line.textContent = `[${new Date().toISOString().slice(11,23)}] ${msg}`;
+  el.appendChild(line);
+  el.scrollTop = el.scrollHeight;
+}
+
+function setStatus(msg, cls) {
+  const el = document.getElementById('status');
+  el.textContent = msg;
+  el.className = cls;
+}
+
+// ============================================================
+// ROM Parsing: Extract CTL and TBL segments
+// ============================================================
+
+function parseALSeqFile(data, offset) {
+  const view = new DataView(data.buffer, data.byteOffset + offset);
+  const revision = view.getInt16(0);  // big-endian
+  const count = view.getInt16(2);
+  const entries = [];
+  for (let i = 0; i < count; i++) {
+    const entryOff = 4 + i * 8;
+    entries.push({
+      offset: view.getUint32(entryOff),
+      length: view.getInt32(entryOff + 4),
+    });
+  }
+  return { revision, count, entries };
+}
+
+function parseSample(bankData, sampleOffset) {
+  // AudioBankSample (non-SH, big-endian in ROM):
+  // zero(4), sampleAddr(4), loopPtr(4), bookPtr(4), sampleSize(4) = 20 bytes
+  const view = new DataView(bankData.buffer, bankData.byteOffset + sampleOffset);
+  return {
+    zero: view.getUint32(0),
+    sampleAddr: view.getUint32(4),
+    loopPtr: view.getUint32(8),
+    bookPtr: view.getUint32(12),
+    sampleSize: view.getUint32(16),
+  };
+}
+
+function parseBook(bankData, bookOffset) {
+  const view = new DataView(bankData.buffer, bankData.byteOffset + bookOffset);
+  const order = view.getInt32(0);
+  const npredictors = view.getInt32(4);
+  const tableSize = 8 * order * npredictors;
+  const table = [];
+  for (let i = 0; i < tableSize; i++) {
+    table.push(view.getInt16(8 + i * 2));
+  }
+  return { order, npredictors, table };
+}
+
+function parseLoop(bankData, loopOffset) {
+  const view = new DataView(bankData.buffer, bankData.byteOffset + loopOffset);
+  const start = view.getUint32(0);
+  const end = view.getUint32(4);
+  const count = view.getInt32(8);
+  const result = { start, end, count };
+  if (count !== 0) {
+    result.state = [];
+    for (let i = 0; i < 16; i++) {
+      result.state.push(view.getInt16(16 + i * 2));
+    }
+  }
+  return result;
+}
+
+function extractSamplesFromROM(romBytes) {
+  log('Parsing TBL (sample banks)...');
+  const tblHeader = parseALSeqFile(romBytes, TBL_ROM_OFFSET);
+  log(`TBL: ${tblHeader.count} sample banks`, 'info');
+
+  log('Parsing CTL (sound banks)...');
+  const ctlHeader = parseALSeqFile(romBytes, CTL_ROM_OFFSET);
+  log(`CTL: ${ctlHeader.count} sound banks`, 'info');
+
+  const samples = [];
+
+  // Parse each CTL bank to find drum/instrument samples
+  for (let bankIdx = 0; bankIdx < ctlHeader.count; bankIdx++) {
+    const bankEntry = ctlHeader.entries[bankIdx];
+    const bankOff = CTL_ROM_OFFSET + bankEntry.offset;
+    const bankData = romBytes.slice(bankOff, bankOff + bankEntry.length);
+    const bankView = new DataView(bankData.buffer);
+
+    // Bank data: drums_ptr(4), inst_ptrs[numInst](4 each)
+    // But first byte pair is numDrums/numInst metadata
+    // In the N64 big-endian format, the first 4 bytes are a pointer
+    // Let me try to find the sample bank reference in the TBL
+    const tblBankEntry = bankIdx < tblHeader.count ? tblHeader.entries[bankIdx] : null;
+
+    // Parse drums by scanning for known patterns
+    // Each sound bank contains pointers to instruments/drums which reference samples
+    // Samples have codebooks stored inline in the bank data
+    parseBankForSamples(bankData, bankIdx, tblBankEntry, tblHeader, romBytes, samples);
+  }
+
+  return samples;
+}
+
+function parseBankForSamples(bankData, bankIdx, tblBankEntry, tblHeader, romBytes, samples) {
+  // Scan the bank for codebook patterns (order=2, npredictors=2)
+  const view = new DataView(bankData.buffer, bankData.byteOffset);
+  const seen = new Set();
+
+  for (let off = 0; off < bankData.length - 72; off += 4) {
+    const order = view.getInt32(off);
+    const npred = view.getInt32(off + 4);
+    if (order !== 2 || npred !== 2) continue;
+
+    // Found a potential codebook at this offset
+    const tableSize = 8 * order * npred;
+    const table = [];
+    for (let i = 0; i < tableSize; i++) {
+      table.push(view.getInt16(8 + off + i * 2));
+    }
+
+    // Validate table values (should be reasonable s16 range, not all zeros)
+    const maxVal = Math.max(...table.map(Math.abs));
+    if (maxVal === 0 || maxVal > 32767) continue;
+
+    // Now scan backward to find the sample entry that references this codebook
+    const bookPtr = off;  // relative to bank start
+    for (let soff = 0; soff < bankData.length - 20; soff += 4) {
+      // Check if this offset has bookPtr at +12 (matching our codebook)
+      if (view.getUint32(soff + 12) === bookPtr) {
+        const sampleAddr = view.getUint32(soff + 4);
+        const loopPtr = view.getUint32(soff + 8);
+        const sampleSize = view.getUint32(soff + 16);
+
+        if (sampleSize === 0 || sampleSize > 200000 || sampleAddr > 0x600000) continue;
+
+        const key = `${bankIdx}:${sampleAddr}:${sampleSize}`;
+        if (seen.has(key)) continue;
+        seen.add(key);
+
+        // Find which TBL bank this sample belongs to
+        let tblRomAddr = 0;
+        for (let t = 0; t < tblHeader.count; t++) {
+          const te = tblHeader.entries[t];
+          if (sampleAddr >= te.offset && sampleAddr < te.offset + te.length) {
+            tblRomAddr = TBL_ROM_OFFSET + sampleAddr;
+            break;
+          }
+        }
+
+        if (tblRomAddr === 0) {
+          // sampleAddr might be relative to the TBL bank
+          if (tblBankEntry) {
+            tblRomAddr = TBL_ROM_OFFSET + tblBankEntry.offset + sampleAddr;
+          }
+        }
+
+        let loop = null;
+        if (loopPtr > 0 && loopPtr + 16 <= bankData.length) {
+          loop = parseLoop(bankData, loopPtr);
+        }
+
+        samples.push({
+          name: `bank${bankIdx}_s${sampleAddr.toString(16)}`,
+          bankIdx,
+          sampleAddr,
+          tblRomAddr,
+          size: sampleSize,
+          book: { order, npredictors: npred, table },
+          loop,
+        });
+      }
+    }
+  }
+}
+
+// ============================================================
+// VADPCM Decoder
+// ============================================================
+
+class VADPCMDecoder {
+  constructor(book) {
+    this.order = book.order;
+    this.npredictors = book.npredictors;
+    // Reshape table: [predictor][8][order+8] coefficients
+    this.coefTable = this._reshapeTable(book.table);
+    this.state = new Int32Array(16);
+  }
+
+  _reshapeTable(flat) {
+    // flat = npredictors * order * 8 values
+    // Layout: for each predictor, for each of 8 output samples, 'order' coefficients
+    // Actually the layout is: predictor[p][coeff_row[c][8 values]]
+    // Reshape to: coefTable[p][sample_idx][coeff_idx]
+    const table = [];
+    let idx = 0;
+    for (let p = 0; p < this.npredictors; p++) {
+      const pred = [];
+      for (let c = 0; c < this.order; c++) {
+        const row = [];
+        for (let s = 0; s < 8; s++) {
+          row.push(flat[idx++]);
+        }
+        pred.push(row);
+      }
+      table.push(pred);
+    }
+    return table;
+  }
+
+  decodeFrame(frameData) {
+    const header = frameData[0];
+    const scale = 1 << (header >> 4);
+    const predIdx = header & 0xf;
+
+    // Clamp predictor index
+    const pred = Math.min(predIdx, this.npredictors - 1);
+
+    // Extract 16 4-bit signed residuals
+    const ix = new Int32Array(16);
+    for (let i = 0; i < 8; i++) {
+      const byte = frameData[1 + i];
+      let upper = (byte >> 4) & 0xf;
+      let lower = byte & 0xf;
+      if (upper >= 8) upper -= 16;
+      if (lower >= 8) lower -= 16;
+      ix[i * 2] = upper * scale;
+      ix[i * 2 + 1] = lower * scale;
+    }
+
+    const decoded = new Int32Array(16);
+
+    // Process two sub-frames of 8 samples each
+    for (let j = 0; j < 2; j++) {
+      const baseIdx = j * 8;
+
+      for (let i = 0; i < 8; i++) {
+        let sum = 0;
+
+        // Apply prediction coefficients
+        for (let c = 0; c < this.order; c++) {
+          const coef = this.coefTable[pred][c][i];
+          // History: previous decoded samples
+          const histIdx = baseIdx + i - this.order + c;
+          let histVal;
+          if (histIdx < 0) {
+            histVal = this.state[16 + histIdx]; // from previous frame
+          } else {
+            histVal = decoded[histIdx];
+          }
+          sum += coef * histVal;
+        }
+
+        // Fixed-point: divide by 2^11 with rounding toward zero
+        let predicted = (sum >> 11);
+        if (sum > 0 && (sum & 0x7FF) !== 0) {
+          // No adjustment needed for positive
+        } else if (sum < 0) {
+          predicted = -(-sum >> 11);
+        }
+
+        decoded[baseIdx + i] = predicted + ix[baseIdx + i];
+
+        // Clamp to s16 range
+        if (decoded[baseIdx + i] > 32767) decoded[baseIdx + i] = 32767;
+        if (decoded[baseIdx + i] < -32768) decoded[baseIdx + i] = -32768;
+      }
+    }
+
+    // Update state for next frame
+    this.state.set(decoded);
+    return decoded;
+  }
+
+  decode(adpcmData) {
+    this.state.fill(0);
+    const numFrames = Math.floor(adpcmData.length / 9);
+    const output = new Int16Array(numFrames * 16);
+
+    for (let f = 0; f < numFrames; f++) {
+      const frame = adpcmData.slice(f * 9, f * 9 + 9);
+      const decoded = this.decodeFrame(frame);
+      for (let i = 0; i < 16; i++) {
+        output[f * 16 + i] = decoded[i];
+      }
+    }
+    return output;
+  }
+}
+
+// ============================================================
+// Audio playback
+// ============================================================
+
+function playPCM(pcmData, sampleRate = 32000) {
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: 32000 });
+  }
+  if (audioCtx.state === 'suspended') {
+    audioCtx.resume();
+  }
+
+  const buffer = audioCtx.createBuffer(1, pcmData.length, sampleRate);
+  const channel = buffer.getChannelData(0);
+  for (let i = 0; i < pcmData.length; i++) {
+    channel[i] = pcmData[i] / 32768.0;
+  }
+
+  const source = audioCtx.createBufferSource();
+  source.buffer = buffer;
+  source.connect(audioCtx.destination);
+  source.start();
+  return source;
+}
+
+// ============================================================
+// ROM loading
+// ============================================================
+
+async function loadROM() {
+  setStatus('Downloading ROM...', 'status-loading');
+  log(`Fetching ROM from ${SM64_ROM_URL}...`);
+
+  try {
+    const resp = await fetch(SM64_ROM_URL);
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    const ab = await resp.arrayBuffer();
+    romData = new Uint8Array(ab);
+    log(`ROM loaded: ${romData.length} bytes (${(romData.length/1024/1024).toFixed(1)} MB)`, 'ok');
+    processROM();
+  } catch (e) {
+    log(`Failed to load ROM: ${e.message}`, 'err');
+    setStatus('ROM load failed: ' + e.message, 'status-err');
+  }
+}
+
+function loadROMFile(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  setStatus('Loading ROM file...', 'status-loading');
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    romData = new Uint8Array(e.target.result);
+    log(`ROM loaded from file: ${romData.length} bytes`, 'ok');
+    processROM();
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+function processROM() {
+  log('Extracting audio samples from ROM...');
+  const t0 = performance.now();
+
+  try {
+    sampleManifest = extractSamplesFromROM(romData);
+    const t1 = performance.now();
+    log(`Extracted ${sampleManifest.length} samples in ${(t1-t0).toFixed(0)}ms`, 'ok');
+
+    // Decode all samples to PCM
+    let decoded = 0;
+    for (const sample of sampleManifest) {
+      if (sample.tblRomAddr && sample.size > 0 && sample.book) {
+        const adpcmData = romData.slice(sample.tblRomAddr, sample.tblRomAddr + sample.size);
+        const decoder = new VADPCMDecoder(sample.book);
+        const pcm = decoder.decode(adpcmData);
+
+        // Check if PCM has any non-zero content
+        let maxAbs = 0;
+        for (let i = 0; i < Math.min(pcm.length, 200); i++) {
+          maxAbs = Math.max(maxAbs, Math.abs(pcm[i]));
+        }
+
+        if (maxAbs > 0) {
+          decodedSamples[sample.name] = pcm;
+          decoded++;
+        }
+      }
+    }
+
+    const t2 = performance.now();
+    log(`Decoded ${decoded}/${sampleManifest.length} samples to PCM in ${(t2-t1).toFixed(0)}ms`, 'ok');
+
+    setStatus(`Ready! ${decoded} playable samples extracted from ROM`, 'status-ok');
+    document.getElementById('btnTest').disabled = false;
+    document.getElementById('btnPlayAll').disabled = false;
+
+    // Create sample buttons
+    createSampleButtons();
+
+  } catch (e) {
+    log(`Error: ${e.message}`, 'err');
+    console.error(e);
+    setStatus('Extraction failed: ' + e.message, 'status-err');
+  }
+}
+
+function createSampleButtons() {
+  const container = document.getElementById('sampleButtons');
+  container.innerHTML = '';
+  const names = Object.keys(decodedSamples).sort();
+  for (const name of names) {
+    const btn = document.createElement('button');
+    btn.className = 'sample-btn';
+    btn.textContent = name.replace('bank', 'b').replace('_s', ':');
+    btn.onclick = () => {
+      const pcm = decodedSamples[name];
+      log(`Playing ${name} (${pcm.length} samples, ${(pcm.length/32000).toFixed(2)}s)`);
+      playPCM(pcm);
+    };
+    container.appendChild(btn);
+  }
+}
+
+function playRandomSample() {
+  const names = Object.keys(decodedSamples);
+  if (names.length === 0) return;
+  const name = names[Math.floor(Math.random() * names.length)];
+  const pcm = decodedSamples[name];
+  log(`Playing ${name} (${pcm.length} samples, ${(pcm.length/32000).toFixed(2)}s)`);
+  playPCM(pcm);
+}
+
+// ============================================================
+// Tests
+// ============================================================
+
+function runTests() {
+  log('=== Running VADPCM Decoder Tests ===', 'info');
+  let pass = 0, fail = 0;
+
+  function assert(cond, msg) {
+    if (cond) {
+      pass++;
+      log(`  PASS: ${msg}`, 'ok');
+    } else {
+      fail++;
+      log(`  FAIL: ${msg}`, 'err');
+    }
+  }
+
+  // Test 1: ROM loaded
+  assert(romData !== null, 'ROM data loaded');
+  assert(romData.length === 8388608, `ROM size is 8MB (got ${romData ? romData.length : 0})`);
+
+  // Test 2: TBL header parse
+  const tblHeader = parseALSeqFile(romData, TBL_ROM_OFFSET);
+  assert(tblHeader.count > 0, `TBL has ${tblHeader.count} sample banks`);
+  assert(tblHeader.count === 38, `TBL bank count is 38 (got ${tblHeader.count})`);
+
+  // Test 3: CTL header parse
+  const ctlHeader = parseALSeqFile(romData, CTL_ROM_OFFSET);
+  assert(ctlHeader.count > 0, `CTL has ${ctlHeader.count} sound banks`);
+  assert(ctlHeader.count === 38, `CTL bank count is 38 (got ${ctlHeader.count})`);
+
+  // Test 4: Samples extracted
+  assert(sampleManifest.length > 0, `Extracted ${sampleManifest.length} samples`);
+  assert(sampleManifest.length > 50, `At least 50 samples (got ${sampleManifest.length})`);
+
+  // Test 5: Codebooks valid
+  const withBooks = sampleManifest.filter(s => s.book);
+  assert(withBooks.length === sampleManifest.length, `All ${sampleManifest.length} samples have codebooks`);
+  if (withBooks.length > 0) {
+    const b = withBooks[0].book;
+    assert(b.order === 2, `Codebook order is 2 (got ${b.order})`);
+    assert(b.npredictors === 2, `Codebook has 2 predictors (got ${b.npredictors})`);
+    assert(b.table.length === 64, `Codebook table has 64 entries (got ${b.table.length})`);
+  }
+
+  // Test 6: PCM decoding produces non-silent audio
+  const decodedNames = Object.keys(decodedSamples);
+  assert(decodedNames.length > 0, `Decoded ${decodedNames.length} samples to PCM`);
+  if (decodedNames.length > 0) {
+    const pcm = decodedSamples[decodedNames[0]];
+    assert(pcm.length > 0, `First sample has ${pcm.length} PCM samples`);
+    let maxVal = 0;
+    for (let i = 0; i < pcm.length; i++) maxVal = Math.max(maxVal, Math.abs(pcm[i]));
+    assert(maxVal > 100, `First sample has non-trivial audio (maxAbs=${maxVal})`);
+  }
+
+  // Test 7: VADPCM decode known data
+  // Create a simple test: all-zero ADPCM should decode to silence
+  const silentBook = { order: 2, npredictors: 2, table: new Array(64).fill(0) };
+  const silentDecoder = new VADPCMDecoder(silentBook);
+  const silentAdpcm = new Uint8Array(9); // one frame of zeros
+  const silentPcm = silentDecoder.decode(silentAdpcm);
+  assert(silentPcm.length === 16, `Silent frame decodes to 16 samples (got ${silentPcm.length})`);
+  let silentMax = 0;
+  for (let i = 0; i < silentPcm.length; i++) silentMax = Math.max(silentMax, Math.abs(silentPcm[i]));
+  assert(silentMax === 0, `All-zero ADPCM produces silence (maxAbs=${silentMax})`);
+
+  log(`=== Tests complete: ${pass} passed, ${fail} failed ===`, fail > 0 ? 'err' : 'ok');
+}
+
+// Auto-load ROM on page load
+log('SM64 VADPCM Audio Test ready. Click "Load ROM" to begin.', 'info');
+</script>
+</body>
+</html>
