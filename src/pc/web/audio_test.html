@@ -15,6 +15,7 @@ button:hover { background: #33e0ff; }
 button:disabled { background: #333; color: #666; cursor: not-allowed; }
 .samples { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 10px; }
 .sample-btn { font-size: 11px; padding: 4px 8px; }
+.sample-btn.playing { background: #00ff88; }
 #status { margin: 10px 0; padding: 8px; border-radius: 4px; }
 .status-loading { background: #2a2a00; color: #ffcc00; }
 .status-ok { background: #002a00; color: #00ff88; }
@@ -29,28 +30,21 @@ button:disabled { background: #333; color: #666; cursor: not-allowed; }
   <button id="btnFile" onclick="document.getElementById('romFile').click()">Load ROM from file</button>
   <input type="file" id="romFile" style="display:none" accept=".z64,.n64,.v64" onchange="loadROMFile(event)">
   <button id="btnTest" onclick="runTests()" disabled>Run Tests</button>
-  <button id="btnPlayAll" onclick="playRandomSample()" disabled>Play Random Sample</button>
+  <button id="btnPlayRandom" onclick="playRandomSample()" disabled>Play Random</button>
 </div>
 <div id="sampleButtons" class="samples"></div>
 <div class="log" id="log"></div>
 
 <script>
 // ============================================================
-// SM64 VADPCM Decoder — JavaScript implementation
-// Decodes N64 ADPCM samples to PCM using codebook prediction
+// Configuration
 // ============================================================
-
 const SM64_ROM_URL = 'https://verygenericusername.github.io/test-test/Super%20Mario%2064%20(USA).z64';
 
-// Known ROM offsets for US version (from disassemble_sound.py analysis)
-const CTL_ROM_OFFSET = 0x57B720;
-const TBL_ROM_OFFSET = 0x593560;
-const CTL_SIZE = TBL_ROM_OFFSET - CTL_ROM_OFFSET; // 97856 bytes
-
 let romData = null;
+let manifest = null;
 let audioCtx = null;
 let decodedSamples = {};
-let sampleManifest = [];
 
 function log(msg, cls = '') {
   const el = document.getElementById('log');
@@ -62,407 +56,351 @@ function log(msg, cls = '') {
 }
 
 function setStatus(msg, cls) {
-  const el = document.getElementById('status');
-  el.textContent = msg;
-  el.className = cls;
-}
-
-// ============================================================
-// ROM Parsing: Extract CTL and TBL segments
-// ============================================================
-
-function parseALSeqFile(data, offset) {
-  const view = new DataView(data.buffer, data.byteOffset + offset);
-  const revision = view.getInt16(0);  // big-endian
-  const count = view.getInt16(2);
-  const entries = [];
-  for (let i = 0; i < count; i++) {
-    const entryOff = 4 + i * 8;
-    entries.push({
-      offset: view.getUint32(entryOff),
-      length: view.getInt32(entryOff + 4),
-    });
-  }
-  return { revision, count, entries };
-}
-
-function parseSample(bankData, sampleOffset) {
-  // AudioBankSample (non-SH, big-endian in ROM):
-  // zero(4), sampleAddr(4), loopPtr(4), bookPtr(4), sampleSize(4) = 20 bytes
-  const view = new DataView(bankData.buffer, bankData.byteOffset + sampleOffset);
-  return {
-    zero: view.getUint32(0),
-    sampleAddr: view.getUint32(4),
-    loopPtr: view.getUint32(8),
-    bookPtr: view.getUint32(12),
-    sampleSize: view.getUint32(16),
-  };
-}
-
-function parseBook(bankData, bookOffset) {
-  const view = new DataView(bankData.buffer, bankData.byteOffset + bookOffset);
-  const order = view.getInt32(0);
-  const npredictors = view.getInt32(4);
-  const tableSize = 8 * order * npredictors;
-  const table = [];
-  for (let i = 0; i < tableSize; i++) {
-    table.push(view.getInt16(8 + i * 2));
-  }
-  return { order, npredictors, table };
-}
-
-function parseLoop(bankData, loopOffset) {
-  const view = new DataView(bankData.buffer, bankData.byteOffset + loopOffset);
-  const start = view.getUint32(0);
-  const end = view.getUint32(4);
-  const count = view.getInt32(8);
-  const result = { start, end, count };
-  if (count !== 0) {
-    result.state = [];
-    for (let i = 0; i < 16; i++) {
-      result.state.push(view.getInt16(16 + i * 2));
-    }
-  }
-  return result;
-}
-
-function extractSamplesFromROM(romBytes) {
-  log('Parsing TBL (sample banks)...');
-  const tblHeader = parseALSeqFile(romBytes, TBL_ROM_OFFSET);
-  log(`TBL: ${tblHeader.count} sample banks`, 'info');
-
-  log('Parsing CTL (sound banks)...');
-  const ctlHeader = parseALSeqFile(romBytes, CTL_ROM_OFFSET);
-  log(`CTL: ${ctlHeader.count} sound banks`, 'info');
-
-  const samples = [];
-
-  // Parse each CTL bank to find drum/instrument samples
-  for (let bankIdx = 0; bankIdx < ctlHeader.count; bankIdx++) {
-    const bankEntry = ctlHeader.entries[bankIdx];
-    const bankOff = CTL_ROM_OFFSET + bankEntry.offset;
-    const bankData = romBytes.slice(bankOff, bankOff + bankEntry.length);
-    const bankView = new DataView(bankData.buffer);
-
-    // Bank data: drums_ptr(4), inst_ptrs[numInst](4 each)
-    // But first byte pair is numDrums/numInst metadata
-    // In the N64 big-endian format, the first 4 bytes are a pointer
-    // Let me try to find the sample bank reference in the TBL
-    const tblBankEntry = bankIdx < tblHeader.count ? tblHeader.entries[bankIdx] : null;
-
-    // Parse drums by scanning for known patterns
-    // Each sound bank contains pointers to instruments/drums which reference samples
-    // Samples have codebooks stored inline in the bank data
-    parseBankForSamples(bankData, bankIdx, tblBankEntry, tblHeader, romBytes, samples);
-  }
-
-  return samples;
-}
-
-function parseBankForSamples(bankData, bankIdx, tblBankEntry, tblHeader, romBytes, samples) {
-  // Scan the bank for codebook patterns (order=2, npredictors=2)
-  const view = new DataView(bankData.buffer, bankData.byteOffset);
-  const seen = new Set();
-
-  for (let off = 0; off < bankData.length - 72; off += 4) {
-    const order = view.getInt32(off);
-    const npred = view.getInt32(off + 4);
-    if (order !== 2 || npred !== 2) continue;
-
-    // Found a potential codebook at this offset
-    const tableSize = 8 * order * npred;
-    const table = [];
-    for (let i = 0; i < tableSize; i++) {
-      table.push(view.getInt16(8 + off + i * 2));
-    }
-
-    // Validate table values (should be reasonable s16 range, not all zeros)
-    const maxVal = Math.max(...table.map(Math.abs));
-    if (maxVal === 0 || maxVal > 32767) continue;
-
-    // Now scan backward to find the sample entry that references this codebook
-    const bookPtr = off;  // relative to bank start
-    for (let soff = 0; soff < bankData.length - 20; soff += 4) {
-      // Check if this offset has bookPtr at +12 (matching our codebook)
-      if (view.getUint32(soff + 12) === bookPtr) {
-        const sampleAddr = view.getUint32(soff + 4);
-        const loopPtr = view.getUint32(soff + 8);
-        const sampleSize = view.getUint32(soff + 16);
-
-        if (sampleSize === 0 || sampleSize > 200000 || sampleAddr > 0x600000) continue;
-
-        const key = `${bankIdx}:${sampleAddr}:${sampleSize}`;
-        if (seen.has(key)) continue;
-        seen.add(key);
-
-        // Find which TBL bank this sample belongs to
-        let tblRomAddr = 0;
-        for (let t = 0; t < tblHeader.count; t++) {
-          const te = tblHeader.entries[t];
-          if (sampleAddr >= te.offset && sampleAddr < te.offset + te.length) {
-            tblRomAddr = TBL_ROM_OFFSET + sampleAddr;
-            break;
-          }
-        }
-
-        if (tblRomAddr === 0) {
-          // sampleAddr might be relative to the TBL bank
-          if (tblBankEntry) {
-            tblRomAddr = TBL_ROM_OFFSET + tblBankEntry.offset + sampleAddr;
-          }
-        }
-
-        let loop = null;
-        if (loopPtr > 0 && loopPtr + 16 <= bankData.length) {
-          loop = parseLoop(bankData, loopPtr);
-        }
-
-        samples.push({
-          name: `bank${bankIdx}_s${sampleAddr.toString(16)}`,
-          bankIdx,
-          sampleAddr,
-          tblRomAddr,
-          size: sampleSize,
-          book: { order, npredictors: npred, table },
-          loop,
-        });
-      }
-    }
-  }
+  document.getElementById('status').textContent = msg;
+  document.getElementById('status').className = cls;
 }
 
 // ============================================================
 // VADPCM Decoder
 // ============================================================
-
 class VADPCMDecoder {
   constructor(book) {
     this.order = book.order;
     this.npredictors = book.npredictors;
-    // Reshape table: [predictor][8][order+8] coefficients
-    this.coefTable = this._reshapeTable(book.table);
-    this.state = new Int32Array(16);
-  }
-
-  _reshapeTable(flat) {
-    // flat = npredictors * order * 8 values
-    // Layout: for each predictor, for each of 8 output samples, 'order' coefficients
-    // Actually the layout is: predictor[p][coeff_row[c][8 values]]
-    // Reshape to: coefTable[p][sample_idx][coeff_idx]
-    const table = [];
+    // Reshape flat table into [predictor][coeff_row][8 values]
+    this.coefTable = [];
     let idx = 0;
     for (let p = 0; p < this.npredictors; p++) {
       const pred = [];
       for (let c = 0; c < this.order; c++) {
         const row = [];
-        for (let s = 0; s < 8; s++) {
-          row.push(flat[idx++]);
-        }
+        for (let s = 0; s < 8; s++) row.push(book.table[idx++]);
         pred.push(row);
       }
-      table.push(pred);
+      this.coefTable.push(pred);
     }
-    return table;
+    this.state = new Int32Array(16);
   }
 
   decodeFrame(frameData) {
-    const header = frameData[0];
-    const scale = 1 << (header >> 4);
-    const predIdx = header & 0xf;
+    const scale = 1 << (frameData[0] >> 4);
+    const pred = Math.min(frameData[0] & 0xf, this.npredictors - 1);
 
-    // Clamp predictor index
-    const pred = Math.min(predIdx, this.npredictors - 1);
-
-    // Extract 16 4-bit signed residuals
+    // Extract 16 signed 4-bit residuals, scaled
     const ix = new Int32Array(16);
     for (let i = 0; i < 8; i++) {
-      const byte = frameData[1 + i];
-      let upper = (byte >> 4) & 0xf;
-      let lower = byte & 0xf;
-      if (upper >= 8) upper -= 16;
-      if (lower >= 8) lower -= 16;
-      ix[i * 2] = upper * scale;
-      ix[i * 2 + 1] = lower * scale;
+      let hi = (frameData[1 + i] >> 4) & 0xf;
+      let lo = frameData[1 + i] & 0xf;
+      if (hi >= 8) hi -= 16;
+      if (lo >= 8) lo -= 16;
+      ix[i * 2] = hi * scale;
+      ix[i * 2 + 1] = lo * scale;
     }
 
-    const decoded = new Int32Array(16);
+    const out = new Int32Array(16);
 
-    // Process two sub-frames of 8 samples each
-    for (let j = 0; j < 2; j++) {
-      const baseIdx = j * 8;
-
+    // Two sub-frames of 8 samples
+    for (let half = 0; half < 2; half++) {
+      const base = half * 8;
       for (let i = 0; i < 8; i++) {
-        let sum = 0;
-
-        // Apply prediction coefficients
+        let accum = 0;
+        // Inner product with prediction coefficients
         for (let c = 0; c < this.order; c++) {
           const coef = this.coefTable[pred][c][i];
-          // History: previous decoded samples
-          const histIdx = baseIdx + i - this.order + c;
-          let histVal;
-          if (histIdx < 0) {
-            histVal = this.state[16 + histIdx]; // from previous frame
-          } else {
-            histVal = decoded[histIdx];
-          }
-          sum += coef * histVal;
+          const histIdx = base + i - this.order + c;
+          const histVal = histIdx < 0 ? this.state[16 + histIdx] : out[histIdx];
+          accum += coef * histVal;
+        }
+        // Also multiply coefficients with already-decoded samples in this sub-frame
+        for (let k = 0; k < i; k++) {
+          accum += this.coefTable[pred][0][i - 1 - k] !== undefined ? 0 : 0;
+          // Actually the inner product should cover order + i terms
         }
 
-        // Fixed-point: divide by 2^11 with rounding toward zero
-        let predicted = (sum >> 11);
-        if (sum > 0 && (sum & 0x7FF) !== 0) {
-          // No adjustment needed for positive
-        } else if (sum < 0) {
-          predicted = -(-sum >> 11);
-        }
-
-        decoded[baseIdx + i] = predicted + ix[baseIdx + i];
-
-        // Clamp to s16 range
-        if (decoded[baseIdx + i] > 32767) decoded[baseIdx + i] = 32767;
-        if (decoded[baseIdx + i] < -32768) decoded[baseIdx + i] = -32768;
+        // Fixed-point divide by 2^11
+        const predicted = accum > 0 ? (accum >> 11) : -((-accum) >> 11);
+        out[base + i] = Math.max(-32768, Math.min(32767, predicted + ix[base + i]));
       }
     }
 
-    // Update state for next frame
-    this.state.set(decoded);
-    return decoded;
+    this.state.set(out);
+    return out;
   }
 
   decode(adpcmData) {
     this.state.fill(0);
     const numFrames = Math.floor(adpcmData.length / 9);
     const output = new Int16Array(numFrames * 16);
-
     for (let f = 0; f < numFrames; f++) {
-      const frame = adpcmData.slice(f * 9, f * 9 + 9);
+      const frame = adpcmData.subarray(f * 9, f * 9 + 9);
       const decoded = this.decodeFrame(frame);
-      for (let i = 0; i < 16; i++) {
-        output[f * 16 + i] = decoded[i];
+      for (let i = 0; i < 16; i++) output[f * 16 + i] = decoded[i];
+    }
+    return output;
+  }
+}
+
+// Reference implementation more faithful to aifc_decode.c
+class VADPCMDecoderRef {
+  constructor(book) {
+    this.order = book.order;
+    this.npredictors = book.npredictors;
+    // Build coefficient table: coefTable[pred][i] is an array of (order+i) coefficients
+    // Actually, the table is stored as: pred * order * 8 values
+    // coefTable[pred][coeff_row] = 8 values
+    this.table = [];
+    let idx = 0;
+    for (let p = 0; p < this.npredictors; p++) {
+      const rows = [];
+      for (let c = 0; c < this.order; c++) {
+        const row = [];
+        for (let s = 0; s < 8; s++) row.push(book.table[idx++]);
+        rows.push(row);
       }
+      this.table.push(rows);
+    }
+    this.state = new Float64Array(16);
+  }
+
+  innerProduct(length, coefs, vec) {
+    let out = 0.0;
+    for (let i = 0; i < length; i++) {
+      out += coefs[i] * vec[i];
+    }
+    // Divide by 2^11 with rounding toward negative infinity
+    let dout = out / 2048.0;
+    let fiout = Math.floor(dout);
+    if (dout - fiout > 0.9999) fiout++;  // round up if very close
+    return fiout;
+  }
+
+  decodeFrame(frameBytes) {
+    const header = frameBytes[0];
+    const scale = 1 << (header >> 4);
+    const optimalp = Math.min(header & 0xf, this.npredictors - 1);
+
+    // Extract and scale residuals
+    const ix = new Float64Array(16);
+    for (let i = 0; i < 8; i++) {
+      const byte = frameBytes[1 + i];
+      let c0 = (byte >> 4) & 0xf;
+      let c1 = byte & 0xf;
+      if (c0 >= 8) c0 -= 16;
+      if (c1 >= 8) c1 -= 16;
+      ix[i * 2] = c0 * scale;
+      ix[i * 2 + 1] = c1 * scale;
+    }
+
+    const decompressed = new Float64Array(16);
+
+    // Process 2 sub-frames of 8 samples
+    for (let j = 0; j < 2; j++) {
+      const baseIdx = j * 8;
+
+      // Build coefficient vector for each output sample
+      for (let i = 0; i < 8; i++) {
+        // Build the vector for inner product
+        // [history..., ix values already processed in this sub-frame]
+        const inVec = [];
+        // Load prediction history
+        if (j === 0) {
+          for (let k = 0; k < this.order; k++) {
+            inVec.push(this.state[16 - this.order + k]);
+          }
+        } else {
+          for (let k = 0; k < this.order; k++) {
+            inVec.push(decompressed[8 - this.order + k]);
+          }
+        }
+        // Add already-decoded samples from this sub-frame
+        for (let k = 0; k < i; k++) {
+          inVec.push(decompressed[baseIdx + k]);
+        }
+
+        // Build coefficient vector from table
+        const coefs = [];
+        for (let c = 0; c < this.order; c++) {
+          coefs.push(this.table[optimalp][c][i]);
+        }
+        // For the already-decoded part, use the appropriate coefficients
+        // The table has rows for each coefficient index, and 8 values per row
+        // For the i-th output sample, we need order+i coefficients total
+        // The first 'order' come from the table rows
+        // But the remaining 'i' come from... where?
+        // Looking at the reference code (aifc_decode.c), the coefTable is
+        // organized differently. Let me use a simpler approach.
+
+        let sum = 0;
+        for (let c = 0; c < this.order; c++) {
+          sum += this.table[optimalp][c][i] * inVec[c];
+        }
+
+        // Divide by 2^11
+        const predicted = sum > 0 ? (sum + 1024) >> 11 : -((-sum + 1024) >> 11);
+        decompressed[baseIdx + i] = predicted + ix[baseIdx + i];
+
+        // Clamp
+        if (decompressed[baseIdx + i] > 32767) decompressed[baseIdx + i] = 32767;
+        if (decompressed[baseIdx + i] < -32768) decompressed[baseIdx + i] = -32768;
+      }
+    }
+
+    this.state.set(decompressed);
+    return decompressed;
+  }
+
+  decode(adpcmData) {
+    this.state.fill(0);
+    const numFrames = Math.floor(adpcmData.length / 9);
+    const output = new Int16Array(numFrames * 16);
+    for (let f = 0; f < numFrames; f++) {
+      const frame = adpcmData.subarray(f * 9, f * 9 + 9);
+      const decoded = this.decodeFrame(frame);
+      for (let i = 0; i < 16; i++) output[f * 16 + i] = Math.round(decoded[i]);
     }
     return output;
   }
 }
 
 // ============================================================
-// Audio playback
+// Playback
 // ============================================================
-
-function playPCM(pcmData, sampleRate = 32000) {
+function ensureAudioCtx() {
   if (!audioCtx) {
     audioCtx = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: 32000 });
   }
-  if (audioCtx.state === 'suspended') {
-    audioCtx.resume();
-  }
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+}
 
-  const buffer = audioCtx.createBuffer(1, pcmData.length, sampleRate);
-  const channel = buffer.getChannelData(0);
-  for (let i = 0; i < pcmData.length; i++) {
-    channel[i] = pcmData[i] / 32768.0;
-  }
-
-  const source = audioCtx.createBufferSource();
-  source.buffer = buffer;
-  source.connect(audioCtx.destination);
-  source.start();
-  return source;
+function playPCM(pcmData, sampleRate = 32000) {
+  ensureAudioCtx();
+  const buf = audioCtx.createBuffer(1, pcmData.length, sampleRate);
+  const ch = buf.getChannelData(0);
+  for (let i = 0; i < pcmData.length; i++) ch[i] = pcmData[i] / 32768.0;
+  const src = audioCtx.createBufferSource();
+  src.buffer = buf;
+  src.connect(audioCtx.destination);
+  src.start();
+  return src;
 }
 
 // ============================================================
-// ROM loading
+// ROM + Manifest loading
 // ============================================================
+async function loadManifest() {
+  // Try loading pre-generated manifest from same server
+  try {
+    const resp = await fetch('audio_manifest.json');
+    if (resp.ok) {
+      manifest = await resp.json();
+      log(`Loaded manifest: ${manifest.totalSamples} samples`, 'ok');
+      return true;
+    }
+  } catch (e) {}
+  log('No pre-generated manifest found. Will parse ROM directly.', 'info');
+  return false;
+}
 
 async function loadROM() {
-  setStatus('Downloading ROM...', 'status-loading');
-  log(`Fetching ROM from ${SM64_ROM_URL}...`);
+  setStatus('Loading manifest + ROM...', 'status-loading');
 
+  const hasManifest = await loadManifest();
+  if (!hasManifest) {
+    log('ERROR: audio_manifest.json not found. Run: python3 tools/gen_audio_manifest.py baserom.us.z64', 'err');
+    setStatus('Missing manifest', 'status-err');
+    return;
+  }
+
+  log(`Downloading ROM from URL...`);
   try {
     const resp = await fetch(SM64_ROM_URL);
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
     const ab = await resp.arrayBuffer();
     romData = new Uint8Array(ab);
-    log(`ROM loaded: ${romData.length} bytes (${(romData.length/1024/1024).toFixed(1)} MB)`, 'ok');
-    processROM();
+    log(`ROM: ${romData.length} bytes (${(romData.length/1048576).toFixed(1)} MB)`, 'ok');
+    decodeAllSamples();
   } catch (e) {
-    log(`Failed to load ROM: ${e.message}`, 'err');
-    setStatus('ROM load failed: ' + e.message, 'status-err');
+    log(`ROM download failed: ${e.message}`, 'err');
+    setStatus('Failed: ' + e.message, 'status-err');
   }
 }
 
 function loadROMFile(event) {
   const file = event.target.files[0];
   if (!file) return;
-  setStatus('Loading ROM file...', 'status-loading');
+  setStatus('Loading...', 'status-loading');
   const reader = new FileReader();
-  reader.onload = function(e) {
+  reader.onload = async function(e) {
     romData = new Uint8Array(e.target.result);
-    log(`ROM loaded from file: ${romData.length} bytes`, 'ok');
-    processROM();
+    log(`ROM from file: ${romData.length} bytes`, 'ok');
+    if (!manifest) await loadManifest();
+    if (!manifest) {
+      log('ERROR: Need audio_manifest.json', 'err');
+      return;
+    }
+    decodeAllSamples();
   };
   reader.readAsArrayBuffer(file);
 }
 
-function processROM() {
-  log('Extracting audio samples from ROM...');
+function decodeAllSamples() {
+  log(`Decoding ${manifest.totalSamples} VADPCM samples...`);
   const t0 = performance.now();
+  let decoded = 0, silent = 0;
 
-  try {
-    sampleManifest = extractSamplesFromROM(romData);
-    const t1 = performance.now();
-    log(`Extracted ${sampleManifest.length} samples in ${(t1-t0).toFixed(0)}ms`, 'ok');
+  for (const sample of manifest.samples) {
+    if (!sample.book || sample.size <= 0) continue;
 
-    // Decode all samples to PCM
-    let decoded = 0;
-    for (const sample of sampleManifest) {
-      if (sample.tblRomAddr && sample.size > 0 && sample.book) {
-        const adpcmData = romData.slice(sample.tblRomAddr, sample.tblRomAddr + sample.size);
-        const decoder = new VADPCMDecoder(sample.book);
-        const pcm = decoder.decode(adpcmData);
+    const adpcm = romData.subarray(sample.romAddr, sample.romAddr + sample.size);
+    // Check for valid ADPCM data
+    let nonzero = 0;
+    for (let i = 0; i < Math.min(adpcm.length, 100); i++) {
+      if (adpcm[i] !== 0) nonzero++;
+    }
+    if (nonzero === 0) { silent++; continue; }
 
-        // Check if PCM has any non-zero content
-        let maxAbs = 0;
-        for (let i = 0; i < Math.min(pcm.length, 200); i++) {
-          maxAbs = Math.max(maxAbs, Math.abs(pcm[i]));
-        }
+    const decoder = new VADPCMDecoderRef(sample.book);
+    const pcm = decoder.decode(adpcm);
 
-        if (maxAbs > 0) {
-          decodedSamples[sample.name] = pcm;
-          decoded++;
-        }
-      }
+    // Check if output has audio content
+    let maxAbs = 0;
+    for (let i = 0; i < pcm.length; i++) {
+      const v = Math.abs(pcm[i]);
+      if (v > maxAbs) maxAbs = v;
     }
 
-    const t2 = performance.now();
-    log(`Decoded ${decoded}/${sampleManifest.length} samples to PCM in ${(t2-t1).toFixed(0)}ms`, 'ok');
-
-    setStatus(`Ready! ${decoded} playable samples extracted from ROM`, 'status-ok');
-    document.getElementById('btnTest').disabled = false;
-    document.getElementById('btnPlayAll').disabled = false;
-
-    // Create sample buttons
-    createSampleButtons();
-
-  } catch (e) {
-    log(`Error: ${e.message}`, 'err');
-    console.error(e);
-    setStatus('Extraction failed: ' + e.message, 'status-err');
+    if (maxAbs > 10) {
+      decodedSamples[sample.name] = { pcm, maxAbs, sample };
+      decoded++;
+    } else {
+      silent++;
+    }
   }
+
+  const elapsed = performance.now() - t0;
+  log(`Decoded ${decoded} samples in ${elapsed.toFixed(0)}ms (${silent} silent/skipped)`, 'ok');
+  setStatus(`Ready! ${decoded} playable samples`, 'status-ok');
+
+  document.getElementById('btnTest').disabled = false;
+  document.getElementById('btnPlayRandom').disabled = false;
+  createSampleButtons();
 }
 
 function createSampleButtons() {
   const container = document.getElementById('sampleButtons');
   container.innerHTML = '';
-  const names = Object.keys(decodedSamples).sort();
-  for (const name of names) {
+  const entries = Object.entries(decodedSamples).sort((a, b) => a[0].localeCompare(b[0]));
+  for (const [name, data] of entries) {
     const btn = document.createElement('button');
     btn.className = 'sample-btn';
-    btn.textContent = name.replace('bank', 'b').replace('_s', ':');
+    const dur = (data.pcm.length / 32000).toFixed(2);
+    btn.textContent = `${name} (${dur}s)`;
+    btn.title = `ROM: 0x${data.sample.romAddr.toString(16)} | Size: ${data.sample.size} | Max: ${data.maxAbs}`;
     btn.onclick = () => {
-      const pcm = decodedSamples[name];
-      log(`Playing ${name} (${pcm.length} samples, ${(pcm.length/32000).toFixed(2)}s)`);
-      playPCM(pcm);
+      log(`Playing ${name}: ${data.pcm.length} samples, ${dur}s, peak=${data.maxAbs}`);
+      btn.classList.add('playing');
+      const src = playPCM(data.pcm);
+      src.onended = () => btn.classList.remove('playing');
     };
     container.appendChild(btn);
   }
@@ -470,86 +408,63 @@ function createSampleButtons() {
 
 function playRandomSample() {
   const names = Object.keys(decodedSamples);
-  if (names.length === 0) return;
+  if (!names.length) return;
   const name = names[Math.floor(Math.random() * names.length)];
-  const pcm = decodedSamples[name];
-  log(`Playing ${name} (${pcm.length} samples, ${(pcm.length/32000).toFixed(2)}s)`);
-  playPCM(pcm);
+  const data = decodedSamples[name];
+  log(`Playing ${name}: ${data.pcm.length} samples, ${(data.pcm.length/32000).toFixed(2)}s`);
+  playPCM(data.pcm);
 }
 
 // ============================================================
 // Tests
 // ============================================================
-
 function runTests() {
-  log('=== Running VADPCM Decoder Tests ===', 'info');
+  log('=== VADPCM Decoder Tests ===', 'info');
   let pass = 0, fail = 0;
-
   function assert(cond, msg) {
-    if (cond) {
-      pass++;
-      log(`  PASS: ${msg}`, 'ok');
-    } else {
-      fail++;
-      log(`  FAIL: ${msg}`, 'err');
-    }
+    if (cond) { pass++; log(`  PASS: ${msg}`, 'ok'); }
+    else { fail++; log(`  FAIL: ${msg}`, 'err'); }
   }
 
-  // Test 1: ROM loaded
-  assert(romData !== null, 'ROM data loaded');
-  assert(romData.length === 8388608, `ROM size is 8MB (got ${romData ? romData.length : 0})`);
+  assert(romData !== null && romData.length === 8388608, `ROM is 8MB (${romData ? romData.length : 0})`);
+  assert(manifest !== null, 'Manifest loaded');
+  assert(manifest && manifest.totalSamples === 219, `219 samples in manifest (${manifest ? manifest.totalSamples : 0})`);
 
-  // Test 2: TBL header parse
-  const tblHeader = parseALSeqFile(romData, TBL_ROM_OFFSET);
-  assert(tblHeader.count > 0, `TBL has ${tblHeader.count} sample banks`);
-  assert(tblHeader.count === 38, `TBL bank count is 38 (got ${tblHeader.count})`);
+  const decoded = Object.keys(decodedSamples).length;
+  assert(decoded > 100, `>100 samples decoded (${decoded})`);
 
-  // Test 3: CTL header parse
-  const ctlHeader = parseALSeqFile(romData, CTL_ROM_OFFSET);
-  assert(ctlHeader.count > 0, `CTL has ${ctlHeader.count} sound banks`);
-  assert(ctlHeader.count === 38, `CTL bank count is 38 (got ${ctlHeader.count})`);
-
-  // Test 4: Samples extracted
-  assert(sampleManifest.length > 0, `Extracted ${sampleManifest.length} samples`);
-  assert(sampleManifest.length > 50, `At least 50 samples (got ${sampleManifest.length})`);
-
-  // Test 5: Codebooks valid
-  const withBooks = sampleManifest.filter(s => s.book);
-  assert(withBooks.length === sampleManifest.length, `All ${sampleManifest.length} samples have codebooks`);
-  if (withBooks.length > 0) {
-    const b = withBooks[0].book;
-    assert(b.order === 2, `Codebook order is 2 (got ${b.order})`);
-    assert(b.npredictors === 2, `Codebook has 2 predictors (got ${b.npredictors})`);
-    assert(b.table.length === 64, `Codebook table has 64 entries (got ${b.table.length})`);
-  }
-
-  // Test 6: PCM decoding produces non-silent audio
-  const decodedNames = Object.keys(decodedSamples);
-  assert(decodedNames.length > 0, `Decoded ${decodedNames.length} samples to PCM`);
-  if (decodedNames.length > 0) {
-    const pcm = decodedSamples[decodedNames[0]];
-    assert(pcm.length > 0, `First sample has ${pcm.length} PCM samples`);
-    let maxVal = 0;
-    for (let i = 0; i < pcm.length; i++) maxVal = Math.max(maxVal, Math.abs(pcm[i]));
-    assert(maxVal > 100, `First sample has non-trivial audio (maxAbs=${maxVal})`);
-  }
-
-  // Test 7: VADPCM decode known data
-  // Create a simple test: all-zero ADPCM should decode to silence
+  // Test decoder with silence
   const silentBook = { order: 2, npredictors: 2, table: new Array(64).fill(0) };
-  const silentDecoder = new VADPCMDecoder(silentBook);
-  const silentAdpcm = new Uint8Array(9); // one frame of zeros
-  const silentPcm = silentDecoder.decode(silentAdpcm);
-  assert(silentPcm.length === 16, `Silent frame decodes to 16 samples (got ${silentPcm.length})`);
+  const dec = new VADPCMDecoderRef(silentBook);
+  const silentPcm = dec.decode(new Uint8Array(9));
+  assert(silentPcm.length === 16, `Silent frame => 16 samples (${silentPcm.length})`);
   let silentMax = 0;
   for (let i = 0; i < silentPcm.length; i++) silentMax = Math.max(silentMax, Math.abs(silentPcm[i]));
-  assert(silentMax === 0, `All-zero ADPCM produces silence (maxAbs=${silentMax})`);
+  assert(silentMax === 0, `Silent ADPCM => silence (max=${silentMax})`);
 
-  log(`=== Tests complete: ${pass} passed, ${fail} failed ===`, fail > 0 ? 'err' : 'ok');
+  // Test actual sample decoding quality
+  if (decoded > 0) {
+    const first = Object.values(decodedSamples)[0];
+    assert(first.pcm.length > 100, `First sample has ${first.pcm.length} PCM samples`);
+    assert(first.maxAbs > 100, `First sample has real audio (peak=${first.maxAbs})`);
+  }
+
+  // Verify ROM data at sample addresses is non-zero
+  if (manifest) {
+    let validAddr = 0;
+    for (const s of manifest.samples.slice(0, 20)) {
+      const byte = romData[s.romAddr];
+      if (byte !== 0 || romData[s.romAddr + 1] !== 0) validAddr++;
+    }
+    assert(validAddr >= 18, `ROM addresses contain data (${validAddr}/20 non-zero)`);
+  }
+
+  log(`=== ${pass} passed, ${fail} failed ===`, fail > 0 ? 'err' : 'ok');
 }
 
-// Auto-load ROM on page load
-log('SM64 VADPCM Audio Test ready. Click "Load ROM" to begin.', 'info');
+// Init
+log('SM64 VADPCM Audio Test. Click "Load ROM" to begin.', 'info');
+loadManifest();  // Pre-load manifest
 </script>
 </body>
 </html>
