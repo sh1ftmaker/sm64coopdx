@@ -476,7 +476,7 @@ BAD_RETURN(s32) save_file_copy(s32 srcFileIndex, s32 destFileIndex) {
 }
 
 void save_file_load_all(UNUSED u8 reload) {
-    //s32 file;
+    s32 file;
 
     gMainMenuDataModified = FALSE;
     gSaveFileModified = FALSE;
@@ -489,7 +489,6 @@ void save_file_load_all(UNUSED u8 reload) {
         save_file_bswap(&gSaveBuffer);
 
     // Verify the main menu data and create a backup copy if only one of the slots is valid.
-    /* Disable this so the 'backup' slot can be used
     s32 validSlots;
     validSlots = verify_save_block_signature(&gSaveBuffer.menuData[0], sizeof(gSaveBuffer.menuData[0]), MENU_DATA_MAGIC);
     validSlots |= verify_save_block_signature(&gSaveBuffer.menuData[1], sizeof(gSaveBuffer.menuData[1]),MENU_DATA_MAGIC) << 1;
@@ -521,8 +520,6 @@ void save_file_load_all(UNUSED u8 reload) {
                 break;
         }
     }
-    */
-    stub_save_file_1();
 }
 
 /**
