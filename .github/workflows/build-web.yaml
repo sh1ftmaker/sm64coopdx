@@ -16,7 +16,49 @@ permissions:
   id-token: write
 
 jobs:
+  deploy-partykit:
+    runs-on: ubuntu-22.04
+    outputs:
+      server_url: ${{ steps.deploy.outputs.server_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Check PARTYKIT_AUTH_TOKEN
+        run: |
+          if [ -z "${{ secrets.PARTYKIT_AUTH_TOKEN }}" ]; then
+            echo "ERROR: The secret PARTYKIT_AUTH_TOKEN is not set."
+            echo "Please add it in repository Settings > Secrets > Actions > New repository secret"
+            exit 1
+          fi
+      - name: Install PartyKit
+        run: npm install -g partykit
+      - name: Deploy PartyKit server
+        id: deploy
+        env:
+          PARTYKIT_AUTH_TOKEN: ${{ secrets.PARTYKIT_AUTH_TOKEN }}
+        run: |
+          cd partykit
+          npm ci
+          set -e
+          DEPLOY_OUTPUT=$(npx partykit deploy --prod 2>&1)
+          echo "$DEPLOY_OUTPUT"
+          # Extract the deployed URL
+          SERVER_URL=$(echo "$DEPLOY_OUTPUT" | grep -o 'https://[^[:space:]]*\.partykit\.dev')
+          if [ -z "$SERVER_URL" ]; then
+            echo "ERROR: Could not extract PartyKit server URL from deploy output"
+            echo "$DEPLOY_OUTPUT"
+            exit 1
+          fi
+          echo "server_url=$SERVER_URL" >> $GITHUB_OUTPUT
+
   build-stable:
+    needs: [deploy-partykit]
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout stable branch
@@ -58,6 +100,25 @@ jobs:
       - name: Build stable for web
         run: |
           emmake make TARGET_WEB=1 VERSION=us -j$(nproc)
+
+      - name: Inject PartyKit server URL
+        run: |
+          SERVER_URL="${{ needs.deploy-partykit.outputs.server_url }}"
+          echo "Injecting PARTYKIT_SERVER_URL = $SERVER_URL into HTML"
+          python3 << 'PY'
+          import sys
+          file_path = 'build/us_pc/sm64coopdx.html'
+          server_url = sys.argv[1]
+          with open(file_path, 'r') as f:
+              content = f.read()
+          inject = f"<script>window.PARTYKIT_SERVER_URL = '{server_url}';</script>"
+          if '<head>' in content:
+              content = content.replace('<head>', f'<head>\n{inject}', 1)
+          else:
+              content = inject + '\n' + content
+          with open(file_path, 'w') as f:
+              f.write(content)
+          PY $SERVER_URL
 
       - name: Prepare stable artifact
         run: |
