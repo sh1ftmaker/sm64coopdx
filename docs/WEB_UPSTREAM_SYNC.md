@@ -17,8 +17,8 @@ Integration changes:
   PartyKit connection state.
 - Include upstream native CI changes, repair the deployment URL injection
   heredoc, bound relay deployment time, and run browser-shell checks in CI.
-  Preserve the downloadable build when relay deployment fails; Pages deployment
-  still requires a successful relay deployment.
+  Publish the playable web build even when the optional relay deployment fails.
+  Both the Pages root and `sm64coopdx.html` serve the game.
 
 Validation:
 
