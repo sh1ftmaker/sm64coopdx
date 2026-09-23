@@ -15,12 +15,10 @@ Integration changes:
 - Restore the browser shell's missing `Module` declaration, load PartySocket as
   an ES module, preserve binary payloads, and resolve room roles through the
   PartyKit connection state.
-- Workflow updates are preserved in `docs/patches/upstream-web-workflows.patch`
-  because the available GitHub credential cannot update Actions workflows. This
-  includes upstream native CI changes, the URL injection heredoc fix, a relay
-  deployment timeout, and browser-shell checks. Apply with
-  `git apply docs/patches/upstream-web-workflows.patch` using a credential with
-  workflow access. Existing workflows are unchanged in the pushed merge.
+- Include upstream native CI changes, repair the deployment URL injection
+  heredoc, bound relay deployment time, and run browser-shell checks in CI.
+  Preserve the downloadable build when relay deployment fails; Pages deployment
+  still requires a successful relay deployment.
 
 Validation:
 
@@ -31,8 +29,8 @@ Validation:
 - Two isolated Chromium contexts with a local PartyKit server: host/client role
   assignment, successful game join, and player updates during gameplay.
 - `node --test tests/web-shell.test.mjs`: shell syntax and binary transport
-  regression checks pass. The saved workflow patch adds these to CI.
-- Proposed workflow YAML and shell syntax checks; whitespace checks on merge
+  regression checks pass. These also run in CI.
+- Workflow YAML and shell syntax checks; whitespace checks on merge
   resolutions (upstream/vendor whitespace is preserved).
 
 The public lobby service returned HTTP 400/404 during the local multiplayer

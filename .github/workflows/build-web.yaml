@@ -17,6 +17,7 @@ permissions:
 
 jobs:
   deploy-partykit:
+    timeout-minutes: 3
     runs-on: ubuntu-22.04
     outputs:
       server_url: ${{ steps.deploy.outputs.server_url }}
@@ -58,6 +59,8 @@ jobs:
           echo "server_url=$SERVER_URL" >> $GITHUB_OUTPUT
 
   build-stable:
+    # Keep the downloadable build available if relay deployment fails.
+    if: ${{ !cancelled() }}
     needs: [deploy-partykit]
     runs-on: ubuntu-22.04
     steps:
@@ -66,6 +69,9 @@ jobs:
         with:
           ref: feature/emscripten-web-port
           submodules: recursive
+
+      - name: Test browser shell
+        run: node --test tests/web-shell.test.mjs
 
       - name: Install dependencies
         run: |
@@ -102,10 +108,11 @@ jobs:
           emmake make TARGET_WEB=1 VERSION=us -j$(nproc)
 
       - name: Inject PartyKit server URL
+        if: needs.deploy-partykit.result == 'success'
         run: |
           SERVER_URL="${{ needs.deploy-partykit.outputs.server_url }}"
           echo "Injecting PARTYKIT_SERVER_URL = $SERVER_URL into HTML"
-          python3 << 'PY'
+          python3 - "$SERVER_URL" << 'PY'
           import sys
           file_path = 'build/us_pc/sm64coopdx.html'
           server_url = sys.argv[1]
@@ -118,7 +125,7 @@ jobs:
               content = inject + '\n' + content
           with open(file_path, 'w') as f:
               f.write(content)
-          PY $SERVER_URL
+          PY
 
       - name: Prepare stable artifact
         run: |
@@ -141,7 +148,7 @@ jobs:
           path: _stable/
 
   deploy:
-    needs: [build-stable]
+    needs: [build-stable, deploy-partykit]
     runs-on: ubuntu-latest
     environment:
       name: github-pages
