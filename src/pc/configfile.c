@@ -827,8 +827,6 @@ NEXT_OPTION:
     if (configFrameLimit < 30)   { configFrameLimit = 30; }
     if (configFrameLimit > 3000) { configFrameLimit = 3000; }
 
-    gMasterVolume = (f32)configMasterVolume / 127.0f;
-
     if (configPlayerModel >= CT_MAX) { configPlayerModel = 0; }
 
     if (configDjuiTheme >= DJUI_THEME_MAX) { configDjuiTheme = 0; }
@@ -906,6 +904,9 @@ void configfile_load(void) {
         configfile_save(configfile_backup_name());
     }
 #endif
+    // A first launch creates the config and returns before parsing it. Apply
+    // the default volume too, or the zero-initialized mixer stays muted.
+    gMasterVolume = (f32)configMasterVolume / 127.0f;
 }
 
 static void configfile_save_option(FILE *file, const struct ConfigOption *option, bool isSecret) {

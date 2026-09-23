@@ -51,3 +51,77 @@ test('PartyKit bridge preserves binary packets and assigned roles', () => {
     assert.equal(network.isConnected(), true);
     assert.equal(network.isHost, false);
 });
+
+function audioHarness() {
+    const handlers = {};
+    const registrations = [];
+    const document = {
+        hidden: false,
+        addEventListener(event, handler, options) {
+            handlers[event] = handler;
+            registrations.push({ event, options });
+        },
+    };
+    const context = vm.createContext({
+        document, window: { addEventListener(event, handler) { handlers[event] = handler; } },
+        Module: {},
+        AudioContext() { throw new Error('Must not create an unrelated audio context'); },
+    });
+    const start = shell.indexOf('    // ---- Unlock and recover');
+    const end = shell.indexOf('    // ---- Watch for game rendering', start);
+    assert.ok(start >= 0 && end > start);
+    vm.runInContext(shell.slice(start, end), context);
+    return { context, handlers, registrations, document };
+}
+
+test('an early touch does not prevent unlocking SDL audio on a later touch', () => {
+    const { context, handlers, registrations } = audioHarness();
+    handlers.touchstart();
+    let resumes = 0;
+    context.Module.SDL2 = { audioContext: {
+        state: 'suspended', resume() { resumes++; this.state = 'running'; return Promise.resolve(); },
+    } };
+    handlers.touchend();
+    assert.equal(resumes, 1);
+    handlers.click();
+    assert.equal(resumes, 1);
+    assert.ok(registrations.filter(r => ['touchstart', 'touchend', 'pointerdown'].includes(r.event))
+        .every(r => r.options.capture));
+});
+
+test('failed and interrupted resumes remain retryable', async () => {
+    const { context, handlers } = audioHarness();
+    let resumes = 0;
+    const ctx = { state: 'suspended', resume() { resumes++; return Promise.reject(new Error('gesture required')); } };
+    context.Module.SDL2 = { audioContext: ctx };
+    handlers.touchend();
+    await Promise.resolve();
+    ctx.resume = function() { resumes++; this.state = 'running'; return Promise.resolve(); };
+    handlers.touchend();
+    assert.equal(ctx.state, 'running');
+    ctx.state = 'interrupted';
+    handlers.touchend();
+    assert.equal(ctx.state, 'running');
+    ctx.state = 'suspended';
+    handlers.touchstart();
+    assert.equal(resumes, 4);
+});
+
+test('returning to the page retries audio without resuming hidden or closed contexts', () => {
+    const { context, handlers, document } = audioHarness();
+    let resumes = 0;
+    const ctx = { state: 'interrupted', resume() { resumes++; this.state = 'running'; } };
+    context.Module.SDL2 = { audioContext: ctx };
+    document.hidden = true;
+    handlers.visibilitychange();
+    assert.equal(resumes, 0);
+    document.hidden = false;
+    handlers.visibilitychange();
+    assert.equal(resumes, 1);
+    ctx.state = 'closed';
+    handlers.pageshow();
+    assert.equal(resumes, 1);
+    ctx.state = 'interrupted';
+    ctx.resume = () => { throw new Error('temporarily unavailable'); };
+    assert.doesNotThrow(() => handlers.focus());
+});

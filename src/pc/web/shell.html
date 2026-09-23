@@ -371,7 +371,6 @@
     var Z64_MAGIC = 0x80371240;
 
     var romReady = false;
-    var audioResumed = false;
 
     // Lobby server URL (set to your deployed Cloudflare Worker)
     // Override this before loading the WASM module if deploying to a custom domain
@@ -665,45 +664,32 @@
       }
     });
 
-    // ---- Audio context resume on first interaction ----
-    // iOS Safari requires touchstart (not just click) and the AudioContext
-    // must be created or resumed inside a user gesture handler.
-
+    // ---- Unlock and recover the game's audio context ----
+    // Use SDL's context only: resuming a separate context cannot unlock game audio.
+    // Check its current state on every gesture so early taps, failed resumes and
+    // mobile interruptions do not permanently disable retries.
     function resumeAudio() {
-      if (audioResumed) return;
+      var ctx = typeof Module !== 'undefined' && Module.SDL2 && Module.SDL2.audioContext;
+      if (!ctx || ctx.state === 'running' || ctx.state === 'closed') return;
       try {
-        // Try SDL2's context first (created by Emscripten audio backend)
-        var ctx = Module.SDL2 && Module.SDL2.audioContext;
-        if (ctx && ctx.state === 'suspended') {
-          ctx.resume();
-        }
-        // Also try webkitAudioContext for older iOS Safari
-        if (!ctx) {
-          var AC = window.AudioContext || window.webkitAudioContext;
-          if (AC) {
-            ctx = new AC();
-            if (ctx.state === 'suspended') ctx.resume();
-          }
-        }
-      } catch(e) {}
-      audioResumed = true;
-    }
-
-    // Continuously retry resume — iOS sometimes needs multiple attempts
-    // because SDL2's AudioContext may not exist yet on first touch
-    function resumeAudioRetry() {
-      if (audioResumed) return;
-      resumeAudio();
-      if (!audioResumed) {
-        // SDL2 context not ready yet; retry on next interaction
-        audioResumed = false;
+        // Safari may report "interrupted" after a phone call or backgrounding.
+        // Call resume synchronously inside the gesture, not in a timer/promise.
+        var resumed = ctx.resume();
+        if (resumed && resumed.catch) resumed.catch(function() {});
+      } catch(e) {
+        // Keep listening: the next user gesture can retry.
       }
     }
 
-    document.addEventListener('click', resumeAudioRetry);
-    document.addEventListener('keydown', resumeAudioRetry);
-    document.addEventListener('touchstart', resumeAudioRetry);
-    document.addEventListener('touchend', resumeAudioRetry);
+    // Capture gestures before the on-screen controls handle/prevent them.
+    ['pointerdown', 'click', 'keydown', 'touchstart', 'touchend'].forEach(function(event) {
+      document.addEventListener(event, resumeAudio, { capture: true, passive: true });
+    });
+    document.addEventListener('visibilitychange', function() {
+      if (!document.hidden) resumeAudio();
+    });
+    window.addEventListener('pageshow', resumeAudio);
+    window.addEventListener('focus', resumeAudio);
 
     // ---- Watch for game rendering to start ----
 
