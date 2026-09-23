@@ -26,10 +26,6 @@
 #include "network/network.h"
 #include "lua/smlua.h"
 
-#include "audio/audio_api.h"
-#include "audio/audio_sdl.h"
-#include "audio/audio_null.h"
-
 #include "rom_assets.h"
 #include "rom_checker.h"
 #include "pc_main.h"
@@ -78,13 +74,11 @@
 
 #include "pc/mumble/mumble.h"
 
-#if defined(_WIN32) || defined(_WIN64)
+#if defined(_WIN32)
 #include <windows.h>
 #endif
 
-#ifdef HAVE_SDL2
 #include <SDL2/SDL.h>
-#endif
 
 extern Vp gViewportFullscreen;
 
@@ -120,8 +114,9 @@ u8 gLuaVolumeLevel = 127;
 u8 gLuaVolumeSfx = 127;
 u8 gLuaVolumeEnv = 127;
 
-static struct AudioAPI *audio_api;
-struct GfxWindowManagerAPI *wm_api = &WAPI;
+struct AudioAPI* gAudioApi = &audio_null;
+struct GfxWindowManagerAPI* gWindowApi = &gfx_dummy_wm_api;
+struct GfxRenderingAPI* gRenderApi = &gfx_dummy_renderer_api;
 
 extern void gfx_run(Gfx *commands);
 extern void thread5_game_loop(void *arg);
@@ -212,8 +207,7 @@ static s32 get_num_frames_to_draw(f64 t, u32 frameLimit) {
     return (s32) MAX(1, numFramesNext - numFramesCurr);
 }
 
-static u32 get_display_refresh_rate() {
-#ifdef HAVE_SDL2
+static u32 get_display_refresh_rate(void) {
     static u32 refreshRate = 0;
     if (!refreshRate) {
         SDL_DisplayMode mode;
@@ -224,15 +218,52 @@ static u32 get_display_refresh_rate() {
         }
     }
     return refreshRate;
-#else
-    return 60;
-#endif
 }
 
-static u32 get_target_refresh_rate() {
+static u32 get_target_refresh_rate(void) {
     if (configFramerateMode == RRM_MANUAL) { return configFrameLimit; }
     if (configFramerateMode == RRM_UNLIMITED) { return 3000; } // Has no effect
     return get_display_refresh_rate();
+}
+
+static void select_graphics_backend(void) {
+    if (gCLIOpts.headless) {
+        return;
+    }
+
+#if defined(_WIN32)
+    if (configGraphicsBackend == GAPI_GL && !gfx_sdl_check_opengl_compatibility()) {
+        configGraphicsBackend = GAPI_D3D11;
+    }
+#endif
+    int backend = configGraphicsBackend;
+#if defined(_WIN32)
+    if (gCLIOpts.backend != -1) { backend = gCLIOpts.backend; }
+#endif
+
+    switch (backend) {
+        case GAPI_GL:
+            gWindowApi = &gfx_sdl;
+            gRenderApi = &gfx_opengl_api;
+            gAudioApi  = &audio_sdl;
+            break;
+#if defined(_WIN32)
+        case GAPI_D3D11:
+            gWindowApi = &gfx_dxgi;
+            gRenderApi = &gfx_direct3d11_api;
+            gAudioApi  = &audio_sdl;
+            break;
+#endif
+        default:
+            gWindowApi = &gfx_sdl;
+            gRenderApi = &gfx_opengl_api;
+            gAudioApi  = &audio_sdl;
+            break;
+    }
+
+    if (!gAudioApi->init()) {
+        gAudioApi = &audio_null;
+    }
 }
 
 void produce_interpolation_frames_and_delay(void) {
@@ -287,6 +318,7 @@ void produce_interpolation_frames_and_delay(void) {
     // make sure to draw at least one frame to prevent the game from freezing completely
     // (including inputs and window events) if the game update duration is greater than 33ms
     do {
+        curTime = clock_elapsed_f64();
         ++framesDrawn;
 
         // when we know how many frames to draw, use a precise delta
@@ -301,6 +333,7 @@ void produce_interpolation_frames_and_delay(void) {
         gfx_end_frame_render();
         ssgi_render();
         ssgi_composite();
+        gfx_display_frame();
 
         // delay if our framerate is capped
         if (shouldDelay) {
@@ -313,8 +346,6 @@ void produce_interpolation_frames_and_delay(void) {
             }
         }
 
-        // send the frame to the screen (should be directly after the delay for good frame pacing)
-        gfx_display_frame();
         sDrawnFrames++;
         if (shouldDelay) { numFramesToDraw--; }
     } while ((curTime = clock_elapsed_f64()) < targetTime && numFramesToDraw > 0);
@@ -339,15 +370,15 @@ void produce_interpolation_frames_and_delay(void) {
 static s16 sAudioBuffer[SAMPLES_HIGH * 2 * 2] = { 0 };
 
 inline static void buffer_audio(void) {
-    bool shouldMute = (configMuteFocusLoss && !WAPI.has_focus()) || (gMasterVolume == 0);
+    bool shouldMute = (configMuteFocusLoss && !gWindowApi->has_focus()) || (gMasterVolume == 0);
     if (!shouldMute) {
         set_sequence_player_volume(SEQ_PLAYER_LEVEL, (f32)configMusicVolume / 127.0f * (f32)gLuaVolumeLevel / 127.0f);
         set_sequence_player_volume(SEQ_PLAYER_SFX,   (f32)configSfxVolume / 127.0f * (f32)gLuaVolumeSfx / 127.0f);
         set_sequence_player_volume(SEQ_PLAYER_ENV,   (f32)configEnvVolume / 127.0f * (f32)gLuaVolumeEnv / 127.0f);
     }
 
-    int samplesLeft = audio_api->buffered();
-    u32 numAudioSamples = samplesLeft < audio_api->get_desired_buffered() ? SAMPLES_HIGH : SAMPLES_LOW;
+    int samplesLeft = gAudioApi->buffered();
+    u32 numAudioSamples = samplesLeft < gAudioApi->get_desired_buffered() ? SAMPLES_HIGH : SAMPLES_LOW;
     for (s32 i = 0; i < 2; i++) {
         create_next_audio_buffer(sAudioBuffer + i * (numAudioSamples * 2), numAudioSamples);
     }
@@ -356,13 +387,13 @@ inline static void buffer_audio(void) {
         for (u16 i=0; i < ARRAY_COUNT(sAudioBuffer); i++) {
             sAudioBuffer[i] *= gMasterVolume;
         }
-        audio_api->play((u8 *)sAudioBuffer, 2 * numAudioSamples * 4);
+        gAudioApi->play((u8 *)sAudioBuffer, 2 * numAudioSamples * 4);
     }
 }
 
 void *audio_thread(UNUSED void *arg) {
     // As long as we have an audio api and that we're threaded, Loop.
-    while (audio_api) {
+    while (gAudioApi) {
         f64 curTime = clock_elapsed_f64();
 
         // Buffer the audio.
@@ -377,7 +408,7 @@ void *audio_thread(UNUSED void *arg) {
         f64 actualDelta = now - curTime;
         if (actualDelta < targetDelta) {
             f64 delay = ((targetDelta - actualDelta) * 1000.0);
-            WAPI.delay((u32)delay);
+            gWindowApi->delay((u32)delay);
         }
     }
 
@@ -444,11 +475,11 @@ void produce_one_dummy_frame(void (*callback)(), u8 clearColorR, u8 clearColorG,
     f64 remaining = targetFrameTime - elapsed;
     if (remaining > 0) {
 #ifdef TARGET_WEB
-        // Skip WAPI.delay on web — it uses emscripten_sleep which causes
+        // Skip gWindowApi->delay on web — it uses emscripten_sleep which causes
         // ASYNCIFY to unwind the stack inside the rAF callback, freezing the game.
         // The rAF loop handles frame pacing instead.
 #else
-        WAPI.delay((u32)(remaining * 1000.0));
+        gWindowApi->delay((u32)(remaining * 1000.0));
 #endif
     }
 
@@ -456,22 +487,19 @@ void produce_one_dummy_frame(void (*callback)(), u8 clearColorR, u8 clearColorG,
 }
 
 void audio_shutdown(void) {
-    audio_custom_shutdown();
-    if (audio_api) {
-        if (audio_api->shutdown) audio_api->shutdown();
-        audio_api = NULL;
+    if (gAudioApi) {
+        if (gAudioApi->shutdown) gAudioApi->shutdown();
+        gAudioApi = NULL;
     }
 }
 
 void game_deinit(void) {
     if (gGameInited) { configfile_save(configfile_name()); }
     controller_shutdown();
-    audio_custom_shutdown();
     audio_shutdown();
     network_shutdown(true, true, false, false);
     smlua_text_utils_shutdown();
     smlua_shutdown();
-    smlua_audio_custom_deinit();
     mods_shutdown();
     djui_shutdown();
     gfx_shutdown();
@@ -502,19 +530,9 @@ static void web_auto_network(void) {
     if (web_peer_waiting) {
         // Check if PeerJS has determined our role yet
         int roleKnown = EM_ASM_INT({
-            // Host: isHost is set in the 'open' callback
-            // Client: isHost is false after _joinAsClient creates the peer
-            // We know the role once the peer is open (host) or we've fallen
-            // back to client (peer exists and isHost is explicitly false)
-            if (!PeerNetwork.peer) return 0;
-            if (PeerNetwork.isHost) return 1; // confirmed host
-            // For client: check if we've started joining (peer exists, not host)
-            if (PeerNetwork.peer.id && !PeerNetwork.isHost && PeerNetwork.peer.disconnected === false) {
-                // Check if we have a connection to the host
-                var conn = PeerNetwork.connections[PeerNetwork.hostPeerId];
-                if (conn && conn.open) return 2; // confirmed client, connected
-            }
-            return 0; // still resolving
+            // PartyKit assigns the host/client role when the room socket opens.
+            if (!PeerNetwork.isConnected()) return 0;
+            return PeerNetwork.isHost ? 1 : 2;
         });
 
         if (roleKnown == 0) return; // still waiting
@@ -621,7 +639,7 @@ void web_one_iteration(void) {
     web_auto_network();
 
     // Handle SDL events every frame (window resize, keyboard, etc.)
-    WAPI.handle_events();
+    gWindowApi->handle_events();
 
     double elapsed = now - web_last_tick_time;
 
@@ -796,10 +814,6 @@ int main(int argc, char *argv[]) {
     // handle terminal arguments
     if (!parse_cli_opts(argc, argv)) { return 0; }
 
-#if defined(RAPI_DUMMY) || defined(WAPI_DUMMY)
-    gCLIOpts.headless = true;
-#endif
-
 #if defined(_WIN32) && !defined(TARGET_WEB)
     // handle Windows console
     if (gCLIOpts.console || gCLIOpts.headless) {
@@ -827,40 +841,31 @@ int main(int argc, char *argv[]) {
     fs_init(gCLIOpts.savePath[0] ? gCLIOpts.savePath : sys_user_path());
 #endif
 
-#if !defined(RAPI_DUMMY) && !defined(WAPI_DUMMY)
-    if (gCLIOpts.headless) {
-        memcpy(&WAPI, &gfx_dummy_wm_api, sizeof(struct GfxWindowManagerAPI));
-        memcpy(&RAPI, &gfx_dummy_renderer_api, sizeof(struct GfxRenderingAPI));
-    }
-#endif
-
     configfile_load();
 
     legacy_folder_handler();
 
+    select_graphics_backend();
+
     // create the window almost straight away
     if (!gGfxInited) {
-        gfx_init(&WAPI, &RAPI, TITLE);
-        WAPI.set_keyboard_callbacks(keyboard_on_key_down, keyboard_on_key_up, keyboard_on_all_keys_up,
+        gfx_init(gWindowApi, gRenderApi, TITLE);
+        gWindowApi->set_keyboard_callbacks(keyboard_on_key_down, keyboard_on_key_up, keyboard_on_all_keys_up,
             keyboard_on_text_input, keyboard_on_text_editing);
-        WAPI.set_scroll_callback(mouse_on_scroll);
+        gWindowApi->set_scroll_callback(mouse_on_scroll);
     }
 
     // render the rom setup screen
     if (!main_rom_handler()) {
-#ifdef LOADING_SCREEN_SUPPORTED
         if (!gCLIOpts.hideLoadingScreen) {
             render_rom_setup_screen(); // holds the game load until a valid rom is provided
-        } else
-#endif
-        {
+        } else {
             printf("ERROR: could not find valid vanilla us sm64 rom in game's user folder\n");
             return 0;
         }
     }
 
     // start the thread for setting up the game
-#ifdef LOADING_SCREEN_SUPPORTED
     bool threadSuccess = false;
     if (!gCLIOpts.hideLoadingScreen && !gCLIOpts.headless) {
         if (init_thread_handle(&gLoadingThread, main_game_init, NULL, NULL, 0) == 0) {
@@ -869,28 +874,17 @@ int main(int argc, char *argv[]) {
             destroy_mutex(&gLoadingThread);
         }
     }
-    if (!threadSuccess)
-#endif
-    {
+    if (!threadSuccess) {
         main_game_init(NULL); // failsafe incase threading doesn't work
     }
 
     // initialize sm64 data and controllers
     thread5_game_loop(NULL);
 
-    // initialize sound outside threads
-    if (gCLIOpts.headless) audio_api = &audio_null;
-#if defined(AAPI_SDL1) || defined(AAPI_SDL2)
-    if (!audio_api && audio_sdl.init()) audio_api = &audio_sdl;
-#endif
-    if (!audio_api) audio_api = &audio_null;
-
     // Initialize the audio thread if possible.
     // init_thread_handle(&gAudioThread, audio_thread, NULL, NULL, 0);
 
-#ifdef LOADING_SCREEN_SUPPORTED
     loading_screen_reset();
-#endif
 
     // initialize djui
     djui_init();
@@ -900,6 +894,10 @@ int main(int argc, char *argv[]) {
 
 #ifndef TARGET_WEB
     show_update_popup();
+
+    if (can_update_game()) {
+        djui_open_update_panel();
+    }
 #endif
 
     // initialize network
@@ -969,7 +967,7 @@ int main(int argc, char *argv[]) {
     while (true) {
         debug_context_reset();
         CTX_BEGIN(CTX_TOTAL);
-        WAPI.main_loop(produce_one_frame);
+        gWindowApi->main_loop(produce_one_frame);
 #ifdef DISCORD_SDK
         discord_update();
 #endif

@@ -1,7 +1,5 @@
 #include "loading.h"
 
-#ifdef LOADING_SCREEN_SUPPORTED
-
 #include <assert.h>
 #ifdef TARGET_WEB
 #include <emscripten.h>
@@ -32,7 +30,7 @@ static struct LoadingScreen* sLoading = NULL;
 struct ThreadHandle gLoadingThread = { 0 };
 
 void loading_screen_set_segment_text(const char* text) {
-    snprintf(gCurrLoadingSegment.str, 256, text);
+    snprintf(gCurrLoadingSegment.str, 256, "%s", text);
 }
 
 void loading_screen_reset_progress_bar(void) {
@@ -182,7 +180,7 @@ void render_loading_screen(void) {
 
     // loading screen loop
     while (!gGameInited) {
-        WAPI.main_loop(loading_screen_produce_one_frame);
+        gWindowApi->main_loop(loading_screen_produce_one_frame);
 #ifdef TARGET_WEB
         emscripten_sleep(16); // yield to browser (~60fps)
 #endif
@@ -202,7 +200,7 @@ void render_rom_setup_screen(void) {
 #endif
 
     while (!gRomIsValid) {
-        WAPI.main_loop(loading_screen_produce_one_frame);
+        gWindowApi->main_loop(loading_screen_produce_one_frame);
 #ifdef TARGET_WEB
         // Re-check the filesystem each iteration in case JS wrote the ROM
         if (!gRomIsValid) {
@@ -212,5 +210,3 @@ void render_rom_setup_screen(void) {
 #endif
     }
 }
-
-#endif

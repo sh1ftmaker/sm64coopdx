@@ -11,7 +11,10 @@
   <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
   <link rel="apple-touch-icon" href="icons/icon-180.png">
   <title>SM64 CoopDX - Web</title>
-  <script src="https://cdn.jsdelivr.net/npm/partysocket@1.1.16/dist/index.min.js"></script>
+  <script type="module">
+    import PartySocket from "https://cdn.jsdelivr.net/npm/partysocket@1.1.16/+esm";
+    window.PartySocket = PartySocket;
+  </script>
   <style>
     * {
       margin: 0;
@@ -904,6 +907,8 @@
           room: roomId,
         });
 
+        this.socket.binaryType = 'arraybuffer';
+
         var self = this;
         this.socket.addEventListener('open', function() {
           console.log('[Net] PartySocket connected');
@@ -946,6 +951,7 @@
       // Binary format: [toSlot(u8)][payload]
       send: function(slotId, data) {
         if (!this.socket || this.socket.readyState !== WebSocket.OPEN) return;
+        data = new Uint8Array(data);
         var msg = new Uint8Array(1 + data.length);
         msg[0] = slotId & 0xFF;
         msg.set(data, 1);
@@ -979,6 +985,8 @@
         console.log('[Net] kickSlot(' + slotId + ') called but not supported in PartyKit mode');
       }
     };
+
+    var Module = {
       canvas: (function() {
         return document.getElementById('canvas');
       })(),

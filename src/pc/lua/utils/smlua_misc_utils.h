@@ -37,7 +37,7 @@ enum ActSelectHudPart {
     ACT_SELECT_HUD_ACT_NAME = 1 << 3,
     ACT_SELECT_HUD_STAR_NUM = 1 << 4,
     ACT_SELECT_HUD_PLAYERS_IN_LEVEL = 1 << 5,
-	
+
 	ACT_SELECT_HUD_NONE = 0,
 	ACT_SELECT_HUD_ALL = ACT_SELECT_HUD_SCORE | ACT_SELECT_HUD_LEVEL_NAME | ACT_SELECT_HUD_COURSE_NUM | ACT_SELECT_HUD_ACT_NAME |ACT_SELECT_HUD_STAR_NUM | ACT_SELECT_HUD_PLAYERS_IN_LEVEL
 };
@@ -150,6 +150,11 @@ void game_unpause(void);
 /* |description|Checks if a screen transition is playing|descriptionEnd| */
 bool is_transition_playing(void);
 
+/* |description|Gets the current play mode (`PLAY_MODE_*`)|descriptionEnd| */
+s16 get_current_play_mode(void);
+/* |description|Gets the delayed warp operation type (`WARP_OP_*`)|descriptionEnd| */
+s16 get_delayed_warp_op(void);
+
 /* |description|Allocates an action ID with bitwise flags|descriptionEnd| */
 u32 allocate_mario_action(u32 actFlags);
 
@@ -246,6 +251,8 @@ void set_environment_region(u8 index, s16 value);
 bool mod_file_exists(const char* filename);
 /* |description|Gets the mod currently being processed|descriptionEnd| */
 struct Mod* get_active_mod(void);
+/* |description|Gets all files a mod contains|descriptionEnd| */
+LuaTable get_mod_files(struct Mod* mod, OPTIONAL const char* subDirectory);
 
 /* |description|Sets the window title to a custom title|descriptionEnd| */
 void set_window_title(const char* title);

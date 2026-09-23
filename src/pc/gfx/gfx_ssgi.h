@@ -17,6 +17,6 @@ void ssgi_on_ortho_switch(void);  // Call when switching from perspective to ort
 extern unsigned int gSSGI_AoIntensity;  // ÷10 → float. Power curve: higher = subtler (default 15 → 1.5)
 extern unsigned int gSSGI_Radius;       // ÷10 → float. Sample radius (default 15 → 1.5)
 extern unsigned int gSSGI_Thickness;    // ÷10 → float. Depth rejection (default 3 → 0.3)
-extern unsigned int gSSGI_Enabled;      // 0=off, 1=on
+extern bool gSSGI_Enabled;      // 0=off, 1=on
 
 #endif

@@ -55,6 +55,7 @@
 #include "src/engine/lighting_engine.h"
 #include "src/pc/network/sync_object.h"
 #include "src/audio/load.h"
+#include "src/pc/djui/djui_gfx.h"
 
 
   ///////////////
@@ -479,7 +480,7 @@ int smlua_func_area_get_warp_node(lua_State* L) {
     return 1;
 }
 
-int smlua_func_area_get_any_warp_node(UNUSED lua_State* L) {
+int smlua_func_area_get_any_warp_node(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -633,7 +634,7 @@ int smlua_func_spawn_triangle_break_particles(lua_State* L) {
     return 1;
 }
 
-int smlua_func_spawn_mist_from_global(UNUSED lua_State* L) {
+int smlua_func_spawn_mist_from_global(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -815,7 +816,7 @@ int smlua_func_cur_obj_spawn_strong_wind_particles(lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_star_door_loop_2(UNUSED lua_State* L) {
+int smlua_func_bhv_star_door_loop_2(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -831,7 +832,7 @@ int smlua_func_bhv_star_door_loop_2(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_cap_switch_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_cap_switch_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -847,7 +848,7 @@ int smlua_func_bhv_cap_switch_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_tiny_star_particles_init(UNUSED lua_State* L) {
+int smlua_func_bhv_tiny_star_particles_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -863,7 +864,7 @@ int smlua_func_bhv_tiny_star_particles_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_grindel_thwomp_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_grindel_thwomp_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -879,7 +880,7 @@ int smlua_func_bhv_grindel_thwomp_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_koopa_shell_underwater_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_koopa_shell_underwater_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -895,7 +896,7 @@ int smlua_func_bhv_koopa_shell_underwater_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_door_init(UNUSED lua_State* L) {
+int smlua_func_bhv_door_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -911,7 +912,7 @@ int smlua_func_bhv_door_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_door_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_door_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -927,7 +928,7 @@ int smlua_func_bhv_door_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_star_door_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_star_door_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -943,7 +944,7 @@ int smlua_func_bhv_star_door_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_mr_i_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_mr_i_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -959,7 +960,7 @@ int smlua_func_bhv_mr_i_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_mr_i_body_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_mr_i_body_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -975,7 +976,7 @@ int smlua_func_bhv_mr_i_body_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_mr_i_particle_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_mr_i_particle_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -991,7 +992,7 @@ int smlua_func_bhv_mr_i_particle_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_piranha_particle_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_piranha_particle_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1007,7 +1008,7 @@ int smlua_func_bhv_piranha_particle_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_giant_pole_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_giant_pole_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1023,7 +1024,7 @@ int smlua_func_bhv_giant_pole_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_pole_init(UNUSED lua_State* L) {
+int smlua_func_bhv_pole_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1039,7 +1040,7 @@ int smlua_func_bhv_pole_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_pole_base_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_pole_base_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1055,7 +1056,7 @@ int smlua_func_bhv_pole_base_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_thi_huge_island_top_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_thi_huge_island_top_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1071,7 +1072,7 @@ int smlua_func_bhv_thi_huge_island_top_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_thi_tiny_island_top_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_thi_tiny_island_top_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1087,7 +1088,7 @@ int smlua_func_bhv_thi_tiny_island_top_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_king_bobomb_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_king_bobomb_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1103,7 +1104,7 @@ int smlua_func_bhv_king_bobomb_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_bobomb_anchor_mario_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_bobomb_anchor_mario_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1119,7 +1120,7 @@ int smlua_func_bhv_bobomb_anchor_mario_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_beta_chest_bottom_init(UNUSED lua_State* L) {
+int smlua_func_bhv_beta_chest_bottom_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1135,7 +1136,7 @@ int smlua_func_bhv_beta_chest_bottom_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_beta_chest_bottom_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_beta_chest_bottom_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1151,7 +1152,7 @@ int smlua_func_bhv_beta_chest_bottom_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_beta_chest_lid_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_beta_chest_lid_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1167,7 +1168,7 @@ int smlua_func_bhv_beta_chest_lid_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_bubble_wave_init(UNUSED lua_State* L) {
+int smlua_func_bhv_bubble_wave_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1183,7 +1184,7 @@ int smlua_func_bhv_bubble_wave_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_bubble_maybe_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_bubble_maybe_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1199,7 +1200,7 @@ int smlua_func_bhv_bubble_maybe_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_bubble_player_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_bubble_player_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1215,7 +1216,7 @@ int smlua_func_bhv_bubble_player_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_water_air_bubble_init(UNUSED lua_State* L) {
+int smlua_func_bhv_water_air_bubble_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1231,7 +1232,7 @@ int smlua_func_bhv_water_air_bubble_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_water_air_bubble_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_water_air_bubble_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1247,7 +1248,7 @@ int smlua_func_bhv_water_air_bubble_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_particle_init(UNUSED lua_State* L) {
+int smlua_func_bhv_particle_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1263,7 +1264,7 @@ int smlua_func_bhv_particle_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_particle_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_particle_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1279,7 +1280,7 @@ int smlua_func_bhv_particle_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_water_waves_init(UNUSED lua_State* L) {
+int smlua_func_bhv_water_waves_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1295,7 +1296,7 @@ int smlua_func_bhv_water_waves_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_small_bubbles_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_small_bubbles_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1311,7 +1312,7 @@ int smlua_func_bhv_small_bubbles_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_fish_group_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_fish_group_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1327,7 +1328,7 @@ int smlua_func_bhv_fish_group_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_cannon_base_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_cannon_base_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1343,7 +1344,7 @@ int smlua_func_bhv_cannon_base_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_cannon_barrel_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_cannon_barrel_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1359,7 +1360,7 @@ int smlua_func_bhv_cannon_barrel_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_cannon_base_unused_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_cannon_base_unused_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1396,7 +1397,7 @@ int smlua_func_common_anchor_mario_behavior(lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_chuckya_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_chuckya_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1412,7 +1413,7 @@ int smlua_func_bhv_chuckya_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_chuckya_anchor_mario_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_chuckya_anchor_mario_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1428,7 +1429,7 @@ int smlua_func_bhv_chuckya_anchor_mario_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_rotating_platform_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_rotating_platform_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1444,7 +1445,7 @@ int smlua_func_bhv_rotating_platform_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_wf_breakable_wall_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_wf_breakable_wall_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1460,7 +1461,7 @@ int smlua_func_bhv_wf_breakable_wall_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_kickable_board_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_kickable_board_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1476,7 +1477,7 @@ int smlua_func_bhv_kickable_board_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_tower_door_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_tower_door_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1492,7 +1493,7 @@ int smlua_func_bhv_tower_door_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_wf_rotating_wooden_platform_init(UNUSED lua_State* L) {
+int smlua_func_bhv_wf_rotating_wooden_platform_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1508,7 +1509,7 @@ int smlua_func_bhv_wf_rotating_wooden_platform_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_wf_rotating_wooden_platform_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_wf_rotating_wooden_platform_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1524,7 +1525,7 @@ int smlua_func_bhv_wf_rotating_wooden_platform_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_fading_warp_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_fading_warp_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1540,7 +1541,7 @@ int smlua_func_bhv_fading_warp_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_warp_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_warp_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1556,7 +1557,7 @@ int smlua_func_bhv_warp_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_white_puff_exploding_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_white_puff_exploding_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1572,7 +1573,7 @@ int smlua_func_bhv_white_puff_exploding_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_spawned_star_init(UNUSED lua_State* L) {
+int smlua_func_bhv_spawned_star_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1588,7 +1589,7 @@ int smlua_func_bhv_spawned_star_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_spawned_star_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_spawned_star_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1604,7 +1605,7 @@ int smlua_func_bhv_spawned_star_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_coin_init(UNUSED lua_State* L) {
+int smlua_func_bhv_coin_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1620,7 +1621,7 @@ int smlua_func_bhv_coin_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_coin_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_coin_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1636,7 +1637,7 @@ int smlua_func_bhv_coin_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_coin_inside_boo_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_coin_inside_boo_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1652,7 +1653,7 @@ int smlua_func_bhv_coin_inside_boo_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_coin_formation_init(UNUSED lua_State* L) {
+int smlua_func_bhv_coin_formation_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1668,7 +1669,7 @@ int smlua_func_bhv_coin_formation_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_coin_formation_spawn_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_coin_formation_spawn_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1684,7 +1685,7 @@ int smlua_func_bhv_coin_formation_spawn_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_coin_formation_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_coin_formation_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1700,7 +1701,7 @@ int smlua_func_bhv_coin_formation_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_temp_coin_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_temp_coin_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1716,7 +1717,7 @@ int smlua_func_bhv_temp_coin_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_coin_sparkles_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_coin_sparkles_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1732,7 +1733,7 @@ int smlua_func_bhv_coin_sparkles_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_golden_coin_sparkles_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_golden_coin_sparkles_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1748,7 +1749,7 @@ int smlua_func_bhv_golden_coin_sparkles_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_wall_tiny_star_particle_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_wall_tiny_star_particle_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1764,7 +1765,7 @@ int smlua_func_bhv_wall_tiny_star_particle_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_pound_tiny_star_particle_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_pound_tiny_star_particle_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1780,7 +1781,7 @@ int smlua_func_bhv_pound_tiny_star_particle_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_pound_tiny_star_particle_init(UNUSED lua_State* L) {
+int smlua_func_bhv_pound_tiny_star_particle_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1796,7 +1797,7 @@ int smlua_func_bhv_pound_tiny_star_particle_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_punch_tiny_triangle_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_punch_tiny_triangle_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1812,7 +1813,7 @@ int smlua_func_bhv_punch_tiny_triangle_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_punch_tiny_triangle_init(UNUSED lua_State* L) {
+int smlua_func_bhv_punch_tiny_triangle_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1828,7 +1829,7 @@ int smlua_func_bhv_punch_tiny_triangle_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_tumbling_bridge_platform_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_tumbling_bridge_platform_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1844,7 +1845,7 @@ int smlua_func_bhv_tumbling_bridge_platform_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_tumbling_bridge_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_tumbling_bridge_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1860,7 +1861,7 @@ int smlua_func_bhv_tumbling_bridge_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_elevator_init(UNUSED lua_State* L) {
+int smlua_func_bhv_elevator_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1876,7 +1877,7 @@ int smlua_func_bhv_elevator_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_elevator_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_elevator_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1892,7 +1893,7 @@ int smlua_func_bhv_elevator_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_water_mist_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_water_mist_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1908,7 +1909,7 @@ int smlua_func_bhv_water_mist_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_water_mist_spawn_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_water_mist_spawn_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1924,7 +1925,7 @@ int smlua_func_bhv_water_mist_spawn_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_water_mist_2_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_water_mist_2_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1940,7 +1941,7 @@ int smlua_func_bhv_water_mist_2_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_pound_white_puffs_init(UNUSED lua_State* L) {
+int smlua_func_bhv_pound_white_puffs_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1956,7 +1957,7 @@ int smlua_func_bhv_pound_white_puffs_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_ground_sand_init(UNUSED lua_State* L) {
+int smlua_func_bhv_ground_sand_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1972,7 +1973,7 @@ int smlua_func_bhv_ground_sand_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_ground_snow_init(UNUSED lua_State* L) {
+int smlua_func_bhv_ground_snow_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -1988,7 +1989,7 @@ int smlua_func_bhv_ground_snow_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_wind_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_wind_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2004,7 +2005,7 @@ int smlua_func_bhv_wind_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_unused_particle_spawn_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_unused_particle_spawn_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2020,7 +2021,7 @@ int smlua_func_bhv_unused_particle_spawn_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_ukiki_cage_star_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_ukiki_cage_star_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2036,7 +2037,7 @@ int smlua_func_bhv_ukiki_cage_star_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_ukiki_cage_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_ukiki_cage_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2052,7 +2053,7 @@ int smlua_func_bhv_ukiki_cage_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_bitfs_sinking_platform_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_bitfs_sinking_platform_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2068,7 +2069,7 @@ int smlua_func_bhv_bitfs_sinking_platform_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_bitfs_sinking_cage_platform_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_bitfs_sinking_cage_platform_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2084,7 +2085,7 @@ int smlua_func_bhv_bitfs_sinking_cage_platform_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_ddd_moving_pole_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_ddd_moving_pole_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2100,7 +2101,7 @@ int smlua_func_bhv_ddd_moving_pole_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_platform_normals_init(UNUSED lua_State* L) {
+int smlua_func_bhv_platform_normals_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2116,7 +2117,7 @@ int smlua_func_bhv_platform_normals_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_tilting_inverted_pyramid_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_tilting_inverted_pyramid_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2132,7 +2133,7 @@ int smlua_func_bhv_tilting_inverted_pyramid_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_squishable_platform_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_squishable_platform_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2148,7 +2149,7 @@ int smlua_func_bhv_squishable_platform_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_beta_moving_flames_spawn_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_beta_moving_flames_spawn_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2164,7 +2165,7 @@ int smlua_func_bhv_beta_moving_flames_spawn_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_beta_moving_flames_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_beta_moving_flames_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2180,7 +2181,7 @@ int smlua_func_bhv_beta_moving_flames_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_rr_rotating_bridge_platform_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_rr_rotating_bridge_platform_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2196,7 +2197,7 @@ int smlua_func_bhv_rr_rotating_bridge_platform_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_flamethrower_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_flamethrower_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2212,7 +2213,7 @@ int smlua_func_bhv_flamethrower_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_flamethrower_flame_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_flamethrower_flame_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2228,7 +2229,7 @@ int smlua_func_bhv_flamethrower_flame_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_bouncing_fireball_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_bouncing_fireball_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2244,7 +2245,7 @@ int smlua_func_bhv_bouncing_fireball_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_bouncing_fireball_flame_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_bouncing_fireball_flame_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2260,7 +2261,7 @@ int smlua_func_bhv_bouncing_fireball_flame_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_bowser_shock_wave_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_bowser_shock_wave_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2276,7 +2277,7 @@ int smlua_func_bhv_bowser_shock_wave_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_flame_mario_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_flame_mario_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2292,7 +2293,7 @@ int smlua_func_bhv_flame_mario_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_black_smoke_mario_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_black_smoke_mario_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2308,7 +2309,7 @@ int smlua_func_bhv_black_smoke_mario_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_black_smoke_bowser_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_black_smoke_bowser_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2324,7 +2325,7 @@ int smlua_func_bhv_black_smoke_bowser_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_black_smoke_upward_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_black_smoke_upward_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2340,7 +2341,7 @@ int smlua_func_bhv_black_smoke_upward_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_beta_fish_splash_spawner_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_beta_fish_splash_spawner_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2356,7 +2357,7 @@ int smlua_func_bhv_beta_fish_splash_spawner_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_spindrift_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_spindrift_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2372,7 +2373,7 @@ int smlua_func_bhv_spindrift_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_tower_platform_group_init(UNUSED lua_State* L) {
+int smlua_func_bhv_tower_platform_group_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2388,7 +2389,7 @@ int smlua_func_bhv_tower_platform_group_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_tower_platform_group_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_tower_platform_group_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2404,7 +2405,7 @@ int smlua_func_bhv_tower_platform_group_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_wf_sliding_tower_platform_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_wf_sliding_tower_platform_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2420,7 +2421,7 @@ int smlua_func_bhv_wf_sliding_tower_platform_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_wf_elevator_tower_platform_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_wf_elevator_tower_platform_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2436,7 +2437,7 @@ int smlua_func_bhv_wf_elevator_tower_platform_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_wf_solid_tower_platform_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_wf_solid_tower_platform_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2452,7 +2453,7 @@ int smlua_func_bhv_wf_solid_tower_platform_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_snow_leaf_particle_spawn_init(UNUSED lua_State* L) {
+int smlua_func_bhv_snow_leaf_particle_spawn_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2468,7 +2469,7 @@ int smlua_func_bhv_snow_leaf_particle_spawn_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_tree_snow_or_leaf_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_tree_snow_or_leaf_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2484,7 +2485,7 @@ int smlua_func_bhv_tree_snow_or_leaf_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_piranha_plant_bubble_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_piranha_plant_bubble_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2500,7 +2501,7 @@ int smlua_func_bhv_piranha_plant_bubble_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_piranha_plant_waking_bubbles_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_piranha_plant_waking_bubbles_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2516,7 +2517,7 @@ int smlua_func_bhv_piranha_plant_waking_bubbles_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_purple_switch_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_purple_switch_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2532,7 +2533,7 @@ int smlua_func_bhv_purple_switch_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_hidden_object_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_hidden_object_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2548,7 +2549,7 @@ int smlua_func_bhv_hidden_object_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_breakable_box_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_breakable_box_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2564,7 +2565,7 @@ int smlua_func_bhv_breakable_box_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_pushable_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_pushable_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2580,7 +2581,7 @@ int smlua_func_bhv_pushable_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_small_water_wave_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_small_water_wave_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2596,7 +2597,7 @@ int smlua_func_bhv_small_water_wave_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_yellow_coin_init(UNUSED lua_State* L) {
+int smlua_func_bhv_yellow_coin_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2612,7 +2613,7 @@ int smlua_func_bhv_yellow_coin_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_yellow_coin_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_yellow_coin_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2628,7 +2629,7 @@ int smlua_func_bhv_yellow_coin_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_squarish_path_moving_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_squarish_path_moving_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2644,7 +2645,7 @@ int smlua_func_bhv_squarish_path_moving_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_squarish_path_parent_init(UNUSED lua_State* L) {
+int smlua_func_bhv_squarish_path_parent_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2660,7 +2661,7 @@ int smlua_func_bhv_squarish_path_parent_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_squarish_path_parent_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_squarish_path_parent_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2676,7 +2677,7 @@ int smlua_func_bhv_squarish_path_parent_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_heave_ho_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_heave_ho_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2692,7 +2693,7 @@ int smlua_func_bhv_heave_ho_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_heave_ho_throw_mario_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_heave_ho_throw_mario_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2708,7 +2709,7 @@ int smlua_func_bhv_heave_ho_throw_mario_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_ccm_touched_star_spawn_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_ccm_touched_star_spawn_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2724,7 +2725,7 @@ int smlua_func_bhv_ccm_touched_star_spawn_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_unused_poundable_platform(UNUSED lua_State* L) {
+int smlua_func_bhv_unused_poundable_platform(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2740,7 +2741,7 @@ int smlua_func_bhv_unused_poundable_platform(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_beta_trampoline_top_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_beta_trampoline_top_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2756,7 +2757,7 @@ int smlua_func_bhv_beta_trampoline_top_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_beta_trampoline_spring_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_beta_trampoline_spring_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2772,7 +2773,7 @@ int smlua_func_bhv_beta_trampoline_spring_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_jumping_box_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_jumping_box_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2788,7 +2789,7 @@ int smlua_func_bhv_jumping_box_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_boo_cage_init(UNUSED lua_State* L) {
+int smlua_func_bhv_boo_cage_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2804,7 +2805,7 @@ int smlua_func_bhv_boo_cage_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_boo_cage_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_boo_cage_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2820,7 +2821,7 @@ int smlua_func_bhv_boo_cage_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_bowser_key_init(UNUSED lua_State* L) {
+int smlua_func_bhv_bowser_key_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2836,7 +2837,7 @@ int smlua_func_bhv_bowser_key_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_bowser_key_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_bowser_key_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2852,7 +2853,7 @@ int smlua_func_bhv_bowser_key_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_grand_star_init(UNUSED lua_State* L) {
+int smlua_func_bhv_grand_star_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2868,7 +2869,7 @@ int smlua_func_bhv_grand_star_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_grand_star_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_grand_star_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2884,7 +2885,7 @@ int smlua_func_bhv_grand_star_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_beta_boo_key_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_beta_boo_key_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2900,7 +2901,7 @@ int smlua_func_bhv_beta_boo_key_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_alpha_boo_key_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_alpha_boo_key_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2916,7 +2917,7 @@ int smlua_func_bhv_alpha_boo_key_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_bullet_bill_init(UNUSED lua_State* L) {
+int smlua_func_bhv_bullet_bill_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2932,7 +2933,7 @@ int smlua_func_bhv_bullet_bill_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_bullet_bill_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_bullet_bill_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2948,7 +2949,7 @@ int smlua_func_bhv_bullet_bill_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_white_puff_smoke_init(UNUSED lua_State* L) {
+int smlua_func_bhv_white_puff_smoke_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2964,7 +2965,7 @@ int smlua_func_bhv_white_puff_smoke_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_bowser_tail_anchor_init(UNUSED lua_State* L) {
+int smlua_func_bhv_bowser_tail_anchor_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2980,7 +2981,7 @@ int smlua_func_bhv_bowser_tail_anchor_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_bowser_tail_anchor_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_bowser_tail_anchor_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -2996,7 +2997,7 @@ int smlua_func_bhv_bowser_tail_anchor_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_bowser_init(UNUSED lua_State* L) {
+int smlua_func_bhv_bowser_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3012,7 +3013,7 @@ int smlua_func_bhv_bowser_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_bowser_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_bowser_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3028,7 +3029,7 @@ int smlua_func_bhv_bowser_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_bowser_body_anchor_init(UNUSED lua_State* L) {
+int smlua_func_bhv_bowser_body_anchor_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3044,7 +3045,7 @@ int smlua_func_bhv_bowser_body_anchor_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_bowser_body_anchor_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_bowser_body_anchor_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3060,7 +3061,7 @@ int smlua_func_bhv_bowser_body_anchor_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_bowser_flame_spawn_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_bowser_flame_spawn_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3076,7 +3077,7 @@ int smlua_func_bhv_bowser_flame_spawn_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_tilting_bowser_lava_platform_init(UNUSED lua_State* L) {
+int smlua_func_bhv_tilting_bowser_lava_platform_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3092,7 +3093,7 @@ int smlua_func_bhv_tilting_bowser_lava_platform_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_falling_bowser_platform_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_falling_bowser_platform_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3108,7 +3109,7 @@ int smlua_func_bhv_falling_bowser_platform_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_blue_bowser_flame_init(UNUSED lua_State* L) {
+int smlua_func_bhv_blue_bowser_flame_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3124,7 +3125,7 @@ int smlua_func_bhv_blue_bowser_flame_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_blue_bowser_flame_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_blue_bowser_flame_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3140,7 +3141,7 @@ int smlua_func_bhv_blue_bowser_flame_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_flame_floating_landing_init(UNUSED lua_State* L) {
+int smlua_func_bhv_flame_floating_landing_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3156,7 +3157,7 @@ int smlua_func_bhv_flame_floating_landing_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_flame_floating_landing_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_flame_floating_landing_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3172,7 +3173,7 @@ int smlua_func_bhv_flame_floating_landing_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_blue_flames_group_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_blue_flames_group_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3188,7 +3189,7 @@ int smlua_func_bhv_blue_flames_group_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_flame_bouncing_init(UNUSED lua_State* L) {
+int smlua_func_bhv_flame_bouncing_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3204,7 +3205,7 @@ int smlua_func_bhv_flame_bouncing_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_flame_bouncing_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_flame_bouncing_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3220,7 +3221,7 @@ int smlua_func_bhv_flame_bouncing_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_flame_moving_forward_growing_init(UNUSED lua_State* L) {
+int smlua_func_bhv_flame_moving_forward_growing_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3236,7 +3237,7 @@ int smlua_func_bhv_flame_moving_forward_growing_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_flame_moving_forward_growing_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_flame_moving_forward_growing_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3252,7 +3253,7 @@ int smlua_func_bhv_flame_moving_forward_growing_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_flame_bowser_init(UNUSED lua_State* L) {
+int smlua_func_bhv_flame_bowser_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3268,7 +3269,7 @@ int smlua_func_bhv_flame_bowser_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_flame_bowser_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_flame_bowser_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3284,7 +3285,7 @@ int smlua_func_bhv_flame_bowser_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_flame_large_burning_out_init(UNUSED lua_State* L) {
+int smlua_func_bhv_flame_large_burning_out_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3300,7 +3301,7 @@ int smlua_func_bhv_flame_large_burning_out_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_blue_fish_movement_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_blue_fish_movement_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3316,7 +3317,7 @@ int smlua_func_bhv_blue_fish_movement_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_tank_fish_group_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_tank_fish_group_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3332,7 +3333,7 @@ int smlua_func_bhv_tank_fish_group_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_checkerboard_elevator_group_init(UNUSED lua_State* L) {
+int smlua_func_bhv_checkerboard_elevator_group_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3348,7 +3349,7 @@ int smlua_func_bhv_checkerboard_elevator_group_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_checkerboard_elevator_group_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_checkerboard_elevator_group_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3364,7 +3365,7 @@ int smlua_func_bhv_checkerboard_elevator_group_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_checkerboard_platform_init(UNUSED lua_State* L) {
+int smlua_func_bhv_checkerboard_platform_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3380,7 +3381,7 @@ int smlua_func_bhv_checkerboard_platform_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_checkerboard_platform_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_checkerboard_platform_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3396,7 +3397,7 @@ int smlua_func_bhv_checkerboard_platform_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_bowser_key_unlock_door_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_bowser_key_unlock_door_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3412,7 +3413,7 @@ int smlua_func_bhv_bowser_key_unlock_door_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_bowser_key_course_exit_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_bowser_key_course_exit_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3428,7 +3429,7 @@ int smlua_func_bhv_bowser_key_course_exit_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_invisible_objects_under_bridge_init(UNUSED lua_State* L) {
+int smlua_func_bhv_invisible_objects_under_bridge_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3444,7 +3445,7 @@ int smlua_func_bhv_invisible_objects_under_bridge_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_invisible_objects_under_bridge_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_invisible_objects_under_bridge_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3460,7 +3461,7 @@ int smlua_func_bhv_invisible_objects_under_bridge_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_water_level_pillar_init(UNUSED lua_State* L) {
+int smlua_func_bhv_water_level_pillar_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3476,7 +3477,7 @@ int smlua_func_bhv_water_level_pillar_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_water_level_pillar_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_water_level_pillar_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3492,7 +3493,7 @@ int smlua_func_bhv_water_level_pillar_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_ddd_warp_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_ddd_warp_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3508,7 +3509,7 @@ int smlua_func_bhv_ddd_warp_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_moat_grills_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_moat_grills_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3524,7 +3525,7 @@ int smlua_func_bhv_moat_grills_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_rotating_clock_arm_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_rotating_clock_arm_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3540,7 +3541,7 @@ int smlua_func_bhv_rotating_clock_arm_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_ukiki_init(UNUSED lua_State* L) {
+int smlua_func_bhv_ukiki_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3556,7 +3557,7 @@ int smlua_func_bhv_ukiki_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_ukiki_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_ukiki_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3572,7 +3573,7 @@ int smlua_func_bhv_ukiki_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_lll_sinking_rock_block_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_lll_sinking_rock_block_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3588,7 +3589,7 @@ int smlua_func_bhv_lll_sinking_rock_block_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_lll_moving_octagonal_mesh_platform_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_lll_moving_octagonal_mesh_platform_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3604,7 +3605,7 @@ int smlua_func_bhv_lll_moving_octagonal_mesh_platform_loop(UNUSED lua_State* L) 
     return 1;
 }
 
-int smlua_func_bhv_lll_rotating_block_fire_bars_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_lll_rotating_block_fire_bars_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3620,7 +3621,7 @@ int smlua_func_bhv_lll_rotating_block_fire_bars_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_lll_rotating_hex_flame_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_lll_rotating_hex_flame_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3636,7 +3637,7 @@ int smlua_func_bhv_lll_rotating_hex_flame_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_lll_wood_piece_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_lll_wood_piece_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3652,7 +3653,7 @@ int smlua_func_bhv_lll_wood_piece_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_lll_floating_wood_bridge_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_lll_floating_wood_bridge_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3668,7 +3669,7 @@ int smlua_func_bhv_lll_floating_wood_bridge_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_volcano_flames_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_volcano_flames_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3684,7 +3685,7 @@ int smlua_func_bhv_volcano_flames_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_lll_rotating_hexagonal_ring_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_lll_rotating_hexagonal_ring_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3700,7 +3701,7 @@ int smlua_func_bhv_lll_rotating_hexagonal_ring_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_lll_sinking_rectangular_platform_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_lll_sinking_rectangular_platform_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3716,7 +3717,7 @@ int smlua_func_bhv_lll_sinking_rectangular_platform_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_lll_sinking_square_platforms_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_lll_sinking_square_platforms_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3732,7 +3733,7 @@ int smlua_func_bhv_lll_sinking_square_platforms_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_koopa_shell_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_koopa_shell_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3748,7 +3749,7 @@ int smlua_func_bhv_koopa_shell_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_koopa_shell_flame_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_koopa_shell_flame_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3764,7 +3765,7 @@ int smlua_func_bhv_koopa_shell_flame_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_tox_box_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_tox_box_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3780,7 +3781,7 @@ int smlua_func_bhv_tox_box_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_mario_moving_fast_enough_to_make_piranha_plant_bite(UNUSED lua_State* L) {
+int smlua_func_mario_moving_fast_enough_to_make_piranha_plant_bite(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -3795,7 +3796,7 @@ int smlua_func_mario_moving_fast_enough_to_make_piranha_plant_bite(UNUSED lua_St
     return 1;
 }
 
-int smlua_func_bhv_piranha_plant_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_piranha_plant_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3811,7 +3812,7 @@ int smlua_func_bhv_piranha_plant_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_lll_bowser_puzzle_piece_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_lll_bowser_puzzle_piece_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3827,7 +3828,7 @@ int smlua_func_bhv_lll_bowser_puzzle_piece_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_lll_bowser_puzzle_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_lll_bowser_puzzle_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3843,7 +3844,7 @@ int smlua_func_bhv_lll_bowser_puzzle_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_tuxies_mother_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_tuxies_mother_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3859,7 +3860,7 @@ int smlua_func_bhv_tuxies_mother_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_small_penguin_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_small_penguin_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3875,7 +3876,7 @@ int smlua_func_bhv_small_penguin_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_fish_spawner_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_fish_spawner_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3891,7 +3892,7 @@ int smlua_func_bhv_fish_spawner_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_fish_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_fish_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3907,7 +3908,7 @@ int smlua_func_bhv_fish_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_wdw_express_elevator_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_wdw_express_elevator_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3923,7 +3924,7 @@ int smlua_func_bhv_wdw_express_elevator_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_bub_spawner_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_bub_spawner_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3939,7 +3940,7 @@ int smlua_func_bhv_bub_spawner_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_bub_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_bub_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3955,7 +3956,7 @@ int smlua_func_bhv_bub_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_exclamation_box_init(UNUSED lua_State* L) {
+int smlua_func_bhv_exclamation_box_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3971,7 +3972,7 @@ int smlua_func_bhv_exclamation_box_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_exclamation_box_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_exclamation_box_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -3987,7 +3988,7 @@ int smlua_func_bhv_exclamation_box_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_rotating_exclamation_box_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_rotating_exclamation_box_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4003,7 +4004,7 @@ int smlua_func_bhv_rotating_exclamation_box_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_sound_spawner_init(UNUSED lua_State* L) {
+int smlua_func_bhv_sound_spawner_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4019,7 +4020,7 @@ int smlua_func_bhv_sound_spawner_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_bowsers_sub_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_bowsers_sub_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4035,7 +4036,7 @@ int smlua_func_bhv_bowsers_sub_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_sushi_shark_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_sushi_shark_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4051,7 +4052,7 @@ int smlua_func_bhv_sushi_shark_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_sushi_shark_collision_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_sushi_shark_collision_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4067,7 +4068,7 @@ int smlua_func_bhv_sushi_shark_collision_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_jrb_sliding_box_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_jrb_sliding_box_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4083,7 +4084,7 @@ int smlua_func_bhv_jrb_sliding_box_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_ship_part_3_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_ship_part_3_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4099,7 +4100,7 @@ int smlua_func_bhv_ship_part_3_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_sunken_ship_part_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_sunken_ship_part_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4115,7 +4116,7 @@ int smlua_func_bhv_sunken_ship_part_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_white_puff_1_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_white_puff_1_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4131,7 +4132,7 @@ int smlua_func_bhv_white_puff_1_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_white_puff_2_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_white_puff_2_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4147,7 +4148,7 @@ int smlua_func_bhv_white_puff_2_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_blue_coin_number_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_blue_coin_number_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4163,7 +4164,7 @@ int smlua_func_bhv_blue_coin_number_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_blue_coin_switch_init(UNUSED lua_State* L) {
+int smlua_func_bhv_blue_coin_switch_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4179,7 +4180,7 @@ int smlua_func_bhv_blue_coin_switch_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_blue_coin_switch_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_blue_coin_switch_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4195,7 +4196,7 @@ int smlua_func_bhv_blue_coin_switch_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_hidden_blue_coin_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_hidden_blue_coin_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4211,7 +4212,7 @@ int smlua_func_bhv_hidden_blue_coin_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_openable_cage_door_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_openable_cage_door_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4227,7 +4228,7 @@ int smlua_func_bhv_openable_cage_door_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_openable_grill_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_openable_grill_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4243,7 +4244,7 @@ int smlua_func_bhv_openable_grill_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_water_level_diamond_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_water_level_diamond_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4259,7 +4260,7 @@ int smlua_func_bhv_water_level_diamond_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_init_changing_water_level_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_init_changing_water_level_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4275,7 +4276,7 @@ int smlua_func_bhv_init_changing_water_level_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_tweester_sand_particle_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_tweester_sand_particle_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4291,7 +4292,7 @@ int smlua_func_bhv_tweester_sand_particle_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_tweester_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_tweester_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4307,7 +4308,7 @@ int smlua_func_bhv_tweester_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_merry_go_round_boo_manager_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_merry_go_round_boo_manager_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4323,7 +4324,7 @@ int smlua_func_bhv_merry_go_round_boo_manager_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_animated_texture_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_animated_texture_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4339,7 +4340,7 @@ int smlua_func_bhv_animated_texture_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_boo_in_castle_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_boo_in_castle_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4355,7 +4356,7 @@ int smlua_func_bhv_boo_in_castle_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_boo_with_cage_init(UNUSED lua_State* L) {
+int smlua_func_bhv_boo_with_cage_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4371,7 +4372,7 @@ int smlua_func_bhv_boo_with_cage_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_boo_with_cage_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_boo_with_cage_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4387,7 +4388,7 @@ int smlua_func_bhv_boo_with_cage_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_boo_init(UNUSED lua_State* L) {
+int smlua_func_bhv_boo_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4403,7 +4404,7 @@ int smlua_func_bhv_boo_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_big_boo_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_big_boo_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4419,7 +4420,7 @@ int smlua_func_bhv_big_boo_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_courtyard_boo_triplet_init(UNUSED lua_State* L) {
+int smlua_func_bhv_courtyard_boo_triplet_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4435,7 +4436,7 @@ int smlua_func_bhv_courtyard_boo_triplet_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_obj_set_secondary_camera_focus(UNUSED lua_State* L) {
+int smlua_func_obj_set_secondary_camera_focus(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -4450,7 +4451,7 @@ int smlua_func_obj_set_secondary_camera_focus(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_boo_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_boo_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4466,7 +4467,7 @@ int smlua_func_bhv_boo_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_boo_boss_spawned_bridge_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_boo_boss_spawned_bridge_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4482,7 +4483,7 @@ int smlua_func_bhv_boo_boss_spawned_bridge_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_bbh_tilting_trap_platform_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_bbh_tilting_trap_platform_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4498,7 +4499,7 @@ int smlua_func_bhv_bbh_tilting_trap_platform_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_haunted_bookshelf_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_haunted_bookshelf_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4514,7 +4515,7 @@ int smlua_func_bhv_haunted_bookshelf_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_merry_go_round_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_merry_go_round_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4531,7 +4532,7 @@ int smlua_func_bhv_merry_go_round_loop(UNUSED lua_State* L) {
 }
 
 #ifndef VERSION_JP
-int smlua_func_bhv_play_music_track_when_touched_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_play_music_track_when_touched_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4548,7 +4549,7 @@ int smlua_func_bhv_play_music_track_when_touched_loop(UNUSED lua_State* L) {
 }
 #endif
 
-int smlua_func_bhv_beta_bowser_anchor_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_beta_bowser_anchor_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4564,7 +4565,7 @@ int smlua_func_bhv_beta_bowser_anchor_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_static_checkered_platform_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_static_checkered_platform_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4580,7 +4581,7 @@ int smlua_func_bhv_static_checkered_platform_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_castle_floor_trap_init(UNUSED lua_State* L) {
+int smlua_func_bhv_castle_floor_trap_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4596,7 +4597,7 @@ int smlua_func_bhv_castle_floor_trap_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_castle_floor_trap_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_castle_floor_trap_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4612,7 +4613,7 @@ int smlua_func_bhv_castle_floor_trap_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_floor_trap_in_castle_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_floor_trap_in_castle_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4628,7 +4629,7 @@ int smlua_func_bhv_floor_trap_in_castle_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_sparkle_spawn_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_sparkle_spawn_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4644,7 +4645,7 @@ int smlua_func_bhv_sparkle_spawn_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_scuttlebug_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_scuttlebug_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4660,7 +4661,7 @@ int smlua_func_bhv_scuttlebug_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_scuttlebug_spawn_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_scuttlebug_spawn_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4676,7 +4677,7 @@ int smlua_func_bhv_scuttlebug_spawn_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_whomp_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_whomp_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4692,7 +4693,7 @@ int smlua_func_bhv_whomp_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_water_splash_spawn_droplets(UNUSED lua_State* L) {
+int smlua_func_bhv_water_splash_spawn_droplets(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4708,7 +4709,7 @@ int smlua_func_bhv_water_splash_spawn_droplets(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_water_droplet_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_water_droplet_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4724,7 +4725,7 @@ int smlua_func_bhv_water_droplet_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_water_droplet_splash_init(UNUSED lua_State* L) {
+int smlua_func_bhv_water_droplet_splash_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4740,7 +4741,7 @@ int smlua_func_bhv_water_droplet_splash_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_bubble_splash_init(UNUSED lua_State* L) {
+int smlua_func_bhv_bubble_splash_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4756,7 +4757,7 @@ int smlua_func_bhv_bubble_splash_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_idle_water_wave_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_idle_water_wave_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4772,7 +4773,7 @@ int smlua_func_bhv_idle_water_wave_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_shallow_water_splash_init(UNUSED lua_State* L) {
+int smlua_func_bhv_shallow_water_splash_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4788,7 +4789,7 @@ int smlua_func_bhv_shallow_water_splash_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_wave_trail_shrink(UNUSED lua_State* L) {
+int smlua_func_bhv_wave_trail_shrink(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4804,7 +4805,7 @@ int smlua_func_bhv_wave_trail_shrink(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_strong_wind_particle_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_strong_wind_particle_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4820,7 +4821,7 @@ int smlua_func_bhv_strong_wind_particle_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_sl_snowman_wind_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_sl_snowman_wind_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4836,7 +4837,7 @@ int smlua_func_bhv_sl_snowman_wind_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_sl_walking_penguin_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_sl_walking_penguin_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4852,7 +4853,7 @@ int smlua_func_bhv_sl_walking_penguin_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_menu_button_init(UNUSED lua_State* L) {
+int smlua_func_bhv_menu_button_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4868,7 +4869,7 @@ int smlua_func_bhv_menu_button_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_menu_button_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_menu_button_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4884,7 +4885,7 @@ int smlua_func_bhv_menu_button_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_menu_button_manager_init(UNUSED lua_State* L) {
+int smlua_func_bhv_menu_button_manager_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4900,7 +4901,7 @@ int smlua_func_bhv_menu_button_manager_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_menu_button_manager_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_menu_button_manager_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4916,7 +4917,7 @@ int smlua_func_bhv_menu_button_manager_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_act_selector_star_type_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_act_selector_star_type_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4932,7 +4933,7 @@ int smlua_func_bhv_act_selector_star_type_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_act_selector_init(UNUSED lua_State* L) {
+int smlua_func_bhv_act_selector_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4948,7 +4949,7 @@ int smlua_func_bhv_act_selector_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_act_selector_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_act_selector_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4964,7 +4965,7 @@ int smlua_func_bhv_act_selector_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_moving_yellow_coin_init(UNUSED lua_State* L) {
+int smlua_func_bhv_moving_yellow_coin_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4980,7 +4981,7 @@ int smlua_func_bhv_moving_yellow_coin_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_moving_yellow_coin_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_moving_yellow_coin_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -4996,7 +4997,7 @@ int smlua_func_bhv_moving_yellow_coin_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_moving_blue_coin_init(UNUSED lua_State* L) {
+int smlua_func_bhv_moving_blue_coin_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5012,7 +5013,7 @@ int smlua_func_bhv_moving_blue_coin_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_moving_blue_coin_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_moving_blue_coin_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5028,7 +5029,7 @@ int smlua_func_bhv_moving_blue_coin_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_blue_coin_sliding_jumping_init(UNUSED lua_State* L) {
+int smlua_func_bhv_blue_coin_sliding_jumping_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5044,7 +5045,7 @@ int smlua_func_bhv_blue_coin_sliding_jumping_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_blue_coin_sliding_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_blue_coin_sliding_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5060,7 +5061,7 @@ int smlua_func_bhv_blue_coin_sliding_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_blue_coin_jumping_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_blue_coin_jumping_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5076,7 +5077,7 @@ int smlua_func_bhv_blue_coin_jumping_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_seaweed_init(UNUSED lua_State* L) {
+int smlua_func_bhv_seaweed_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5092,7 +5093,7 @@ int smlua_func_bhv_seaweed_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_seaweed_bundle_init(UNUSED lua_State* L) {
+int smlua_func_bhv_seaweed_bundle_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5108,7 +5109,7 @@ int smlua_func_bhv_seaweed_bundle_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_bobomb_init(UNUSED lua_State* L) {
+int smlua_func_bhv_bobomb_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5124,7 +5125,7 @@ int smlua_func_bhv_bobomb_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_bobomb_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_bobomb_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5140,7 +5141,7 @@ int smlua_func_bhv_bobomb_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_bobomb_fuse_smoke_init(UNUSED lua_State* L) {
+int smlua_func_bhv_bobomb_fuse_smoke_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5156,7 +5157,7 @@ int smlua_func_bhv_bobomb_fuse_smoke_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_bobomb_buddy_init(UNUSED lua_State* L) {
+int smlua_func_bhv_bobomb_buddy_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5172,7 +5173,7 @@ int smlua_func_bhv_bobomb_buddy_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_bobomb_buddy_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_bobomb_buddy_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5188,7 +5189,7 @@ int smlua_func_bhv_bobomb_buddy_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_cannon_closed_init(UNUSED lua_State* L) {
+int smlua_func_bhv_cannon_closed_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5204,7 +5205,7 @@ int smlua_func_bhv_cannon_closed_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_cannon_closed_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_cannon_closed_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5220,7 +5221,7 @@ int smlua_func_bhv_cannon_closed_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_whirlpool_init(UNUSED lua_State* L) {
+int smlua_func_bhv_whirlpool_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5236,7 +5237,7 @@ int smlua_func_bhv_whirlpool_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_whirlpool_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_whirlpool_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5252,7 +5253,7 @@ int smlua_func_bhv_whirlpool_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_jet_stream_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_jet_stream_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5268,7 +5269,7 @@ int smlua_func_bhv_jet_stream_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_homing_amp_init(UNUSED lua_State* L) {
+int smlua_func_bhv_homing_amp_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5284,7 +5285,7 @@ int smlua_func_bhv_homing_amp_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_homing_amp_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_homing_amp_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5300,7 +5301,7 @@ int smlua_func_bhv_homing_amp_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_circling_amp_init(UNUSED lua_State* L) {
+int smlua_func_bhv_circling_amp_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5316,7 +5317,7 @@ int smlua_func_bhv_circling_amp_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_circling_amp_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_circling_amp_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5332,7 +5333,7 @@ int smlua_func_bhv_circling_amp_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_butterfly_init(UNUSED lua_State* L) {
+int smlua_func_bhv_butterfly_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5348,7 +5349,7 @@ int smlua_func_bhv_butterfly_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_butterfly_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_butterfly_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5364,7 +5365,7 @@ int smlua_func_bhv_butterfly_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_hoot_init(UNUSED lua_State* L) {
+int smlua_func_bhv_hoot_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5380,7 +5381,7 @@ int smlua_func_bhv_hoot_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_hoot_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_hoot_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5396,7 +5397,7 @@ int smlua_func_bhv_hoot_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_beta_holdable_object_init(UNUSED lua_State* L) {
+int smlua_func_bhv_beta_holdable_object_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5412,7 +5413,7 @@ int smlua_func_bhv_beta_holdable_object_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_beta_holdable_object_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_beta_holdable_object_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5428,7 +5429,7 @@ int smlua_func_bhv_beta_holdable_object_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_object_bubble_init(UNUSED lua_State* L) {
+int smlua_func_bhv_object_bubble_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5444,7 +5445,7 @@ int smlua_func_bhv_object_bubble_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_object_bubble_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_object_bubble_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5460,7 +5461,7 @@ int smlua_func_bhv_object_bubble_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_object_water_wave_init(UNUSED lua_State* L) {
+int smlua_func_bhv_object_water_wave_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5476,7 +5477,7 @@ int smlua_func_bhv_object_water_wave_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_object_water_wave_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_object_water_wave_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5492,7 +5493,7 @@ int smlua_func_bhv_object_water_wave_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_explosion_init(UNUSED lua_State* L) {
+int smlua_func_bhv_explosion_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5508,7 +5509,7 @@ int smlua_func_bhv_explosion_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_explosion_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_explosion_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5524,7 +5525,7 @@ int smlua_func_bhv_explosion_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_bobomb_bully_death_smoke_init(UNUSED lua_State* L) {
+int smlua_func_bhv_bobomb_bully_death_smoke_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5540,7 +5541,7 @@ int smlua_func_bhv_bobomb_bully_death_smoke_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_bobomb_explosion_bubble_init(UNUSED lua_State* L) {
+int smlua_func_bhv_bobomb_explosion_bubble_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5556,7 +5557,7 @@ int smlua_func_bhv_bobomb_explosion_bubble_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_bobomb_explosion_bubble_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_bobomb_explosion_bubble_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5572,7 +5573,7 @@ int smlua_func_bhv_bobomb_explosion_bubble_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_respawner_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_respawner_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5588,7 +5589,7 @@ int smlua_func_bhv_respawner_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_small_bully_init(UNUSED lua_State* L) {
+int smlua_func_bhv_small_bully_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5604,7 +5605,7 @@ int smlua_func_bhv_small_bully_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_bully_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_bully_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5620,7 +5621,7 @@ int smlua_func_bhv_bully_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_big_bully_init(UNUSED lua_State* L) {
+int smlua_func_bhv_big_bully_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5636,7 +5637,7 @@ int smlua_func_bhv_big_bully_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_big_bully_with_minions_init(UNUSED lua_State* L) {
+int smlua_func_bhv_big_bully_with_minions_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5652,7 +5653,7 @@ int smlua_func_bhv_big_bully_with_minions_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_big_bully_with_minions_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_big_bully_with_minions_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5668,7 +5669,7 @@ int smlua_func_bhv_big_bully_with_minions_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_jet_stream_ring_spawner_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_jet_stream_ring_spawner_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5684,7 +5685,7 @@ int smlua_func_bhv_jet_stream_ring_spawner_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_jet_stream_water_ring_init(UNUSED lua_State* L) {
+int smlua_func_bhv_jet_stream_water_ring_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5700,7 +5701,7 @@ int smlua_func_bhv_jet_stream_water_ring_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_jet_stream_water_ring_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_jet_stream_water_ring_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5716,7 +5717,7 @@ int smlua_func_bhv_jet_stream_water_ring_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_manta_ray_water_ring_init(UNUSED lua_State* L) {
+int smlua_func_bhv_manta_ray_water_ring_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5732,7 +5733,7 @@ int smlua_func_bhv_manta_ray_water_ring_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_manta_ray_water_ring_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_manta_ray_water_ring_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5748,7 +5749,7 @@ int smlua_func_bhv_manta_ray_water_ring_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_bowser_bomb_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_bowser_bomb_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5764,7 +5765,7 @@ int smlua_func_bhv_bowser_bomb_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_bowser_bomb_explosion_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_bowser_bomb_explosion_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5780,7 +5781,7 @@ int smlua_func_bhv_bowser_bomb_explosion_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_bowser_bomb_smoke_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_bowser_bomb_smoke_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5796,7 +5797,7 @@ int smlua_func_bhv_bowser_bomb_smoke_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_celebration_star_init(UNUSED lua_State* L) {
+int smlua_func_bhv_celebration_star_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5812,7 +5813,7 @@ int smlua_func_bhv_celebration_star_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_celebration_star_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_celebration_star_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5828,7 +5829,7 @@ int smlua_func_bhv_celebration_star_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_celebration_star_sparkle_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_celebration_star_sparkle_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5844,7 +5845,7 @@ int smlua_func_bhv_celebration_star_sparkle_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_star_key_collection_puff_spawner_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_star_key_collection_puff_spawner_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5860,7 +5861,7 @@ int smlua_func_bhv_star_key_collection_puff_spawner_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_lll_drawbridge_spawner_init(UNUSED lua_State* L) {
+int smlua_func_bhv_lll_drawbridge_spawner_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5876,7 +5877,7 @@ int smlua_func_bhv_lll_drawbridge_spawner_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_lll_drawbridge_spawner_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_lll_drawbridge_spawner_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5892,7 +5893,7 @@ int smlua_func_bhv_lll_drawbridge_spawner_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_lll_drawbridge_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_lll_drawbridge_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5908,7 +5909,7 @@ int smlua_func_bhv_lll_drawbridge_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_small_bomp_init(UNUSED lua_State* L) {
+int smlua_func_bhv_small_bomp_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5924,7 +5925,7 @@ int smlua_func_bhv_small_bomp_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_small_bomp_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_small_bomp_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5940,7 +5941,7 @@ int smlua_func_bhv_small_bomp_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_large_bomp_init(UNUSED lua_State* L) {
+int smlua_func_bhv_large_bomp_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5956,7 +5957,7 @@ int smlua_func_bhv_large_bomp_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_large_bomp_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_large_bomp_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5972,7 +5973,7 @@ int smlua_func_bhv_large_bomp_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_wf_sliding_platform_init(UNUSED lua_State* L) {
+int smlua_func_bhv_wf_sliding_platform_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -5988,7 +5989,7 @@ int smlua_func_bhv_wf_sliding_platform_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_wf_sliding_platform_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_wf_sliding_platform_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6004,7 +6005,7 @@ int smlua_func_bhv_wf_sliding_platform_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_moneybag_init(UNUSED lua_State* L) {
+int smlua_func_bhv_moneybag_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6020,7 +6021,7 @@ int smlua_func_bhv_moneybag_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_moneybag_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_moneybag_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6036,7 +6037,7 @@ int smlua_func_bhv_moneybag_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_moneybag_hidden_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_moneybag_hidden_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6052,7 +6053,7 @@ int smlua_func_bhv_moneybag_hidden_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_bob_pit_bowling_ball_init(UNUSED lua_State* L) {
+int smlua_func_bhv_bob_pit_bowling_ball_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6068,7 +6069,7 @@ int smlua_func_bhv_bob_pit_bowling_ball_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_bob_pit_bowling_ball_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_bob_pit_bowling_ball_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6084,7 +6085,7 @@ int smlua_func_bhv_bob_pit_bowling_ball_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_free_bowling_ball_init(UNUSED lua_State* L) {
+int smlua_func_bhv_free_bowling_ball_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6100,7 +6101,7 @@ int smlua_func_bhv_free_bowling_ball_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_free_bowling_ball_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_free_bowling_ball_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6116,7 +6117,7 @@ int smlua_func_bhv_free_bowling_ball_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_bowling_ball_init(UNUSED lua_State* L) {
+int smlua_func_bhv_bowling_ball_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6132,7 +6133,7 @@ int smlua_func_bhv_bowling_ball_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_bowling_ball_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_bowling_ball_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6148,7 +6149,7 @@ int smlua_func_bhv_bowling_ball_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_generic_bowling_ball_spawner_init(UNUSED lua_State* L) {
+int smlua_func_bhv_generic_bowling_ball_spawner_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6164,7 +6165,7 @@ int smlua_func_bhv_generic_bowling_ball_spawner_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_generic_bowling_ball_spawner_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_generic_bowling_ball_spawner_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6180,7 +6181,7 @@ int smlua_func_bhv_generic_bowling_ball_spawner_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_thi_bowling_ball_spawner_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_thi_bowling_ball_spawner_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6196,7 +6197,7 @@ int smlua_func_bhv_thi_bowling_ball_spawner_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_rr_cruiser_wing_init(UNUSED lua_State* L) {
+int smlua_func_bhv_rr_cruiser_wing_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6212,7 +6213,7 @@ int smlua_func_bhv_rr_cruiser_wing_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_rr_cruiser_wing_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_rr_cruiser_wing_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6228,7 +6229,7 @@ int smlua_func_bhv_rr_cruiser_wing_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_spindel_init(UNUSED lua_State* L) {
+int smlua_func_bhv_spindel_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6244,7 +6245,7 @@ int smlua_func_bhv_spindel_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_spindel_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_spindel_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6260,7 +6261,7 @@ int smlua_func_bhv_spindel_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_ssl_moving_pyramid_wall_init(UNUSED lua_State* L) {
+int smlua_func_bhv_ssl_moving_pyramid_wall_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6276,7 +6277,7 @@ int smlua_func_bhv_ssl_moving_pyramid_wall_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_ssl_moving_pyramid_wall_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_ssl_moving_pyramid_wall_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6292,7 +6293,7 @@ int smlua_func_bhv_ssl_moving_pyramid_wall_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_pyramid_elevator_init(UNUSED lua_State* L) {
+int smlua_func_bhv_pyramid_elevator_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6308,7 +6309,7 @@ int smlua_func_bhv_pyramid_elevator_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_pyramid_elevator_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_pyramid_elevator_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6324,7 +6325,7 @@ int smlua_func_bhv_pyramid_elevator_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_pyramid_elevator_trajectory_marker_ball_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_pyramid_elevator_trajectory_marker_ball_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6340,7 +6341,7 @@ int smlua_func_bhv_pyramid_elevator_trajectory_marker_ball_loop(UNUSED lua_State
     return 1;
 }
 
-int smlua_func_bhv_pyramid_top_init(UNUSED lua_State* L) {
+int smlua_func_bhv_pyramid_top_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6356,7 +6357,7 @@ int smlua_func_bhv_pyramid_top_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_pyramid_top_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_pyramid_top_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6372,7 +6373,7 @@ int smlua_func_bhv_pyramid_top_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_pyramid_top_fragment_init(UNUSED lua_State* L) {
+int smlua_func_bhv_pyramid_top_fragment_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6388,7 +6389,7 @@ int smlua_func_bhv_pyramid_top_fragment_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_pyramid_top_fragment_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_pyramid_top_fragment_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6404,7 +6405,7 @@ int smlua_func_bhv_pyramid_top_fragment_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_pyramid_pillar_touch_detector_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_pyramid_pillar_touch_detector_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6420,7 +6421,7 @@ int smlua_func_bhv_pyramid_pillar_touch_detector_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_waterfall_sound_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_waterfall_sound_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6436,7 +6437,7 @@ int smlua_func_bhv_waterfall_sound_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_volcano_sound_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_volcano_sound_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6452,7 +6453,7 @@ int smlua_func_bhv_volcano_sound_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_castle_flag_init(UNUSED lua_State* L) {
+int smlua_func_bhv_castle_flag_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6468,7 +6469,7 @@ int smlua_func_bhv_castle_flag_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_birds_sound_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_birds_sound_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6484,7 +6485,7 @@ int smlua_func_bhv_birds_sound_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_ambient_sounds_init(UNUSED lua_State* L) {
+int smlua_func_bhv_ambient_sounds_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6500,7 +6501,7 @@ int smlua_func_bhv_ambient_sounds_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_sand_sound_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_sand_sound_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6516,7 +6517,7 @@ int smlua_func_bhv_sand_sound_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_castle_cannon_grate_init(UNUSED lua_State* L) {
+int smlua_func_bhv_castle_cannon_grate_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6532,7 +6533,7 @@ int smlua_func_bhv_castle_cannon_grate_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_snowmans_bottom_init(UNUSED lua_State* L) {
+int smlua_func_bhv_snowmans_bottom_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6548,7 +6549,7 @@ int smlua_func_bhv_snowmans_bottom_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_snowmans_bottom_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_snowmans_bottom_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6564,7 +6565,7 @@ int smlua_func_bhv_snowmans_bottom_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_snowmans_head_init(UNUSED lua_State* L) {
+int smlua_func_bhv_snowmans_head_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6580,7 +6581,7 @@ int smlua_func_bhv_snowmans_head_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_snowmans_head_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_snowmans_head_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6596,7 +6597,7 @@ int smlua_func_bhv_snowmans_head_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_snowmans_body_checkpoint_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_snowmans_body_checkpoint_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6612,7 +6613,7 @@ int smlua_func_bhv_snowmans_body_checkpoint_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_big_boulder_init(UNUSED lua_State* L) {
+int smlua_func_bhv_big_boulder_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6628,7 +6629,7 @@ int smlua_func_bhv_big_boulder_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_big_boulder_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_big_boulder_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6644,7 +6645,7 @@ int smlua_func_bhv_big_boulder_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_big_boulder_generator_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_big_boulder_generator_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6660,7 +6661,7 @@ int smlua_func_bhv_big_boulder_generator_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_wing_cap_init(UNUSED lua_State* L) {
+int smlua_func_bhv_wing_cap_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6676,7 +6677,7 @@ int smlua_func_bhv_wing_cap_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_wing_vanish_cap_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_wing_vanish_cap_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6692,7 +6693,7 @@ int smlua_func_bhv_wing_vanish_cap_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_metal_cap_init(UNUSED lua_State* L) {
+int smlua_func_bhv_metal_cap_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6708,7 +6709,7 @@ int smlua_func_bhv_metal_cap_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_metal_cap_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_metal_cap_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6724,7 +6725,7 @@ int smlua_func_bhv_metal_cap_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_normal_cap_init(UNUSED lua_State* L) {
+int smlua_func_bhv_normal_cap_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6740,7 +6741,7 @@ int smlua_func_bhv_normal_cap_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_normal_cap_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_normal_cap_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6756,7 +6757,7 @@ int smlua_func_bhv_normal_cap_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_vanish_cap_init(UNUSED lua_State* L) {
+int smlua_func_bhv_vanish_cap_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6772,7 +6773,7 @@ int smlua_func_bhv_vanish_cap_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_star_number_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_star_number_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6788,7 +6789,7 @@ int smlua_func_bhv_star_number_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_spawn_star_number(UNUSED lua_State* L) {
+int smlua_func_spawn_star_number(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -6803,7 +6804,7 @@ int smlua_func_spawn_star_number(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_collect_star_init(UNUSED lua_State* L) {
+int smlua_func_bhv_collect_star_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6819,7 +6820,7 @@ int smlua_func_bhv_collect_star_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_collect_star_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_collect_star_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6835,7 +6836,7 @@ int smlua_func_bhv_collect_star_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_star_spawn_init(UNUSED lua_State* L) {
+int smlua_func_bhv_star_spawn_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6851,7 +6852,7 @@ int smlua_func_bhv_star_spawn_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_star_spawn_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_star_spawn_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6867,7 +6868,7 @@ int smlua_func_bhv_star_spawn_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_hidden_red_coin_star_init(UNUSED lua_State* L) {
+int smlua_func_bhv_hidden_red_coin_star_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6883,7 +6884,7 @@ int smlua_func_bhv_hidden_red_coin_star_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_hidden_red_coin_star_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_hidden_red_coin_star_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6899,7 +6900,7 @@ int smlua_func_bhv_hidden_red_coin_star_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_red_coin_init(UNUSED lua_State* L) {
+int smlua_func_bhv_red_coin_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6915,7 +6916,7 @@ int smlua_func_bhv_red_coin_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_red_coin_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_red_coin_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6931,7 +6932,7 @@ int smlua_func_bhv_red_coin_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_bowser_course_red_coin_star_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_bowser_course_red_coin_star_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6947,7 +6948,7 @@ int smlua_func_bhv_bowser_course_red_coin_star_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_hidden_star_init(UNUSED lua_State* L) {
+int smlua_func_bhv_hidden_star_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6963,7 +6964,7 @@ int smlua_func_bhv_hidden_star_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_hidden_star_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_hidden_star_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6979,7 +6980,7 @@ int smlua_func_bhv_hidden_star_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_hidden_star_trigger_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_hidden_star_trigger_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -6995,7 +6996,7 @@ int smlua_func_bhv_hidden_star_trigger_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_ttm_rolling_log_init(UNUSED lua_State* L) {
+int smlua_func_bhv_ttm_rolling_log_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7011,7 +7012,7 @@ int smlua_func_bhv_ttm_rolling_log_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_rolling_log_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_rolling_log_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7027,7 +7028,7 @@ int smlua_func_bhv_rolling_log_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_lll_rolling_log_init(UNUSED lua_State* L) {
+int smlua_func_bhv_lll_rolling_log_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7043,7 +7044,7 @@ int smlua_func_bhv_lll_rolling_log_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_1up_trigger_init(UNUSED lua_State* L) {
+int smlua_func_bhv_1up_trigger_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7059,7 +7060,7 @@ int smlua_func_bhv_1up_trigger_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_1up_common_init(UNUSED lua_State* L) {
+int smlua_func_bhv_1up_common_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7075,7 +7076,7 @@ int smlua_func_bhv_1up_common_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_1up_walking_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_1up_walking_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7091,7 +7092,7 @@ int smlua_func_bhv_1up_walking_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_1up_running_away_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_1up_running_away_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7107,7 +7108,7 @@ int smlua_func_bhv_1up_running_away_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_1up_sliding_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_1up_sliding_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7123,7 +7124,7 @@ int smlua_func_bhv_1up_sliding_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_1up_init(UNUSED lua_State* L) {
+int smlua_func_bhv_1up_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7139,7 +7140,7 @@ int smlua_func_bhv_1up_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_1up_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_1up_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7155,7 +7156,7 @@ int smlua_func_bhv_1up_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_1up_jump_on_approach_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_1up_jump_on_approach_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7171,7 +7172,7 @@ int smlua_func_bhv_1up_jump_on_approach_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_1up_hidden_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_1up_hidden_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7187,7 +7188,7 @@ int smlua_func_bhv_1up_hidden_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_1up_hidden_trigger_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_1up_hidden_trigger_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7203,7 +7204,7 @@ int smlua_func_bhv_1up_hidden_trigger_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_1up_hidden_in_pole_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_1up_hidden_in_pole_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7219,7 +7220,7 @@ int smlua_func_bhv_1up_hidden_in_pole_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_1up_hidden_in_pole_trigger_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_1up_hidden_in_pole_trigger_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7235,7 +7236,7 @@ int smlua_func_bhv_1up_hidden_in_pole_trigger_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_1up_hidden_in_pole_spawner_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_1up_hidden_in_pole_spawner_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7251,7 +7252,7 @@ int smlua_func_bhv_1up_hidden_in_pole_spawner_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_controllable_platform_init(UNUSED lua_State* L) {
+int smlua_func_bhv_controllable_platform_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7267,7 +7268,7 @@ int smlua_func_bhv_controllable_platform_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_controllable_platform_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_controllable_platform_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7283,7 +7284,7 @@ int smlua_func_bhv_controllable_platform_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_controllable_platform_sub_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_controllable_platform_sub_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7299,7 +7300,7 @@ int smlua_func_bhv_controllable_platform_sub_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_breakable_box_small_init(UNUSED lua_State* L) {
+int smlua_func_bhv_breakable_box_small_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7315,7 +7316,7 @@ int smlua_func_bhv_breakable_box_small_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_breakable_box_small_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_breakable_box_small_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7331,7 +7332,7 @@ int smlua_func_bhv_breakable_box_small_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_sliding_snow_mound_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_sliding_snow_mound_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7347,7 +7348,7 @@ int smlua_func_bhv_sliding_snow_mound_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_snow_mound_spawn_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_snow_mound_spawn_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7363,7 +7364,7 @@ int smlua_func_bhv_snow_mound_spawn_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_floating_platform_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_floating_platform_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7379,7 +7380,7 @@ int smlua_func_bhv_floating_platform_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_arrow_lift_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_arrow_lift_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7395,7 +7396,7 @@ int smlua_func_bhv_arrow_lift_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_orange_number_init(UNUSED lua_State* L) {
+int smlua_func_bhv_orange_number_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7411,7 +7412,7 @@ int smlua_func_bhv_orange_number_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_orange_number_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_orange_number_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7427,7 +7428,7 @@ int smlua_func_bhv_orange_number_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_manta_ray_init(UNUSED lua_State* L) {
+int smlua_func_bhv_manta_ray_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7443,7 +7444,7 @@ int smlua_func_bhv_manta_ray_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_manta_ray_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_manta_ray_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7459,7 +7460,7 @@ int smlua_func_bhv_manta_ray_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_falling_pillar_init(UNUSED lua_State* L) {
+int smlua_func_bhv_falling_pillar_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7475,7 +7476,7 @@ int smlua_func_bhv_falling_pillar_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_falling_pillar_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_falling_pillar_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7491,7 +7492,7 @@ int smlua_func_bhv_falling_pillar_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_falling_pillar_hitbox_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_falling_pillar_hitbox_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7507,7 +7508,7 @@ int smlua_func_bhv_falling_pillar_hitbox_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_jrb_floating_box_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_jrb_floating_box_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7523,7 +7524,7 @@ int smlua_func_bhv_jrb_floating_box_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_decorative_pendulum_init(UNUSED lua_State* L) {
+int smlua_func_bhv_decorative_pendulum_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7539,7 +7540,7 @@ int smlua_func_bhv_decorative_pendulum_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_decorative_pendulum_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_decorative_pendulum_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7555,7 +7556,7 @@ int smlua_func_bhv_decorative_pendulum_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_treasure_chest_ship_init(UNUSED lua_State* L) {
+int smlua_func_bhv_treasure_chest_ship_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7571,7 +7572,7 @@ int smlua_func_bhv_treasure_chest_ship_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_treasure_chest_ship_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_treasure_chest_ship_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7587,7 +7588,7 @@ int smlua_func_bhv_treasure_chest_ship_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_treasure_chest_jrb_init(UNUSED lua_State* L) {
+int smlua_func_bhv_treasure_chest_jrb_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7603,7 +7604,7 @@ int smlua_func_bhv_treasure_chest_jrb_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_treasure_chest_jrb_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_treasure_chest_jrb_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7619,7 +7620,7 @@ int smlua_func_bhv_treasure_chest_jrb_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_treasure_chest_init(UNUSED lua_State* L) {
+int smlua_func_bhv_treasure_chest_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7635,7 +7636,7 @@ int smlua_func_bhv_treasure_chest_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_treasure_chest_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_treasure_chest_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7651,7 +7652,7 @@ int smlua_func_bhv_treasure_chest_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_treasure_chest_bottom_init(UNUSED lua_State* L) {
+int smlua_func_bhv_treasure_chest_bottom_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7667,7 +7668,7 @@ int smlua_func_bhv_treasure_chest_bottom_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_treasure_chest_bottom_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_treasure_chest_bottom_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7683,7 +7684,7 @@ int smlua_func_bhv_treasure_chest_bottom_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_treasure_chest_top_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_treasure_chest_top_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7699,7 +7700,7 @@ int smlua_func_bhv_treasure_chest_top_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_mips_init(UNUSED lua_State* L) {
+int smlua_func_bhv_mips_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7715,7 +7716,7 @@ int smlua_func_bhv_mips_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_mips_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_mips_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7731,7 +7732,7 @@ int smlua_func_bhv_mips_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_yoshi_init(UNUSED lua_State* L) {
+int smlua_func_bhv_yoshi_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7747,7 +7748,7 @@ int smlua_func_bhv_yoshi_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_koopa_init(UNUSED lua_State* L) {
+int smlua_func_bhv_koopa_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7763,7 +7764,7 @@ int smlua_func_bhv_koopa_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_koopa_update(UNUSED lua_State* L) {
+int smlua_func_bhv_koopa_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7779,7 +7780,7 @@ int smlua_func_bhv_koopa_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_koopa_race_endpoint_update(UNUSED lua_State* L) {
+int smlua_func_bhv_koopa_race_endpoint_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7795,7 +7796,7 @@ int smlua_func_bhv_koopa_race_endpoint_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_pokey_update(UNUSED lua_State* L) {
+int smlua_func_bhv_pokey_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7811,7 +7812,7 @@ int smlua_func_bhv_pokey_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_pokey_body_part_update(UNUSED lua_State* L) {
+int smlua_func_bhv_pokey_body_part_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7827,7 +7828,7 @@ int smlua_func_bhv_pokey_body_part_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_swoop_update(UNUSED lua_State* L) {
+int smlua_func_bhv_swoop_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7843,7 +7844,7 @@ int smlua_func_bhv_swoop_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_fly_guy_update(UNUSED lua_State* L) {
+int smlua_func_bhv_fly_guy_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7859,7 +7860,7 @@ int smlua_func_bhv_fly_guy_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_goomba_init(UNUSED lua_State* L) {
+int smlua_func_bhv_goomba_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7875,7 +7876,7 @@ int smlua_func_bhv_goomba_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_goomba_update(UNUSED lua_State* L) {
+int smlua_func_bhv_goomba_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7891,7 +7892,7 @@ int smlua_func_bhv_goomba_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_goomba_triplet_spawner_update(UNUSED lua_State* L) {
+int smlua_func_bhv_goomba_triplet_spawner_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7907,7 +7908,7 @@ int smlua_func_bhv_goomba_triplet_spawner_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_chain_chomp_update(UNUSED lua_State* L) {
+int smlua_func_bhv_chain_chomp_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7923,7 +7924,7 @@ int smlua_func_bhv_chain_chomp_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_chain_chomp_chain_part_update(UNUSED lua_State* L) {
+int smlua_func_bhv_chain_chomp_chain_part_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7939,7 +7940,7 @@ int smlua_func_bhv_chain_chomp_chain_part_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_wooden_post_update(UNUSED lua_State* L) {
+int smlua_func_bhv_wooden_post_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7955,7 +7956,7 @@ int smlua_func_bhv_wooden_post_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_chain_chomp_gate_init(UNUSED lua_State* L) {
+int smlua_func_bhv_chain_chomp_gate_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7971,7 +7972,7 @@ int smlua_func_bhv_chain_chomp_gate_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_chain_chomp_gate_update(UNUSED lua_State* L) {
+int smlua_func_bhv_chain_chomp_gate_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -7987,7 +7988,7 @@ int smlua_func_bhv_chain_chomp_gate_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_wiggler_update(UNUSED lua_State* L) {
+int smlua_func_bhv_wiggler_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8003,7 +8004,7 @@ int smlua_func_bhv_wiggler_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_wiggler_body_part_update(UNUSED lua_State* L) {
+int smlua_func_bhv_wiggler_body_part_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8019,7 +8020,7 @@ int smlua_func_bhv_wiggler_body_part_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_enemy_lakitu_update(UNUSED lua_State* L) {
+int smlua_func_bhv_enemy_lakitu_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8035,7 +8036,7 @@ int smlua_func_bhv_enemy_lakitu_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_camera_lakitu_init(UNUSED lua_State* L) {
+int smlua_func_bhv_camera_lakitu_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8051,7 +8052,7 @@ int smlua_func_bhv_camera_lakitu_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_camera_lakitu_update(UNUSED lua_State* L) {
+int smlua_func_bhv_camera_lakitu_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8067,7 +8068,7 @@ int smlua_func_bhv_camera_lakitu_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_cloud_update(UNUSED lua_State* L) {
+int smlua_func_bhv_cloud_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8083,7 +8084,7 @@ int smlua_func_bhv_cloud_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_cloud_part_update(UNUSED lua_State* L) {
+int smlua_func_bhv_cloud_part_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8099,7 +8100,7 @@ int smlua_func_bhv_cloud_part_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_spiny_update(UNUSED lua_State* L) {
+int smlua_func_bhv_spiny_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8115,7 +8116,7 @@ int smlua_func_bhv_spiny_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_monty_mole_init(UNUSED lua_State* L) {
+int smlua_func_bhv_monty_mole_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8131,7 +8132,7 @@ int smlua_func_bhv_monty_mole_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_monty_mole_update(UNUSED lua_State* L) {
+int smlua_func_bhv_monty_mole_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8147,7 +8148,7 @@ int smlua_func_bhv_monty_mole_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_monty_mole_hole_update(UNUSED lua_State* L) {
+int smlua_func_bhv_monty_mole_hole_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8163,7 +8164,7 @@ int smlua_func_bhv_monty_mole_hole_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_monty_mole_rock_update(UNUSED lua_State* L) {
+int smlua_func_bhv_monty_mole_rock_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8179,7 +8180,7 @@ int smlua_func_bhv_monty_mole_rock_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_platform_on_track_init(UNUSED lua_State* L) {
+int smlua_func_bhv_platform_on_track_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8195,7 +8196,7 @@ int smlua_func_bhv_platform_on_track_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_platform_on_track_update(UNUSED lua_State* L) {
+int smlua_func_bhv_platform_on_track_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8211,7 +8212,7 @@ int smlua_func_bhv_platform_on_track_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_track_ball_update(UNUSED lua_State* L) {
+int smlua_func_bhv_track_ball_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8227,7 +8228,7 @@ int smlua_func_bhv_track_ball_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_seesaw_platform_init(UNUSED lua_State* L) {
+int smlua_func_bhv_seesaw_platform_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8243,7 +8244,7 @@ int smlua_func_bhv_seesaw_platform_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_seesaw_platform_update(UNUSED lua_State* L) {
+int smlua_func_bhv_seesaw_platform_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8259,7 +8260,7 @@ int smlua_func_bhv_seesaw_platform_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_ferris_wheel_axle_init(UNUSED lua_State* L) {
+int smlua_func_bhv_ferris_wheel_axle_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8275,7 +8276,7 @@ int smlua_func_bhv_ferris_wheel_axle_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_ferris_wheel_platform_init(UNUSED lua_State* L) {
+int smlua_func_bhv_ferris_wheel_platform_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8291,7 +8292,7 @@ int smlua_func_bhv_ferris_wheel_platform_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_ferris_wheel_platform_update(UNUSED lua_State* L) {
+int smlua_func_bhv_ferris_wheel_platform_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8307,7 +8308,7 @@ int smlua_func_bhv_ferris_wheel_platform_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_water_bomb_spawner_update(UNUSED lua_State* L) {
+int smlua_func_bhv_water_bomb_spawner_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8323,7 +8324,7 @@ int smlua_func_bhv_water_bomb_spawner_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_water_bomb_update(UNUSED lua_State* L) {
+int smlua_func_bhv_water_bomb_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8339,7 +8340,7 @@ int smlua_func_bhv_water_bomb_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_water_bomb_shadow_update(UNUSED lua_State* L) {
+int smlua_func_bhv_water_bomb_shadow_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8355,7 +8356,7 @@ int smlua_func_bhv_water_bomb_shadow_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_ttc_rotating_solid_init(UNUSED lua_State* L) {
+int smlua_func_bhv_ttc_rotating_solid_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8371,7 +8372,7 @@ int smlua_func_bhv_ttc_rotating_solid_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_ttc_rotating_solid_update(UNUSED lua_State* L) {
+int smlua_func_bhv_ttc_rotating_solid_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8387,7 +8388,7 @@ int smlua_func_bhv_ttc_rotating_solid_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_ttc_pendulum_init(UNUSED lua_State* L) {
+int smlua_func_bhv_ttc_pendulum_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8403,7 +8404,7 @@ int smlua_func_bhv_ttc_pendulum_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_ttc_pendulum_update(UNUSED lua_State* L) {
+int smlua_func_bhv_ttc_pendulum_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8419,7 +8420,7 @@ int smlua_func_bhv_ttc_pendulum_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_ttc_treadmill_init(UNUSED lua_State* L) {
+int smlua_func_bhv_ttc_treadmill_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8435,7 +8436,7 @@ int smlua_func_bhv_ttc_treadmill_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_ttc_treadmill_update(UNUSED lua_State* L) {
+int smlua_func_bhv_ttc_treadmill_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8451,7 +8452,7 @@ int smlua_func_bhv_ttc_treadmill_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_ttc_moving_bar_init(UNUSED lua_State* L) {
+int smlua_func_bhv_ttc_moving_bar_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8467,7 +8468,7 @@ int smlua_func_bhv_ttc_moving_bar_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_ttc_moving_bar_update(UNUSED lua_State* L) {
+int smlua_func_bhv_ttc_moving_bar_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8483,7 +8484,7 @@ int smlua_func_bhv_ttc_moving_bar_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_ttc_cog_init(UNUSED lua_State* L) {
+int smlua_func_bhv_ttc_cog_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8499,7 +8500,7 @@ int smlua_func_bhv_ttc_cog_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_ttc_cog_update(UNUSED lua_State* L) {
+int smlua_func_bhv_ttc_cog_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8515,7 +8516,7 @@ int smlua_func_bhv_ttc_cog_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_ttc_pit_block_init(UNUSED lua_State* L) {
+int smlua_func_bhv_ttc_pit_block_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8531,7 +8532,7 @@ int smlua_func_bhv_ttc_pit_block_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_ttc_pit_block_update(UNUSED lua_State* L) {
+int smlua_func_bhv_ttc_pit_block_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8547,7 +8548,7 @@ int smlua_func_bhv_ttc_pit_block_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_ttc_elevator_init(UNUSED lua_State* L) {
+int smlua_func_bhv_ttc_elevator_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8563,7 +8564,7 @@ int smlua_func_bhv_ttc_elevator_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_ttc_elevator_update(UNUSED lua_State* L) {
+int smlua_func_bhv_ttc_elevator_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8579,7 +8580,7 @@ int smlua_func_bhv_ttc_elevator_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_ttc_2d_rotator_init(UNUSED lua_State* L) {
+int smlua_func_bhv_ttc_2d_rotator_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8595,7 +8596,7 @@ int smlua_func_bhv_ttc_2d_rotator_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_ttc_2d_rotator_update(UNUSED lua_State* L) {
+int smlua_func_bhv_ttc_2d_rotator_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8611,7 +8612,7 @@ int smlua_func_bhv_ttc_2d_rotator_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_ttc_spinner_update(UNUSED lua_State* L) {
+int smlua_func_bhv_ttc_spinner_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8627,7 +8628,7 @@ int smlua_func_bhv_ttc_spinner_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_mr_blizzard_init(UNUSED lua_State* L) {
+int smlua_func_bhv_mr_blizzard_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8643,7 +8644,7 @@ int smlua_func_bhv_mr_blizzard_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_mr_blizzard_update(UNUSED lua_State* L) {
+int smlua_func_bhv_mr_blizzard_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8659,7 +8660,7 @@ int smlua_func_bhv_mr_blizzard_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_mr_blizzard_snowball(UNUSED lua_State* L) {
+int smlua_func_bhv_mr_blizzard_snowball(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8675,7 +8676,7 @@ int smlua_func_bhv_mr_blizzard_snowball(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_sliding_plat_2_init(UNUSED lua_State* L) {
+int smlua_func_bhv_sliding_plat_2_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8691,7 +8692,7 @@ int smlua_func_bhv_sliding_plat_2_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_sliding_plat_2_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_sliding_plat_2_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8707,7 +8708,7 @@ int smlua_func_bhv_sliding_plat_2_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_rotating_octagonal_plat_init(UNUSED lua_State* L) {
+int smlua_func_bhv_rotating_octagonal_plat_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8723,7 +8724,7 @@ int smlua_func_bhv_rotating_octagonal_plat_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_rotating_octagonal_plat_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_rotating_octagonal_plat_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8739,7 +8740,7 @@ int smlua_func_bhv_rotating_octagonal_plat_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_animates_on_floor_switch_press_init(UNUSED lua_State* L) {
+int smlua_func_bhv_animates_on_floor_switch_press_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8755,7 +8756,7 @@ int smlua_func_bhv_animates_on_floor_switch_press_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_animates_on_floor_switch_press_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_animates_on_floor_switch_press_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8771,7 +8772,7 @@ int smlua_func_bhv_animates_on_floor_switch_press_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_activated_back_and_forth_platform_init(UNUSED lua_State* L) {
+int smlua_func_bhv_activated_back_and_forth_platform_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8787,7 +8788,7 @@ int smlua_func_bhv_activated_back_and_forth_platform_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_activated_back_and_forth_platform_update(UNUSED lua_State* L) {
+int smlua_func_bhv_activated_back_and_forth_platform_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8803,7 +8804,7 @@ int smlua_func_bhv_activated_back_and_forth_platform_update(UNUSED lua_State* L)
     return 1;
 }
 
-int smlua_func_bhv_recovery_heart_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_recovery_heart_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8819,7 +8820,7 @@ int smlua_func_bhv_recovery_heart_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_water_bomb_cannon_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_water_bomb_cannon_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8835,7 +8836,7 @@ int smlua_func_bhv_water_bomb_cannon_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_bubble_cannon_barrel_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_bubble_cannon_barrel_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8851,7 +8852,7 @@ int smlua_func_bhv_bubble_cannon_barrel_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_unagi_init(UNUSED lua_State* L) {
+int smlua_func_bhv_unagi_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8867,7 +8868,7 @@ int smlua_func_bhv_unagi_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_unagi_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_unagi_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8883,7 +8884,7 @@ int smlua_func_bhv_unagi_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_unagi_subobject_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_unagi_subobject_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8899,7 +8900,7 @@ int smlua_func_bhv_unagi_subobject_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_dorrie_update(UNUSED lua_State* L) {
+int smlua_func_bhv_dorrie_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8915,7 +8916,7 @@ int smlua_func_bhv_dorrie_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_haunted_chair_init(UNUSED lua_State* L) {
+int smlua_func_bhv_haunted_chair_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8931,7 +8932,7 @@ int smlua_func_bhv_haunted_chair_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_haunted_chair_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_haunted_chair_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8947,7 +8948,7 @@ int smlua_func_bhv_haunted_chair_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_mad_piano_update(UNUSED lua_State* L) {
+int smlua_func_bhv_mad_piano_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8963,7 +8964,7 @@ int smlua_func_bhv_mad_piano_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_flying_bookend_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_flying_bookend_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8979,7 +8980,7 @@ int smlua_func_bhv_flying_bookend_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_bookend_spawn_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_bookend_spawn_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -8995,7 +8996,7 @@ int smlua_func_bhv_bookend_spawn_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_haunted_bookshelf_manager_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_haunted_bookshelf_manager_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -9011,7 +9012,7 @@ int smlua_func_bhv_haunted_bookshelf_manager_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_book_switch_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_book_switch_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -9027,7 +9028,7 @@ int smlua_func_bhv_book_switch_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_fire_piranha_plant_init(UNUSED lua_State* L) {
+int smlua_func_bhv_fire_piranha_plant_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -9043,7 +9044,7 @@ int smlua_func_bhv_fire_piranha_plant_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_fire_piranha_plant_update(UNUSED lua_State* L) {
+int smlua_func_bhv_fire_piranha_plant_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -9059,7 +9060,7 @@ int smlua_func_bhv_fire_piranha_plant_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_small_piranha_flame_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_small_piranha_flame_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -9075,7 +9076,7 @@ int smlua_func_bhv_small_piranha_flame_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_fire_spitter_update(UNUSED lua_State* L) {
+int smlua_func_bhv_fire_spitter_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -9091,7 +9092,7 @@ int smlua_func_bhv_fire_spitter_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_fly_guy_flame_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_fly_guy_flame_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -9107,7 +9108,7 @@ int smlua_func_bhv_fly_guy_flame_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_snufit_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_snufit_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -9123,7 +9124,7 @@ int smlua_func_bhv_snufit_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_snufit_balls_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_snufit_balls_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -9139,7 +9140,7 @@ int smlua_func_bhv_snufit_balls_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_horizontal_grindel_init(UNUSED lua_State* L) {
+int smlua_func_bhv_horizontal_grindel_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -9155,7 +9156,7 @@ int smlua_func_bhv_horizontal_grindel_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_horizontal_grindel_update(UNUSED lua_State* L) {
+int smlua_func_bhv_horizontal_grindel_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -9171,7 +9172,7 @@ int smlua_func_bhv_horizontal_grindel_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_eyerok_boss_init(UNUSED lua_State* L) {
+int smlua_func_bhv_eyerok_boss_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -9187,7 +9188,7 @@ int smlua_func_bhv_eyerok_boss_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_eyerok_boss_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_eyerok_boss_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -9203,7 +9204,7 @@ int smlua_func_bhv_eyerok_boss_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_eyerok_hand_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_eyerok_hand_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -9219,7 +9220,7 @@ int smlua_func_bhv_eyerok_hand_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_klepto_init(UNUSED lua_State* L) {
+int smlua_func_bhv_klepto_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -9235,7 +9236,7 @@ int smlua_func_bhv_klepto_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_klepto_update(UNUSED lua_State* L) {
+int smlua_func_bhv_klepto_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -9251,7 +9252,7 @@ int smlua_func_bhv_klepto_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_bird_update(UNUSED lua_State* L) {
+int smlua_func_bhv_bird_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -9267,7 +9268,7 @@ int smlua_func_bhv_bird_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_racing_penguin_init(UNUSED lua_State* L) {
+int smlua_func_bhv_racing_penguin_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -9283,7 +9284,7 @@ int smlua_func_bhv_racing_penguin_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_racing_penguin_update(UNUSED lua_State* L) {
+int smlua_func_bhv_racing_penguin_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -9299,7 +9300,7 @@ int smlua_func_bhv_racing_penguin_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_penguin_race_finish_line_update(UNUSED lua_State* L) {
+int smlua_func_bhv_penguin_race_finish_line_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -9315,7 +9316,7 @@ int smlua_func_bhv_penguin_race_finish_line_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_penguin_race_shortcut_check_update(UNUSED lua_State* L) {
+int smlua_func_bhv_penguin_race_shortcut_check_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -9331,7 +9332,7 @@ int smlua_func_bhv_penguin_race_shortcut_check_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_coffin_spawner_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_coffin_spawner_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -9347,7 +9348,7 @@ int smlua_func_bhv_coffin_spawner_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_coffin_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_coffin_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -9363,7 +9364,7 @@ int smlua_func_bhv_coffin_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_clam_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_clam_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -9379,7 +9380,7 @@ int smlua_func_bhv_clam_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_skeeter_update(UNUSED lua_State* L) {
+int smlua_func_bhv_skeeter_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -9395,7 +9396,7 @@ int smlua_func_bhv_skeeter_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_skeeter_wave_update(UNUSED lua_State* L) {
+int smlua_func_bhv_skeeter_wave_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -9411,7 +9412,7 @@ int smlua_func_bhv_skeeter_wave_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_swing_platform_init(UNUSED lua_State* L) {
+int smlua_func_bhv_swing_platform_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -9427,7 +9428,7 @@ int smlua_func_bhv_swing_platform_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_swing_platform_update(UNUSED lua_State* L) {
+int smlua_func_bhv_swing_platform_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -9443,7 +9444,7 @@ int smlua_func_bhv_swing_platform_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_donut_platform_spawner_update(UNUSED lua_State* L) {
+int smlua_func_bhv_donut_platform_spawner_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -9459,7 +9460,7 @@ int smlua_func_bhv_donut_platform_spawner_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_donut_platform_update(UNUSED lua_State* L) {
+int smlua_func_bhv_donut_platform_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -9475,7 +9476,7 @@ int smlua_func_bhv_donut_platform_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_ddd_pole_init(UNUSED lua_State* L) {
+int smlua_func_bhv_ddd_pole_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -9491,7 +9492,7 @@ int smlua_func_bhv_ddd_pole_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_ddd_pole_update(UNUSED lua_State* L) {
+int smlua_func_bhv_ddd_pole_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -9507,7 +9508,7 @@ int smlua_func_bhv_ddd_pole_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_red_coin_star_marker_init(UNUSED lua_State* L) {
+int smlua_func_bhv_red_coin_star_marker_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -9523,7 +9524,7 @@ int smlua_func_bhv_red_coin_star_marker_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_triplet_butterfly_update(UNUSED lua_State* L) {
+int smlua_func_bhv_triplet_butterfly_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -9539,7 +9540,7 @@ int smlua_func_bhv_triplet_butterfly_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_bubba_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_bubba_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -9555,7 +9556,7 @@ int smlua_func_bhv_bubba_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_intro_lakitu_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_intro_lakitu_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -9571,7 +9572,7 @@ int smlua_func_bhv_intro_lakitu_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_intro_peach_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_intro_peach_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -9587,7 +9588,7 @@ int smlua_func_bhv_intro_peach_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_end_birds_1_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_end_birds_1_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -9603,7 +9604,7 @@ int smlua_func_bhv_end_birds_1_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_end_birds_2_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_end_birds_2_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -9619,7 +9620,7 @@ int smlua_func_bhv_end_birds_2_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_intro_scene_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_intro_scene_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -9635,7 +9636,7 @@ int smlua_func_bhv_intro_scene_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_yoshi_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_yoshi_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -9651,7 +9652,7 @@ int smlua_func_bhv_yoshi_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_volcano_trap_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_volcano_trap_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -9667,7 +9668,7 @@ int smlua_func_bhv_volcano_trap_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_uv_update_scroll(UNUSED lua_State* L) {
+int smlua_func_uv_update_scroll(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -9682,7 +9683,7 @@ int smlua_func_uv_update_scroll(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_ambient_light_update(UNUSED lua_State* L) {
+int smlua_func_bhv_ambient_light_update(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -9698,7 +9699,7 @@ int smlua_func_bhv_ambient_light_update(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_point_light_init(UNUSED lua_State* L) {
+int smlua_func_bhv_point_light_init(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -9714,7 +9715,7 @@ int smlua_func_bhv_point_light_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_point_light_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_point_light_loop(lua_State* L) {
     if (!gCurrentObject) { return 0; }
     if (L == NULL) { return 0; }
 
@@ -9797,7 +9798,7 @@ int smlua_func_spawn_no_exit_star(lua_State* L) {
  // behavior_script.h //
 ///////////////////////
 
-int smlua_func_random_u16(UNUSED lua_State* L) {
+int smlua_func_random_u16(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -9812,7 +9813,7 @@ int smlua_func_random_u16(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_random_float(UNUSED lua_State* L) {
+int smlua_func_random_float(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -9827,7 +9828,7 @@ int smlua_func_random_float(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_random_sign(UNUSED lua_State* L) {
+int smlua_func_random_sign(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -9859,7 +9860,7 @@ int smlua_func_obj_update_gfx_pos_and_angle(lua_State* L) {
     return 1;
 }
 
-int smlua_func_position_based_random_u16(UNUSED lua_State* L) {
+int smlua_func_position_based_random_u16(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -9874,7 +9875,7 @@ int smlua_func_position_based_random_u16(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_position_based_random_float_position(UNUSED lua_State* L) {
+int smlua_func_position_based_random_float_position(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -9889,7 +9890,22 @@ int smlua_func_position_based_random_float_position(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_draw_distance_scalar(UNUSED lua_State* L) {
+int smlua_func_draw_distance_scalar_is_infinite(lua_State* L) {
+    if (L == NULL) { return 0; }
+
+    int top = lua_gettop(L);
+    if (top != 0) {
+        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "draw_distance_scalar_is_infinite", 0, top);
+        return 0;
+    }
+
+
+    lua_pushboolean(L, draw_distance_scalar_is_infinite());
+
+    return 1;
+}
+
+int smlua_func_draw_distance_scalar(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -9959,6 +9975,23 @@ int smlua_func_get_behavior_from_id(lua_State* L) {
     return 1;
 }
 
+int smlua_func_get_vanilla_behavior_from_id(lua_State* L) {
+    if (L == NULL) { return 0; }
+
+    int top = lua_gettop(L);
+    if (top != 1) {
+        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "get_vanilla_behavior_from_id", 1, top);
+        return 0;
+    }
+
+    int id = smlua_to_integer(L, 1);
+    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "get_vanilla_behavior_from_id"); return 0; }
+
+    smlua_push_pointer(L, LVT_BEHAVIORSCRIPT_P, (void*)get_vanilla_behavior_from_id(id), NULL);
+
+    return 1;
+}
+
 int smlua_func_get_behavior_name_from_id(lua_State* L) {
     if (L == NULL) { return 0; }
 
@@ -9997,7 +10030,7 @@ int smlua_func_get_id_from_behavior_name(lua_State* L) {
  // camera.h //
 //////////////
 
-int smlua_func_skip_camera_interpolation(UNUSED lua_State* L) {
+int smlua_func_skip_camera_interpolation(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -10160,7 +10193,7 @@ int smlua_func_reset_camera(lua_State* L) {
     return 1;
 }
 
-int smlua_func_select_mario_cam_mode(UNUSED lua_State* L) {
+int smlua_func_select_mario_cam_mode(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -11224,7 +11257,7 @@ int smlua_func_offset_yaw_outward_radial(lua_State* L) {
     return 1;
 }
 
-int smlua_func_play_camera_buzz_if_cdown(UNUSED lua_State* L) {
+int smlua_func_play_camera_buzz_if_cdown(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -11239,7 +11272,7 @@ int smlua_func_play_camera_buzz_if_cdown(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_play_camera_buzz_if_cbutton(UNUSED lua_State* L) {
+int smlua_func_play_camera_buzz_if_cbutton(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -11254,7 +11287,7 @@ int smlua_func_play_camera_buzz_if_cbutton(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_play_camera_buzz_if_c_sideways(UNUSED lua_State* L) {
+int smlua_func_play_camera_buzz_if_c_sideways(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -11269,7 +11302,7 @@ int smlua_func_play_camera_buzz_if_c_sideways(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_play_sound_cbutton_up(UNUSED lua_State* L) {
+int smlua_func_play_sound_cbutton_up(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -11284,7 +11317,7 @@ int smlua_func_play_sound_cbutton_up(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_play_sound_cbutton_down(UNUSED lua_State* L) {
+int smlua_func_play_sound_cbutton_down(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -11299,7 +11332,7 @@ int smlua_func_play_sound_cbutton_down(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_play_sound_cbutton_side(UNUSED lua_State* L) {
+int smlua_func_play_sound_cbutton_side(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -11314,7 +11347,7 @@ int smlua_func_play_sound_cbutton_side(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_play_sound_button_change_blocked(UNUSED lua_State* L) {
+int smlua_func_play_sound_button_change_blocked(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -11329,7 +11362,7 @@ int smlua_func_play_sound_button_change_blocked(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_play_sound_rbutton_changed(UNUSED lua_State* L) {
+int smlua_func_play_sound_rbutton_changed(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -11344,7 +11377,7 @@ int smlua_func_play_sound_rbutton_changed(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_play_sound_if_cam_switched_to_lakitu_or_mario(UNUSED lua_State* L) {
+int smlua_func_play_sound_if_cam_switched_to_lakitu_or_mario(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -11975,7 +12008,7 @@ int smlua_func_camera_set_use_course_specific_settings(lua_State* L) {
     return 1;
 }
 
-int smlua_func_center_rom_hack_camera(UNUSED lua_State* L) {
+int smlua_func_center_rom_hack_camera(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -12150,7 +12183,7 @@ int smlua_func_djui_chat_message_create(lua_State* L) {
  // djui_console.h //
 ////////////////////
 
-int smlua_func_djui_console_toggle(UNUSED lua_State* L) {
+int smlua_func_djui_console_toggle(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -12165,11 +12198,45 @@ int smlua_func_djui_console_toggle(UNUSED lua_State* L) {
     return 1;
 }
 
+int smlua_func_djui_console_is_open(lua_State* L) {
+    if (L == NULL) { return 0; }
+
+    int top = lua_gettop(L);
+    if (top != 0) {
+        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "djui_console_is_open", 0, top);
+        return 0;
+    }
+
+
+    lua_pushboolean(L, djui_console_is_open());
+
+    return 1;
+}
+
+  ////////////////
+ // djui_gfx.h //
+////////////////
+
+int smlua_func_djui_gfx_get_scale(lua_State* L) {
+    if (L == NULL) { return 0; }
+
+    int top = lua_gettop(L);
+    if (top != 0) {
+        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "djui_gfx_get_scale", 0, top);
+        return 0;
+    }
+
+
+    lua_pushnumber(L, djui_gfx_get_scale());
+
+    return 1;
+}
+
   //////////////////////
  // djui_hud_utils.h //
 //////////////////////
 
-int smlua_func_djui_hud_get_resolution(UNUSED lua_State* L) {
+int smlua_func_djui_hud_get_resolution(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -12201,7 +12268,7 @@ int smlua_func_djui_hud_set_resolution(lua_State* L) {
     return 1;
 }
 
-int smlua_func_djui_hud_get_filter(UNUSED lua_State* L) {
+int smlua_func_djui_hud_get_filter(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -12233,7 +12300,7 @@ int smlua_func_djui_hud_set_filter(lua_State* L) {
     return 1;
 }
 
-int smlua_func_djui_hud_get_font(UNUSED lua_State* L) {
+int smlua_func_djui_hud_get_font(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -12265,7 +12332,7 @@ int smlua_func_djui_hud_set_font(lua_State* L) {
     return 1;
 }
 
-int smlua_func_djui_hud_get_color(UNUSED lua_State* L) {
+int smlua_func_djui_hud_get_color(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -12303,7 +12370,7 @@ int smlua_func_djui_hud_set_color(lua_State* L) {
     return 1;
 }
 
-int smlua_func_djui_hud_reset_color(UNUSED lua_State* L) {
+int smlua_func_djui_hud_reset_color(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -12314,6 +12381,59 @@ int smlua_func_djui_hud_reset_color(UNUSED lua_State* L) {
 
 
     djui_hud_reset_color();
+
+    return 1;
+}
+
+int smlua_func_djui_hud_get_text_color(lua_State* L) {
+    if (L == NULL) { return 0; }
+
+    int top = lua_gettop(L);
+    if (top != 0) {
+        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "djui_hud_get_text_color", 0, top);
+        return 0;
+    }
+
+
+    smlua_push_object(L, LOT_DJUICOLOR, djui_hud_get_text_color(), NULL);
+
+    return 1;
+}
+
+int smlua_func_djui_hud_set_text_color(lua_State* L) {
+    if (L == NULL) { return 0; }
+
+    int top = lua_gettop(L);
+    if (top != 4) {
+        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "djui_hud_set_text_color", 4, top);
+        return 0;
+    }
+
+    u8 r = smlua_to_integer(L, 1);
+    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "djui_hud_set_text_color"); return 0; }
+    u8 g = smlua_to_integer(L, 2);
+    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 2, "djui_hud_set_text_color"); return 0; }
+    u8 b = smlua_to_integer(L, 3);
+    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 3, "djui_hud_set_text_color"); return 0; }
+    u8 a = smlua_to_integer(L, 4);
+    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 4, "djui_hud_set_text_color"); return 0; }
+
+    djui_hud_set_text_color(r, g, b, a);
+
+    return 1;
+}
+
+int smlua_func_djui_hud_reset_text_color(lua_State* L) {
+    if (L == NULL) { return 0; }
+
+    int top = lua_gettop(L);
+    if (top != 0) {
+        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "djui_hud_reset_text_color", 0, top);
+        return 0;
+    }
+
+
+    djui_hud_reset_text_color();
 
     return 1;
 }
@@ -12452,7 +12572,7 @@ int smlua_func_djui_hud_set_text_alignment_interpolated(lua_State* L) {
     return 1;
 }
 
-int smlua_func_djui_hud_get_screen_width(UNUSED lua_State* L) {
+int smlua_func_djui_hud_get_screen_width(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -12467,7 +12587,7 @@ int smlua_func_djui_hud_get_screen_width(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_djui_hud_get_screen_height(UNUSED lua_State* L) {
+int smlua_func_djui_hud_get_screen_height(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -12482,7 +12602,7 @@ int smlua_func_djui_hud_get_screen_height(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_djui_hud_get_mouse_x(UNUSED lua_State* L) {
+int smlua_func_djui_hud_get_mouse_x(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -12497,7 +12617,7 @@ int smlua_func_djui_hud_get_mouse_x(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_djui_hud_get_mouse_y(UNUSED lua_State* L) {
+int smlua_func_djui_hud_get_mouse_y(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -12512,7 +12632,7 @@ int smlua_func_djui_hud_get_mouse_y(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_djui_hud_get_raw_mouse_x(UNUSED lua_State* L) {
+int smlua_func_djui_hud_get_raw_mouse_x(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -12527,7 +12647,7 @@ int smlua_func_djui_hud_get_raw_mouse_x(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_djui_hud_get_raw_mouse_y(UNUSED lua_State* L) {
+int smlua_func_djui_hud_get_raw_mouse_y(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -12542,7 +12662,7 @@ int smlua_func_djui_hud_get_raw_mouse_y(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_djui_hud_is_mouse_locked(UNUSED lua_State* L) {
+int smlua_func_djui_hud_is_mouse_locked(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -12574,7 +12694,7 @@ int smlua_func_djui_hud_set_mouse_locked(lua_State* L) {
     return 1;
 }
 
-int smlua_func_djui_hud_get_mouse_buttons_down(UNUSED lua_State* L) {
+int smlua_func_djui_hud_get_mouse_buttons_down(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -12589,7 +12709,7 @@ int smlua_func_djui_hud_get_mouse_buttons_down(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_djui_hud_get_mouse_buttons_pressed(UNUSED lua_State* L) {
+int smlua_func_djui_hud_get_mouse_buttons_pressed(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -12604,7 +12724,7 @@ int smlua_func_djui_hud_get_mouse_buttons_pressed(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_djui_hud_get_mouse_buttons_released(UNUSED lua_State* L) {
+int smlua_func_djui_hud_get_mouse_buttons_released(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -12619,7 +12739,7 @@ int smlua_func_djui_hud_get_mouse_buttons_released(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_djui_hud_get_mouse_scroll_x(UNUSED lua_State* L) {
+int smlua_func_djui_hud_get_mouse_scroll_x(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -12634,7 +12754,7 @@ int smlua_func_djui_hud_get_mouse_scroll_x(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_djui_hud_get_mouse_scroll_y(UNUSED lua_State* L) {
+int smlua_func_djui_hud_get_mouse_scroll_y(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -12672,7 +12792,7 @@ int smlua_func_djui_hud_set_viewport(lua_State* L) {
     return 1;
 }
 
-int smlua_func_djui_hud_reset_viewport(UNUSED lua_State* L) {
+int smlua_func_djui_hud_reset_viewport(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -12710,7 +12830,7 @@ int smlua_func_djui_hud_set_scissor(lua_State* L) {
     return 1;
 }
 
-int smlua_func_djui_hud_reset_scissor(UNUSED lua_State* L) {
+int smlua_func_djui_hud_reset_scissor(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -12737,61 +12857,15 @@ int smlua_func_djui_hud_measure_text(lua_State* L) {
     const char* message = smlua_to_string(L, 1);
     if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "djui_hud_measure_text"); return 0; }
 
-    lua_pushnumber(L, djui_hud_measure_text(message));
+    f32 width;
+    f32 height;
 
-    return 1;
-}
+    djui_hud_measure_text(message, &width, &height);
 
-int smlua_func_djui_hud_print_text(lua_State* L) {
-    if (L == NULL) { return 0; }
+    lua_pushnumber(L, width);
+    lua_pushnumber(L, height);
 
-    int top = lua_gettop(L);
-    if (top != 4) {
-        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "djui_hud_print_text", 4, top);
-        return 0;
-    }
-
-    const char* message = smlua_to_string(L, 1);
-    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "djui_hud_print_text"); return 0; }
-    f32 x = smlua_to_number(L, 2);
-    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 2, "djui_hud_print_text"); return 0; }
-    f32 y = smlua_to_number(L, 3);
-    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 3, "djui_hud_print_text"); return 0; }
-    f32 scale = smlua_to_number(L, 4);
-    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 4, "djui_hud_print_text"); return 0; }
-
-    djui_hud_print_text(message, x, y, scale);
-
-    return 1;
-}
-
-int smlua_func_djui_hud_print_text_interpolated(lua_State* L) {
-    if (L == NULL) { return 0; }
-
-    int top = lua_gettop(L);
-    if (top != 7) {
-        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "djui_hud_print_text_interpolated", 7, top);
-        return 0;
-    }
-
-    const char* message = smlua_to_string(L, 1);
-    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "djui_hud_print_text_interpolated"); return 0; }
-    f32 prevX = smlua_to_number(L, 2);
-    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 2, "djui_hud_print_text_interpolated"); return 0; }
-    f32 prevY = smlua_to_number(L, 3);
-    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 3, "djui_hud_print_text_interpolated"); return 0; }
-    f32 prevScale = smlua_to_number(L, 4);
-    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 4, "djui_hud_print_text_interpolated"); return 0; }
-    f32 x = smlua_to_number(L, 5);
-    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 5, "djui_hud_print_text_interpolated"); return 0; }
-    f32 y = smlua_to_number(L, 6);
-    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 6, "djui_hud_print_text_interpolated"); return 0; }
-    f32 scale = smlua_to_number(L, 7);
-    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 7, "djui_hud_print_text_interpolated"); return 0; }
-
-    djui_hud_print_text_interpolated(message, prevX, prevY, prevScale, x, y, scale);
-
-    return 1;
+    return 2;
 }
 
 int smlua_func_djui_hud_render_texture(lua_State* L) {
@@ -13005,7 +13079,7 @@ int smlua_func_djui_hud_render_line(lua_State* L) {
     return 1;
 }
 
-int smlua_func_get_current_fov(UNUSED lua_State* L) {
+int smlua_func_get_current_fov(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -13020,7 +13094,7 @@ int smlua_func_get_current_fov(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_djui_hud_get_fov_coeff(UNUSED lua_State* L) {
+int smlua_func_djui_hud_get_fov_coeff(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -13060,7 +13134,7 @@ int smlua_func_djui_hud_world_pos_to_screen_pos(lua_State* L) {
     return 1;
 }
 
-int smlua_func_djui_hud_is_pause_menu_created(UNUSED lua_State* L) {
+int smlua_func_djui_hud_is_pause_menu_created(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -13075,7 +13149,7 @@ int smlua_func_djui_hud_is_pause_menu_created(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_djui_open_pause_menu(UNUSED lua_State* L) {
+int smlua_func_djui_open_pause_menu(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -13342,7 +13416,7 @@ int smlua_func_stop_sounds_from_source(lua_State* L) {
     return 1;
 }
 
-int smlua_func_stop_sounds_in_continuous_banks(UNUSED lua_State* L) {
+int smlua_func_stop_sounds_in_continuous_banks(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -13488,7 +13562,7 @@ int smlua_func_fadeout_background_music(lua_State* L) {
     return 1;
 }
 
-int smlua_func_drop_queued_background_music(UNUSED lua_State* L) {
+int smlua_func_drop_queued_background_music(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -13503,7 +13577,7 @@ int smlua_func_drop_queued_background_music(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_get_current_background_music(UNUSED lua_State* L) {
+int smlua_func_get_current_background_music(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -13518,7 +13592,7 @@ int smlua_func_get_current_background_music(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_get_current_background_music_default_volume(UNUSED lua_State* L) {
+int smlua_func_get_current_background_music_default_volume(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -13533,7 +13607,7 @@ int smlua_func_get_current_background_music_default_volume(UNUSED lua_State* L) 
     return 1;
 }
 
-int smlua_func_get_current_background_music_target_volume(UNUSED lua_State* L) {
+int smlua_func_get_current_background_music_target_volume(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -13548,7 +13622,7 @@ int smlua_func_get_current_background_music_target_volume(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_get_current_background_music_max_target_volume(UNUSED lua_State* L) {
+int smlua_func_get_current_background_music_max_target_volume(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -13563,7 +13637,7 @@ int smlua_func_get_current_background_music_max_target_volume(UNUSED lua_State* 
     return 1;
 }
 
-int smlua_func_is_current_background_music_volume_lowered(UNUSED lua_State* L) {
+int smlua_func_is_current_background_music_volume_lowered(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -13635,7 +13709,7 @@ int smlua_func_set_audio_fadeout(lua_State* L) {
     return 1;
 }
 
-int smlua_func_play_course_clear(UNUSED lua_State* L) {
+int smlua_func_play_course_clear(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -13650,7 +13724,7 @@ int smlua_func_play_course_clear(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_play_peachs_jingle(UNUSED lua_State* L) {
+int smlua_func_play_peachs_jingle(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -13665,7 +13739,7 @@ int smlua_func_play_peachs_jingle(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_play_puzzle_jingle(UNUSED lua_State* L) {
+int smlua_func_play_puzzle_jingle(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -13680,7 +13754,7 @@ int smlua_func_play_puzzle_jingle(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_play_star_fanfare(UNUSED lua_State* L) {
+int smlua_func_play_star_fanfare(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -13712,7 +13786,7 @@ int smlua_func_play_power_star_jingle(lua_State* L) {
     return 1;
 }
 
-int smlua_func_play_race_fanfare(UNUSED lua_State* L) {
+int smlua_func_play_race_fanfare(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -13727,7 +13801,7 @@ int smlua_func_play_race_fanfare(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_play_toads_jingle(UNUSED lua_State* L) {
+int smlua_func_play_toads_jingle(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -13835,7 +13909,7 @@ int smlua_func_first_person_check_cancels(lua_State* L) {
     return 1;
 }
 
-int smlua_func_get_first_person_enabled(UNUSED lua_State* L) {
+int smlua_func_get_first_person_enabled(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -13867,7 +13941,7 @@ int smlua_func_set_first_person_enabled(lua_State* L) {
     return 1;
 }
 
-int smlua_func_first_person_reset(UNUSED lua_State* L) {
+int smlua_func_first_person_reset(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -13956,7 +14030,7 @@ int smlua_func_create_dialog_box_with_response(lua_State* L) {
     return 1;
 }
 
-int smlua_func_reset_dialog_render_state(UNUSED lua_State* L) {
+int smlua_func_reset_dialog_render_state(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -14041,7 +14115,7 @@ int smlua_func_set_dialog_override_pos(lua_State* L) {
     return 1;
 }
 
-int smlua_func_reset_dialog_override_pos(UNUSED lua_State* L) {
+int smlua_func_reset_dialog_override_pos(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -14087,7 +14161,7 @@ int smlua_func_set_dialog_override_color(lua_State* L) {
     return 1;
 }
 
-int smlua_func_reset_dialog_override_color(UNUSED lua_State* L) {
+int smlua_func_reset_dialog_override_color(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -15066,7 +15140,7 @@ int smlua_func_determine_interaction(lua_State* L) {
  // lag_compensation.h //
 ////////////////////////
 
-int smlua_func_lag_compensation_store(UNUSED lua_State* L) {
+int smlua_func_lag_compensation_store(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -15098,7 +15172,7 @@ int smlua_func_lag_compensation_get_local_state(lua_State* L) {
     return 1;
 }
 
-int smlua_func_lag_compensation_get_local_state_ready(UNUSED lua_State* L) {
+int smlua_func_lag_compensation_get_local_state_ready(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -15113,7 +15187,7 @@ int smlua_func_lag_compensation_get_local_state_ready(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_lag_compensation_get_local_state_index(UNUSED lua_State* L) {
+int smlua_func_lag_compensation_get_local_state_index(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -15295,7 +15369,7 @@ int smlua_func_area_create_warp_node(lua_State* L) {
  // level_update.h //
 ////////////////////
 
-int smlua_func_level_control_timer_running(UNUSED lua_State* L) {
+int smlua_func_level_control_timer_running(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -15310,7 +15384,7 @@ int smlua_func_level_control_timer_running(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_pressed_pause(UNUSED lua_State* L) {
+int smlua_func_pressed_pause(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -15361,7 +15435,7 @@ int smlua_func_get_instant_warp(lua_State* L) {
     return 1;
 }
 
-int smlua_func_get_painting_warp_node(UNUSED lua_State* L) {
+int smlua_func_get_painting_warp_node(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -15475,7 +15549,7 @@ int smlua_func_lvl_set_current_level(lua_State* L) {
  // lighting_engine.h //
 ///////////////////////
 
-int smlua_func_le_is_enabled(UNUSED lua_State* L) {
+int smlua_func_le_is_enabled(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -15507,7 +15581,7 @@ int smlua_func_le_set_mode(lua_State* L) {
     return 1;
 }
 
-int smlua_func_le_get_mode(UNUSED lua_State* L) {
+int smlua_func_le_get_mode(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -15594,6 +15668,23 @@ int smlua_func_le_set_max_lights_per_vertex(lua_State* L) {
     if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "le_set_max_lights_per_vertex"); return 0; }
 
     le_set_max_lights_per_vertex(count);
+
+    return 1;
+}
+
+int smlua_func_le_set_enabled(lua_State* L) {
+    if (L == NULL) { return 0; }
+
+    int top = lua_gettop(L);
+    if (top != 1) {
+        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "le_set_enabled", 1, top);
+        return 0;
+    }
+
+    bool value = smlua_to_boolean(L, 1);
+    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "le_set_enabled"); return 0; }
+
+    le_set_enabled(value);
 
     return 1;
 }
@@ -15729,7 +15820,7 @@ int smlua_func_le_remove_light(lua_State* L) {
     return 1;
 }
 
-int smlua_func_le_get_light_count(UNUSED lua_State* L) {
+int smlua_func_le_get_light_count(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -17722,7 +17813,7 @@ int smlua_func_get_credits_str_width(lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_end_peach_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_end_peach_loop(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -17738,7 +17829,7 @@ int smlua_func_bhv_end_peach_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_end_toad_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_end_toad_loop(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -17957,6 +18048,26 @@ int smlua_func_stuck_in_ground_handler(lua_State* L) {
 
     return 1;
 }
+
+/*
+int smlua_func_jumbo_star_offset(lua_State* L) {
+    if (L == NULL) { return 0; }
+
+    int top = lua_gettop(L);
+    if (top != 1) {
+        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "jumbo_star_offset", 1, top);
+        return 0;
+    }
+
+    struct MarioState* m = (struct MarioState*)smlua_to_cobject(L, 1, LOT_MARIOSTATE);
+    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "jumbo_star_offset"); return 0; }
+
+    extern UNUSED static void jumbo_star_offset(struct MarioState* m);
+    UNIMPLEMENTED -->(L, jumbo_star_offset(m));
+
+    return 1;
+}
+*/
 
 int smlua_func_generate_yellow_sparkles(lua_State* L) {
     if (L == NULL) { return 0; }
@@ -18928,26 +19039,6 @@ int smlua_func_check_common_landing_cancels(lua_State* L) {
     return 1;
 }
 
-int smlua_func_mario_exit_palette_editor(lua_State* L) {
-    if (L == NULL) { return 0; }
-
-    int top = lua_gettop(L);
-    if (top != 2) {
-        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "mario_exit_palette_editor", 2, top);
-        return 0;
-    }
-
-    struct MarioState* m = (struct MarioState*)smlua_to_cobject(L, 1, LOT_MARIOSTATE);
-    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "mario_exit_palette_editor"); return 0; }
-    struct Camera* c = (struct Camera*)smlua_to_cobject(L, 2, LOT_CAMERA);
-    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 2, "mario_exit_palette_editor"); return 0; }
-
-    extern s32 mario_exit_palette_editor(struct MarioState *m, struct Camera *c);
-    lua_pushinteger(L, mario_exit_palette_editor(m, c));
-
-    return 1;
-}
-
 int smlua_func_check_common_stationary_cancels(lua_State* L) {
     if (L == NULL) { return 0; }
 
@@ -19114,7 +19205,7 @@ int smlua_func_mario_execute_submerged_action(lua_State* L) {
  // mario_misc.h //
 //////////////////
 
-int smlua_func_bhv_toad_message_init(UNUSED lua_State* L) {
+int smlua_func_bhv_toad_message_init(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -19129,7 +19220,7 @@ int smlua_func_bhv_toad_message_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_toad_message_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_toad_message_loop(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -19144,7 +19235,7 @@ int smlua_func_bhv_toad_message_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_unlock_door_star_init(UNUSED lua_State* L) {
+int smlua_func_bhv_unlock_door_star_init(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -19159,7 +19250,7 @@ int smlua_func_bhv_unlock_door_star_init(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_unlock_door_star_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_unlock_door_star_loop(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -19174,7 +19265,7 @@ int smlua_func_bhv_unlock_door_star_loop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_geo_get_mario_state(UNUSED lua_State* L) {
+int smlua_func_geo_get_mario_state(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -19189,7 +19280,7 @@ int smlua_func_geo_get_mario_state(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_geo_get_body_state(UNUSED lua_State* L) {
+int smlua_func_geo_get_body_state(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -19204,11 +19295,26 @@ int smlua_func_geo_get_body_state(UNUSED lua_State* L) {
     return 1;
 }
 
+int smlua_func_geo_get_mario_object(lua_State* L) {
+    if (L == NULL) { return 0; }
+
+    int top = lua_gettop(L);
+    if (top != 0) {
+        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "geo_get_mario_object", 0, top);
+        return 0;
+    }
+
+
+    smlua_push_object(L, LOT_OBJECT, geo_get_mario_object(), NULL);
+
+    return 1;
+}
+
   //////////////////
  // mario_step.h //
 //////////////////
 
-int smlua_func_get_additive_y_vel_for_jumps(UNUSED lua_State* L) {
+int smlua_func_get_additive_y_vel_for_jumps(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -22175,7 +22281,7 @@ int smlua_func_smooth_step(lua_State* L) {
     return 1;
 }
 
-int smlua_func_update_all_mario_stars(UNUSED lua_State* L) {
+int smlua_func_update_all_mario_stars(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -22190,7 +22296,7 @@ int smlua_func_update_all_mario_stars(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_clock_elapsed(UNUSED lua_State* L) {
+int smlua_func_clock_elapsed(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -22205,7 +22311,7 @@ int smlua_func_clock_elapsed(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_clock_elapsed_f64(UNUSED lua_State* L) {
+int smlua_func_clock_elapsed_f64(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -22220,7 +22326,7 @@ int smlua_func_clock_elapsed_f64(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_clock_elapsed_ticks(UNUSED lua_State* L) {
+int smlua_func_clock_elapsed_ticks(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -22422,7 +22528,7 @@ int smlua_func_mod_fs_reload(lua_State* L) {
     return 1;
 }
 
-int smlua_func_mod_fs_create(UNUSED lua_State* L) {
+int smlua_func_mod_fs_create(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -22990,6 +23096,25 @@ int smlua_func_mod_fs_file_set_public(lua_State* L) {
     return 1;
 }
 
+int smlua_func_mod_fs_file_set_compression(lua_State* L) {
+    if (L == NULL) { return 0; }
+
+    int top = lua_gettop(L);
+    if (top != 2) {
+        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "mod_fs_file_set_compression", 2, top);
+        return 0;
+    }
+
+    struct ModFsFile* file = (struct ModFsFile*)smlua_to_cobject(L, 1, LOT_MODFSFILE);
+    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "mod_fs_file_set_compression"); return 0; }
+    s32 level = smlua_to_integer(L, 2);
+    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 2, "mod_fs_file_set_compression"); return 0; }
+
+    lua_pushboolean(L, mod_fs_file_set_compression(file, level));
+
+    return 1;
+}
+
 int smlua_func_mod_fs_hide_errors(lua_State* L) {
     if (L == NULL) { return 0; }
 
@@ -23007,7 +23132,7 @@ int smlua_func_mod_fs_hide_errors(lua_State* L) {
     return 1;
 }
 
-int smlua_func_mod_fs_get_last_error(UNUSED lua_State* L) {
+int smlua_func_mod_fs_get_last_error(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -23045,6 +23170,25 @@ int smlua_func_mod_storage_save(lua_State* L) {
     return 1;
 }
 
+int smlua_func_mod_storage_save_integer(lua_State* L) {
+    if (L == NULL) { return 0; }
+
+    int top = lua_gettop(L);
+    if (top != 2) {
+        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "mod_storage_save_integer", 2, top);
+        return 0;
+    }
+
+    const char* key = smlua_to_string(L, 1);
+    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "mod_storage_save_integer"); return 0; }
+    lua_Integer value = smlua_to_integer(L, 2);
+    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 2, "mod_storage_save_integer"); return 0; }
+
+    lua_pushboolean(L, mod_storage_save_integer(key, value));
+
+    return 1;
+}
+
 int smlua_func_mod_storage_save_number(lua_State* L) {
     if (L == NULL) { return 0; }
 
@@ -23056,7 +23200,7 @@ int smlua_func_mod_storage_save_number(lua_State* L) {
 
     const char* key = smlua_to_string(L, 1);
     if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "mod_storage_save_number"); return 0; }
-    f32 value = smlua_to_number(L, 2);
+    lua_Number value = smlua_to_number(L, 2);
     if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 2, "mod_storage_save_number"); return 0; }
 
     lua_pushboolean(L, mod_storage_save_number(key, value));
@@ -23087,15 +23231,42 @@ int smlua_func_mod_storage_load(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
-    if (top != 1) {
-        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "mod_storage_load", 1, top);
+    if (top < 1 || top > 2) {
+        LOG_LUA_LINE("Improper param count for '%s': Expected between %u and %u, Received %u", "mod_storage_load", 1, 2, top);
         return 0;
     }
 
     const char* key = smlua_to_string(L, 1);
     if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "mod_storage_load"); return 0; }
+    const char* defaultValue = (const char*) NULL;
+    if (top >= 2) {
+        defaultValue = smlua_to_string(L, 2);
+        if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 2, "mod_storage_load"); return 0; }
+    }
 
-    lua_pushstring(L, mod_storage_load(key));
+    lua_pushstring(L, mod_storage_load(key, defaultValue));
+
+    return 1;
+}
+
+int smlua_func_mod_storage_load_integer(lua_State* L) {
+    if (L == NULL) { return 0; }
+
+    int top = lua_gettop(L);
+    if (top < 1 || top > 2) {
+        LOG_LUA_LINE("Improper param count for '%s': Expected between %u and %u, Received %u", "mod_storage_load_integer", 1, 2, top);
+        return 0;
+    }
+
+    const char* key = smlua_to_string(L, 1);
+    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "mod_storage_load_integer"); return 0; }
+    lua_Integer defaultValue = (lua_Integer) 0;
+    if (top >= 2) {
+        defaultValue = smlua_to_integer(L, 2);
+        if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 2, "mod_storage_load_integer"); return 0; }
+    }
+
+    lua_pushinteger(L, mod_storage_load_integer(key, defaultValue));
 
     return 1;
 }
@@ -23104,15 +23275,20 @@ int smlua_func_mod_storage_load_number(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
-    if (top != 1) {
-        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "mod_storage_load_number", 1, top);
+    if (top < 1 || top > 2) {
+        LOG_LUA_LINE("Improper param count for '%s': Expected between %u and %u, Received %u", "mod_storage_load_number", 1, 2, top);
         return 0;
     }
 
     const char* key = smlua_to_string(L, 1);
     if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "mod_storage_load_number"); return 0; }
+    lua_Number defaultValue = (lua_Number) 0;
+    if (top >= 2) {
+        defaultValue = smlua_to_number(L, 2);
+        if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 2, "mod_storage_load_number"); return 0; }
+    }
 
-    lua_pushnumber(L, mod_storage_load_number(key));
+    lua_pushnumber(L, mod_storage_load_number(key, defaultValue));
 
     return 1;
 }
@@ -23121,20 +23297,25 @@ int smlua_func_mod_storage_load_bool(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
-    if (top != 1) {
-        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "mod_storage_load_bool", 1, top);
+    if (top < 1 || top > 2) {
+        LOG_LUA_LINE("Improper param count for '%s': Expected between %u and %u, Received %u", "mod_storage_load_bool", 1, 2, top);
         return 0;
     }
 
     const char* key = smlua_to_string(L, 1);
     if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "mod_storage_load_bool"); return 0; }
+    bool defaultValue = (bool) 0;
+    if (top >= 2) {
+        defaultValue = smlua_to_boolean(L, 2);
+        if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 2, "mod_storage_load_bool"); return 0; }
+    }
 
-    lua_pushboolean(L, mod_storage_load_bool(key));
+    lua_pushboolean(L, mod_storage_load_bool(key, defaultValue));
 
     return 1;
 }
 
-int smlua_func_mod_storage_load_all(UNUSED lua_State* L) {
+int smlua_func_mod_storage_load_all(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -23183,7 +23364,7 @@ int smlua_func_mod_storage_remove(lua_State* L) {
     return 1;
 }
 
-int smlua_func_mod_storage_clear(UNUSED lua_State* L) {
+int smlua_func_mod_storage_clear(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -23202,7 +23383,7 @@ int smlua_func_mod_storage_clear(UNUSED lua_State* L) {
  // network_player.h //
 //////////////////////
 
-int smlua_func_network_player_connected_count(UNUSED lua_State* L) {
+int smlua_func_network_player_connected_count(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -23324,7 +23505,7 @@ int smlua_func_get_network_player_from_area(lua_State* L) {
     return 1;
 }
 
-int smlua_func_get_network_player_smallest_global(UNUSED lua_State* L) {
+int smlua_func_get_network_player_smallest_global(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -23476,7 +23657,7 @@ int smlua_func_network_local_index_from_global(lua_State* L) {
     return 1;
 }
 
-int smlua_func_network_is_server(UNUSED lua_State* L) {
+int smlua_func_network_is_server(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -23491,7 +23672,7 @@ int smlua_func_network_is_server(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_network_is_moderator(UNUSED lua_State* L) {
+int smlua_func_network_is_moderator(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -23523,7 +23704,7 @@ int smlua_func_network_get_player_text_color_string(lua_State* L) {
     return 1;
 }
 
-int smlua_func_network_check_singleplayer_pause(UNUSED lua_State* L) {
+int smlua_func_network_check_singleplayer_pause(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -23559,7 +23740,7 @@ int smlua_func_network_discord_id_from_local_index(lua_State* L) {
  // obj_behaviors.c //
 /////////////////////
 
-int smlua_func_set_yoshi_as_not_dead(UNUSED lua_State* L) {
+int smlua_func_set_yoshi_as_not_dead(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -23739,7 +23920,7 @@ int smlua_func_calc_new_obj_vel_and_pos_y_underwater(lua_State* L) {
     return 1;
 }
 
-int smlua_func_obj_update_pos_vel_xz(UNUSED lua_State* L) {
+int smlua_func_obj_update_pos_vel_xz(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -23775,7 +23956,7 @@ int smlua_func_obj_splash(lua_State* L) {
     return 1;
 }
 
-int smlua_func_object_step(UNUSED lua_State* L) {
+int smlua_func_object_step(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -23791,7 +23972,7 @@ int smlua_func_object_step(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_object_step_without_floor_orient(UNUSED lua_State* L) {
+int smlua_func_object_step_without_floor_orient(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -23891,7 +24072,7 @@ int smlua_func_is_player_active(lua_State* L) {
     return 1;
 }
 
-int smlua_func_is_other_player_active(UNUSED lua_State* L) {
+int smlua_func_is_other_player_active(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -24283,7 +24464,7 @@ int smlua_func_obj_check_floor_death(lua_State* L) {
     return 1;
 }
 
-int smlua_func_obj_lava_death(UNUSED lua_State* L) {
+int smlua_func_obj_lava_death(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -24327,7 +24508,7 @@ int smlua_func_spawn_orange_number(lua_State* L) {
  // obj_behaviors_2.c //
 ///////////////////////
 
-int smlua_func_obj_is_rendering_enabled(UNUSED lua_State* L) {
+int smlua_func_obj_is_rendering_enabled(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -24343,7 +24524,7 @@ int smlua_func_obj_is_rendering_enabled(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_obj_get_pitch_from_vel(UNUSED lua_State* L) {
+int smlua_func_obj_get_pitch_from_vel(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -25022,7 +25203,7 @@ int smlua_func_obj_resolve_collisions_and_turn(lua_State* L) {
     return 1;
 }
 
-int smlua_func_obj_die_if_health_non_positive(UNUSED lua_State* L) {
+int smlua_func_obj_die_if_health_non_positive(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -25038,7 +25219,7 @@ int smlua_func_obj_die_if_health_non_positive(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_obj_unused_die(UNUSED lua_State* L) {
+int smlua_func_obj_unused_die(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -25072,7 +25253,7 @@ int smlua_func_obj_set_knockback_action(lua_State* L) {
     return 1;
 }
 
-int smlua_func_obj_set_squished_action(UNUSED lua_State* L) {
+int smlua_func_obj_set_squished_action(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -25088,7 +25269,7 @@ int smlua_func_obj_set_squished_action(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_obj_die_if_above_lava_and_health_non_positive(UNUSED lua_State* L) {
+int smlua_func_obj_die_if_above_lava_and_health_non_positive(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -25908,7 +26089,7 @@ int smlua_func_obj_build_relative_transform(lua_State* L) {
     return 1;
 }
 
-int smlua_func_cur_obj_move_using_vel(UNUSED lua_State* L) {
+int smlua_func_cur_obj_move_using_vel(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -26322,7 +26503,7 @@ int smlua_func_cur_obj_enable_rendering_and_become_tangible(lua_State* L) {
     return 1;
 }
 
-int smlua_func_cur_obj_enable_rendering(UNUSED lua_State* L) {
+int smlua_func_cur_obj_enable_rendering(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -26356,7 +26537,7 @@ int smlua_func_cur_obj_disable_rendering_and_become_intangible(lua_State* L) {
     return 1;
 }
 
-int smlua_func_cur_obj_disable_rendering(UNUSED lua_State* L) {
+int smlua_func_cur_obj_disable_rendering(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -26372,7 +26553,7 @@ int smlua_func_cur_obj_disable_rendering(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_cur_obj_unhide(UNUSED lua_State* L) {
+int smlua_func_cur_obj_unhide(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -26388,7 +26569,7 @@ int smlua_func_cur_obj_unhide(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_cur_obj_hide(UNUSED lua_State* L) {
+int smlua_func_cur_obj_hide(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -26450,7 +26631,7 @@ int smlua_func_cur_obj_set_pos_relative_to_parent(lua_State* L) {
     return 1;
 }
 
-int smlua_func_cur_obj_enable_rendering_2(UNUSED lua_State* L) {
+int smlua_func_cur_obj_enable_rendering_2(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -26466,7 +26647,7 @@ int smlua_func_cur_obj_enable_rendering_2(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_cur_obj_unused_init_on_floor(UNUSED lua_State* L) {
+int smlua_func_cur_obj_unused_init_on_floor(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -26554,7 +26735,7 @@ int smlua_func_cur_obj_dist_to_nearest_object_with_behavior(lua_State* L) {
     return 1;
 }
 
-int smlua_func_cur_obj_find_nearest_pole(UNUSED lua_State* L) {
+int smlua_func_cur_obj_find_nearest_pole(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -26612,7 +26793,7 @@ int smlua_func_cur_obj_count_objects_with_behavior(lua_State* L) {
     return 1;
 }
 
-int smlua_func_find_unimportant_object(UNUSED lua_State* L) {
+int smlua_func_find_unimportant_object(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -26628,7 +26809,7 @@ int smlua_func_find_unimportant_object(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_count_unimportant_objects(UNUSED lua_State* L) {
+int smlua_func_count_unimportant_objects(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -26700,7 +26881,7 @@ int smlua_func_cur_obj_find_nearby_held_actor(lua_State* L) {
     return 1;
 }
 
-int smlua_func_cur_obj_reset_timer_and_subaction(UNUSED lua_State* L) {
+int smlua_func_cur_obj_reset_timer_and_subaction(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -26756,7 +26937,7 @@ int smlua_func_cur_obj_set_vel_from_mario_vel(lua_State* L) {
     return 1;
 }
 
-int smlua_func_cur_obj_reverse_animation(UNUSED lua_State* L) {
+int smlua_func_cur_obj_reverse_animation(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -26772,7 +26953,7 @@ int smlua_func_cur_obj_reverse_animation(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_cur_obj_extend_animation_if_at_end(UNUSED lua_State* L) {
+int smlua_func_cur_obj_extend_animation_if_at_end(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -26788,7 +26969,7 @@ int smlua_func_cur_obj_extend_animation_if_at_end(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_cur_obj_check_if_near_animation_end(UNUSED lua_State* L) {
+int smlua_func_cur_obj_check_if_near_animation_end(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -26804,7 +26985,7 @@ int smlua_func_cur_obj_check_if_near_animation_end(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_cur_obj_check_if_at_animation_end(UNUSED lua_State* L) {
+int smlua_func_cur_obj_check_if_at_animation_end(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -26854,24 +27035,6 @@ int smlua_func_cur_obj_check_anim_frame_in_range(lua_State* L) {
 
     extern s32 cur_obj_check_anim_frame_in_range(s32 startFrame, s32 rangeLength);
     lua_pushinteger(L, cur_obj_check_anim_frame_in_range(startFrame, rangeLength));
-
-    return 1;
-}
-
-int smlua_func_cur_obj_check_frame_prior_current_frame(lua_State* L) {
-    if (L == NULL) { return 0; }
-
-    int top = lua_gettop(L);
-    if (top != 1) {
-        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "cur_obj_check_frame_prior_current_frame", 1, top);
-        return 0;
-    }
-
-    s16 * a0 = (s16 *)smlua_to_cpointer(L, 1, LVT_S16_P);
-    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "cur_obj_check_frame_prior_current_frame"); return 0; }
-
-    extern s32 cur_obj_check_frame_prior_current_frame(s16 *a0);
-    lua_pushinteger(L, cur_obj_check_frame_prior_current_frame(a0));
 
     return 1;
 }
@@ -26994,7 +27157,7 @@ int smlua_func_cur_obj_get_thrown_or_placed(lua_State* L) {
     return 1;
 }
 
-int smlua_func_cur_obj_get_dropped(UNUSED lua_State* L) {
+int smlua_func_cur_obj_get_dropped(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -27064,7 +27227,7 @@ int smlua_func_obj_mark_for_deletion(lua_State* L) {
     return 1;
 }
 
-int smlua_func_cur_obj_disable(UNUSED lua_State* L) {
+int smlua_func_cur_obj_disable(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -27080,7 +27243,7 @@ int smlua_func_cur_obj_disable(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_cur_obj_become_intangible(UNUSED lua_State* L) {
+int smlua_func_cur_obj_become_intangible(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -27096,7 +27259,7 @@ int smlua_func_cur_obj_become_intangible(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_cur_obj_become_tangible(UNUSED lua_State* L) {
+int smlua_func_cur_obj_become_tangible(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -27130,7 +27293,7 @@ int smlua_func_obj_become_tangible(lua_State* L) {
     return 1;
 }
 
-int smlua_func_cur_obj_update_floor_height(UNUSED lua_State* L) {
+int smlua_func_cur_obj_update_floor_height(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -27146,7 +27309,7 @@ int smlua_func_cur_obj_update_floor_height(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_cur_obj_update_floor_height_and_get_floor(UNUSED lua_State* L) {
+int smlua_func_cur_obj_update_floor_height_and_get_floor(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -27223,7 +27386,7 @@ int smlua_func_cur_obj_move_xz(lua_State* L) {
     return 1;
 }
 
-int smlua_func_cur_obj_move_update_underwater_flags(UNUSED lua_State* L) {
+int smlua_func_cur_obj_move_update_underwater_flags(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -27341,7 +27504,7 @@ int smlua_func_abs_angle_diff(lua_State* L) {
     return 1;
 }
 
-int smlua_func_cur_obj_move_xz_using_fvel_and_yaw(UNUSED lua_State* L) {
+int smlua_func_cur_obj_move_xz_using_fvel_and_yaw(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -27357,7 +27520,7 @@ int smlua_func_cur_obj_move_xz_using_fvel_and_yaw(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_cur_obj_move_y_with_terminal_vel(UNUSED lua_State* L) {
+int smlua_func_cur_obj_move_y_with_terminal_vel(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -27373,7 +27536,7 @@ int smlua_func_cur_obj_move_y_with_terminal_vel(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_cur_obj_compute_vel_xz(UNUSED lua_State* L) {
+int smlua_func_cur_obj_compute_vel_xz(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -27527,7 +27690,7 @@ int smlua_func_cur_obj_lateral_dist_from_obj_to_home(lua_State* L) {
     return 1;
 }
 
-int smlua_func_cur_obj_lateral_dist_from_mario_to_home(UNUSED lua_State* L) {
+int smlua_func_cur_obj_lateral_dist_from_mario_to_home(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -27543,7 +27706,7 @@ int smlua_func_cur_obj_lateral_dist_from_mario_to_home(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_cur_obj_lateral_dist_to_home(UNUSED lua_State* L) {
+int smlua_func_cur_obj_lateral_dist_to_home(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -27601,7 +27764,7 @@ int smlua_func_cur_obj_outside_home_rectangle(lua_State* L) {
     return 1;
 }
 
-int smlua_func_cur_obj_set_pos_to_home(UNUSED lua_State* L) {
+int smlua_func_cur_obj_set_pos_to_home(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -27617,7 +27780,7 @@ int smlua_func_cur_obj_set_pos_to_home(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_cur_obj_set_pos_to_home_and_stop(UNUSED lua_State* L) {
+int smlua_func_cur_obj_set_pos_to_home_and_stop(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -27729,7 +27892,7 @@ int smlua_func_obj_set_cylboard(lua_State* L) {
     return 1;
 }
 
-int smlua_func_cur_obj_set_billboard_if_vanilla_cam(UNUSED lua_State* L) {
+int smlua_func_cur_obj_set_billboard_if_vanilla_cam(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -27754,15 +27917,15 @@ int smlua_func_obj_set_hitbox_radius_and_height(lua_State* L) {
         return 0;
     }
 
-    struct Object* o = (struct Object*)smlua_to_cobject(L, 1, LOT_OBJECT);
+    struct Object* obj = (struct Object*)smlua_to_cobject(L, 1, LOT_OBJECT);
     if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "obj_set_hitbox_radius_and_height"); return 0; }
     f32 radius = smlua_to_number(L, 2);
     if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 2, "obj_set_hitbox_radius_and_height"); return 0; }
     f32 height = smlua_to_number(L, 3);
     if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 3, "obj_set_hitbox_radius_and_height"); return 0; }
 
-    extern void obj_set_hitbox_radius_and_height(struct Object *o, f32 radius, f32 height);
-    obj_set_hitbox_radius_and_height(o, radius, height);
+    extern void obj_set_hitbox_radius_and_height(struct Object *obj, f32 radius, f32 height);
+    obj_set_hitbox_radius_and_height(obj, radius, height);
 
     return 1;
 }
@@ -27776,15 +27939,15 @@ int smlua_func_obj_set_hurtbox_radius_and_height(lua_State* L) {
         return 0;
     }
 
-    struct Object* o = (struct Object*)smlua_to_cobject(L, 1, LOT_OBJECT);
+    struct Object* obj = (struct Object*)smlua_to_cobject(L, 1, LOT_OBJECT);
     if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "obj_set_hurtbox_radius_and_height"); return 0; }
     f32 radius = smlua_to_number(L, 2);
     if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 2, "obj_set_hurtbox_radius_and_height"); return 0; }
     f32 height = smlua_to_number(L, 3);
     if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 3, "obj_set_hurtbox_radius_and_height"); return 0; }
 
-    extern void obj_set_hurtbox_radius_and_height(struct Object *o, f32 radius, f32 height);
-    obj_set_hurtbox_radius_and_height(o, radius, height);
+    extern void obj_set_hurtbox_radius_and_height(struct Object *obj, f32 radius, f32 height);
+    obj_set_hurtbox_radius_and_height(obj, radius, height);
 
     return 1;
 }
@@ -27921,7 +28084,7 @@ int smlua_func_cur_obj_spawn_loot_coin_at_mario_pos(lua_State* L) {
     return 1;
 }
 
-int smlua_func_cur_obj_abs_y_dist_to_home(UNUSED lua_State* L) {
+int smlua_func_cur_obj_abs_y_dist_to_home(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -27937,7 +28100,7 @@ int smlua_func_cur_obj_abs_y_dist_to_home(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_cur_obj_advance_looping_anim(UNUSED lua_State* L) {
+int smlua_func_cur_obj_advance_looping_anim(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -27971,7 +28134,7 @@ int smlua_func_cur_obj_detect_steep_floor(lua_State* L) {
     return 1;
 }
 
-int smlua_func_cur_obj_resolve_wall_collisions(UNUSED lua_State* L) {
+int smlua_func_cur_obj_resolve_wall_collisions(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -27987,7 +28150,7 @@ int smlua_func_cur_obj_resolve_wall_collisions(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_cur_obj_update_floor(UNUSED lua_State* L) {
+int smlua_func_cur_obj_update_floor(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -28021,7 +28184,7 @@ int smlua_func_cur_obj_update_floor_and_resolve_wall_collisions(lua_State* L) {
     return 1;
 }
 
-int smlua_func_cur_obj_update_floor_and_walls(UNUSED lua_State* L) {
+int smlua_func_cur_obj_update_floor_and_walls(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -28055,7 +28218,7 @@ int smlua_func_cur_obj_move_standard(lua_State* L) {
     return 1;
 }
 
-int smlua_func_cur_obj_within_12k_bounds(UNUSED lua_State* L) {
+int smlua_func_cur_obj_within_12k_bounds(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -28071,7 +28234,7 @@ int smlua_func_cur_obj_within_12k_bounds(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_cur_obj_move_using_vel_and_gravity(UNUSED lua_State* L) {
+int smlua_func_cur_obj_move_using_vel_and_gravity(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -28087,7 +28250,7 @@ int smlua_func_cur_obj_move_using_vel_and_gravity(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_cur_obj_move_using_fvel_and_gravity(UNUSED lua_State* L) {
+int smlua_func_cur_obj_move_using_fvel_and_gravity(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -28129,7 +28292,7 @@ int smlua_func_obj_set_pos_relative(lua_State* L) {
     return 1;
 }
 
-int smlua_func_cur_obj_angle_to_home(UNUSED lua_State* L) {
+int smlua_func_cur_obj_angle_to_home(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -28263,7 +28426,7 @@ int smlua_func_obj_create_transform_from_self(lua_State* L) {
     return 1;
 }
 
-int smlua_func_cur_obj_rotate_move_angle_using_vel(UNUSED lua_State* L) {
+int smlua_func_cur_obj_rotate_move_angle_using_vel(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -28279,7 +28442,7 @@ int smlua_func_cur_obj_rotate_move_angle_using_vel(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_cur_obj_rotate_face_angle_using_vel(UNUSED lua_State* L) {
+int smlua_func_cur_obj_rotate_face_angle_using_vel(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -28295,7 +28458,7 @@ int smlua_func_cur_obj_rotate_face_angle_using_vel(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_cur_obj_set_face_angle_to_move_angle(UNUSED lua_State* L) {
+int smlua_func_cur_obj_set_face_angle_to_move_angle(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -28445,7 +28608,7 @@ int smlua_func_obj_build_vel_from_transform(lua_State* L) {
     return 1;
 }
 
-int smlua_func_cur_obj_set_pos_via_transform(UNUSED lua_State* L) {
+int smlua_func_cur_obj_set_pos_via_transform(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -28461,7 +28624,7 @@ int smlua_func_cur_obj_set_pos_via_transform(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_cur_obj_reflect_move_angle_off_wall(UNUSED lua_State* L) {
+int smlua_func_cur_obj_reflect_move_angle_off_wall(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -28553,7 +28716,7 @@ int smlua_func_cur_obj_wait_then_blink(lua_State* L) {
     return 1;
 }
 
-int smlua_func_cur_obj_is_mario_ground_pounding_platform(UNUSED lua_State* L) {
+int smlua_func_cur_obj_is_mario_ground_pounding_platform(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -28589,7 +28752,7 @@ int smlua_func_obj_is_mario_ground_pounding_platform(lua_State* L) {
     return 1;
 }
 
-int smlua_func_spawn_mist_particles(UNUSED lua_State* L) {
+int smlua_func_spawn_mist_particles(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -28661,7 +28824,7 @@ int smlua_func_cur_obj_push_mario_away_from_cylinder(lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_dust_smoke_loop(UNUSED lua_State* L) {
+int smlua_func_bhv_dust_smoke_loop(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -28721,7 +28884,7 @@ int smlua_func_cur_obj_scale_over_time(lua_State* L) {
     return 1;
 }
 
-int smlua_func_cur_obj_set_pos_to_home_with_debug(UNUSED lua_State* L) {
+int smlua_func_cur_obj_set_pos_to_home_with_debug(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -28737,7 +28900,7 @@ int smlua_func_cur_obj_set_pos_to_home_with_debug(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_stub_obj_helpers_4(UNUSED lua_State* L) {
+int smlua_func_stub_obj_helpers_4(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -28753,7 +28916,7 @@ int smlua_func_stub_obj_helpers_4(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_cur_obj_is_mario_on_platform(UNUSED lua_State* L) {
+int smlua_func_cur_obj_is_mario_on_platform(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -28769,7 +28932,7 @@ int smlua_func_cur_obj_is_mario_on_platform(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_cur_obj_is_any_player_on_platform(UNUSED lua_State* L) {
+int smlua_func_cur_obj_is_any_player_on_platform(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -28843,7 +29006,7 @@ int smlua_func_spawn_star_with_no_lvl_exit(lua_State* L) {
     return 1;
 }
 
-int smlua_func_spawn_base_star_with_no_lvl_exit(UNUSED lua_State* L) {
+int smlua_func_spawn_base_star_with_no_lvl_exit(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -28877,7 +29040,7 @@ int smlua_func_bit_shift_left(lua_State* L) {
     return 1;
 }
 
-int smlua_func_cur_obj_mario_far_away(UNUSED lua_State* L) {
+int smlua_func_cur_obj_mario_far_away(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -28931,7 +29094,7 @@ int smlua_func_is_item_in_array(lua_State* L) {
     return 1;
 }
 
-int smlua_func_bhv_init_room(UNUSED lua_State* L) {
+int smlua_func_bhv_init_room(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -28947,7 +29110,7 @@ int smlua_func_bhv_init_room(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_cur_obj_enable_rendering_if_mario_in_room(UNUSED lua_State* L) {
+int smlua_func_cur_obj_enable_rendering_if_mario_in_room(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -29027,7 +29190,7 @@ int smlua_func_obj_set_collision_data(lua_State* L) {
 }
 */
 
-int smlua_func_cur_obj_if_hit_wall_bounce_away(UNUSED lua_State* L) {
+int smlua_func_cur_obj_if_hit_wall_bounce_away(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -29079,7 +29242,7 @@ int smlua_func_obj_is_hidden(lua_State* L) {
     return 1;
 }
 
-int smlua_func_enable_time_stop(UNUSED lua_State* L) {
+int smlua_func_enable_time_stop(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -29095,7 +29258,7 @@ int smlua_func_enable_time_stop(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_enable_time_stop_if_alone(UNUSED lua_State* L) {
+int smlua_func_enable_time_stop_if_alone(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -29111,7 +29274,7 @@ int smlua_func_enable_time_stop_if_alone(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_disable_time_stop(UNUSED lua_State* L) {
+int smlua_func_disable_time_stop(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -29267,7 +29430,7 @@ int smlua_func_cur_obj_has_model(lua_State* L) {
     return 1;
 }
 
-int smlua_func_cur_obj_align_gfx_with_floor(UNUSED lua_State* L) {
+int smlua_func_cur_obj_align_gfx_with_floor(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -29343,7 +29506,7 @@ int smlua_func_obj_attack_collided_from_other_object(lua_State* L) {
     return 1;
 }
 
-int smlua_func_cur_obj_was_attacked_or_ground_pounded(UNUSED lua_State* L) {
+int smlua_func_cur_obj_was_attacked_or_ground_pounded(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -29435,7 +29598,7 @@ int smlua_func_cur_obj_init_animation_and_extend_if_at_end(lua_State* L) {
     return 1;
 }
 
-int smlua_func_cur_obj_check_grabbed_mario(UNUSED lua_State* L) {
+int smlua_func_cur_obj_check_grabbed_mario(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -29451,7 +29614,7 @@ int smlua_func_cur_obj_check_grabbed_mario(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_player_performed_grab_escape_action(UNUSED lua_State* L) {
+int smlua_func_player_performed_grab_escape_action(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -29489,7 +29652,7 @@ int smlua_func_cur_obj_unused_play_footstep_sound(lua_State* L) {
     return 1;
 }
 
-int smlua_func_enable_time_stop_including_mario(UNUSED lua_State* L) {
+int smlua_func_enable_time_stop_including_mario(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -29505,7 +29668,7 @@ int smlua_func_enable_time_stop_including_mario(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_disable_time_stop_including_mario(UNUSED lua_State* L) {
+int smlua_func_disable_time_stop_including_mario(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -29521,7 +29684,7 @@ int smlua_func_disable_time_stop_including_mario(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_cur_obj_check_interacted(UNUSED lua_State* L) {
+int smlua_func_cur_obj_check_interacted(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -29537,7 +29700,7 @@ int smlua_func_cur_obj_check_interacted(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_cur_obj_spawn_loot_blue_coin(UNUSED lua_State* L) {
+int smlua_func_cur_obj_spawn_loot_blue_coin(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -29579,7 +29742,7 @@ int smlua_func_cur_obj_spawn_star_at_y_offset(lua_State* L) {
 }
 #endif
 
-int smlua_func_cur_obj_set_home_once(UNUSED lua_State* L) {
+int smlua_func_cur_obj_set_home_once(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -29853,7 +30016,7 @@ int smlua_func_save_file_erase(lua_State* L) {
     return 1;
 }
 
-int smlua_func_save_file_erase_current_backup_save(UNUSED lua_State* L) {
+int smlua_func_save_file_erase_current_backup_save(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -29976,7 +30139,7 @@ int smlua_func_save_file_clear_flags(lua_State* L) {
     return 1;
 }
 
-int smlua_func_save_file_get_flags(UNUSED lua_State* L) {
+int smlua_func_save_file_get_flags(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -30111,7 +30274,7 @@ int smlua_func_save_file_is_cannon_unlocked(lua_State* L) {
     return 1;
 }
 
-int smlua_func_save_file_set_cannon_unlocked(UNUSED lua_State* L) {
+int smlua_func_save_file_set_cannon_unlocked(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -30147,7 +30310,7 @@ int smlua_func_save_file_get_cap_pos(lua_State* L) {
     return 1;
 }
 
-int smlua_func_save_file_get_sound_mode(UNUSED lua_State* L) {
+int smlua_func_save_file_get_sound_mode(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -30386,7 +30549,7 @@ int smlua_func_smlua_anim_util_get_current_animation_name(lua_State* L) {
  // smlua_audio_utils.h //
 /////////////////////////
 
-int smlua_func_smlua_audio_utils_reset_all(UNUSED lua_State* L) {
+int smlua_func_smlua_audio_utils_reset_all(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -30420,6 +30583,21 @@ int smlua_func_smlua_audio_utils_replace_sequence(lua_State* L) {
     if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 4, "smlua_audio_utils_replace_sequence"); return 0; }
 
     smlua_audio_utils_replace_sequence(sequenceId, bankId, defaultVolume, m64Name);
+
+    return 1;
+}
+
+int smlua_func_smlua_audio_utils_allocate_sequence(lua_State* L) {
+    if (L == NULL) { return 0; }
+
+    int top = lua_gettop(L);
+    if (top != 0) {
+        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "smlua_audio_utils_allocate_sequence", 0, top);
+        return 0;
+    }
+
+
+    lua_pushinteger(L, smlua_audio_utils_allocate_sequence());
 
     return 1;
 }
@@ -30678,6 +30856,42 @@ int smlua_func_audio_stream_set_volume(lua_State* L) {
     return 1;
 }
 
+int smlua_func_audio_stream_get_volume_channel(lua_State* L) {
+    if (L == NULL) { return 0; }
+
+    int top = lua_gettop(L);
+    if (top != 1) {
+        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "audio_stream_get_volume_channel", 1, top);
+        return 0;
+    }
+
+    struct ModAudio* audio = (struct ModAudio*)smlua_to_cobject(L, 1, LOT_MODAUDIO);
+    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "audio_stream_get_volume_channel"); return 0; }
+
+    lua_pushinteger(L, audio_stream_get_volume_channel(audio));
+
+    return 1;
+}
+
+int smlua_func_audio_stream_set_volume_channel(lua_State* L) {
+    if (L == NULL) { return 0; }
+
+    int top = lua_gettop(L);
+    if (top != 2) {
+        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "audio_stream_set_volume_channel", 2, top);
+        return 0;
+    }
+
+    struct ModAudio* audio = (struct ModAudio*)smlua_to_cobject(L, 1, LOT_MODAUDIO);
+    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "audio_stream_set_volume_channel"); return 0; }
+    u8 channel = smlua_to_integer(L, 2);
+    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 2, "audio_stream_set_volume_channel"); return 0; }
+
+    audio_stream_set_volume_channel(audio, channel);
+
+    return 1;
+}
+
 int smlua_func_audio_sample_load(lua_State* L) {
     if (L == NULL) { return 0; }
 
@@ -30756,7 +30970,7 @@ int smlua_func_audio_sample_play(lua_State* L) {
  // smlua_camera_utils.h //
 //////////////////////////
 
-int smlua_func_camera_reset_overrides(UNUSED lua_State* L) {
+int smlua_func_camera_reset_overrides(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -30771,7 +30985,7 @@ int smlua_func_camera_reset_overrides(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_camera_freeze(UNUSED lua_State* L) {
+int smlua_func_camera_freeze(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -30786,7 +31000,7 @@ int smlua_func_camera_freeze(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_camera_unfreeze(UNUSED lua_State* L) {
+int smlua_func_camera_unfreeze(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -30801,7 +31015,7 @@ int smlua_func_camera_unfreeze(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_camera_is_frozen(UNUSED lua_State* L) {
+int smlua_func_camera_is_frozen(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -30850,19 +31064,19 @@ int smlua_func_camera_set_romhack_override(lua_State* L) {
     return 1;
 }
 
-int smlua_func_camera_romhack_allow_centering(lua_State* L) {
+int smlua_func_camera_romhack_allow_switchable(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
     if (top != 1) {
-        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "camera_romhack_allow_centering", 1, top);
+        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "camera_romhack_allow_switchable", 1, top);
         return 0;
     }
 
     u8 allow = smlua_to_integer(L, 1);
-    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "camera_romhack_allow_centering"); return 0; }
+    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "camera_romhack_allow_switchable"); return 0; }
 
-    camera_romhack_allow_centering(allow);
+    camera_romhack_allow_switchable(allow);
 
     return 1;
 }
@@ -30986,7 +31200,7 @@ int smlua_func_camera_romhack_set_zoomed_out_height(lua_State* L) {
     return 1;
 }
 
-int smlua_func_camera_romhack_get_zoomed_in_dist(UNUSED lua_State* L) {
+int smlua_func_camera_romhack_get_zoomed_in_dist(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -31001,7 +31215,7 @@ int smlua_func_camera_romhack_get_zoomed_in_dist(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_camera_romhack_get_zoomed_out_dist(UNUSED lua_State* L) {
+int smlua_func_camera_romhack_get_zoomed_out_dist(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -31016,7 +31230,7 @@ int smlua_func_camera_romhack_get_zoomed_out_dist(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_camera_romhack_get_zoomed_in_height(UNUSED lua_State* L) {
+int smlua_func_camera_romhack_get_zoomed_in_height(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -31031,7 +31245,7 @@ int smlua_func_camera_romhack_get_zoomed_in_height(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_camera_romhack_get_zoomed_out_height(UNUSED lua_State* L) {
+int smlua_func_camera_romhack_get_zoomed_out_height(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -31046,7 +31260,7 @@ int smlua_func_camera_romhack_get_zoomed_out_height(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_camera_get_romhack_override(UNUSED lua_State* L) {
+int smlua_func_camera_get_romhack_override(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -31061,22 +31275,22 @@ int smlua_func_camera_get_romhack_override(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_camera_romhack_get_allow_centering(UNUSED lua_State* L) {
+int smlua_func_camera_romhack_get_allow_switchable(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
     if (top != 0) {
-        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "camera_romhack_get_allow_centering", 0, top);
+        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "camera_romhack_get_allow_switchable", 0, top);
         return 0;
     }
 
 
-    lua_pushinteger(L, camera_romhack_get_allow_centering());
+    lua_pushinteger(L, camera_romhack_get_allow_switchable());
 
     return 1;
 }
 
-int smlua_func_camera_get_allow_toxic_gas_camera(UNUSED lua_State* L) {
+int smlua_func_camera_get_allow_toxic_gas_camera(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -31091,7 +31305,7 @@ int smlua_func_camera_get_allow_toxic_gas_camera(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_camera_romhack_get_allow_dpad_usage(UNUSED lua_State* L) {
+int smlua_func_camera_romhack_get_allow_dpad_usage(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -31106,7 +31320,7 @@ int smlua_func_camera_romhack_get_allow_dpad_usage(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_camera_romhack_get_collisions(UNUSED lua_State* L) {
+int smlua_func_camera_romhack_get_collisions(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -31121,7 +31335,7 @@ int smlua_func_camera_romhack_get_collisions(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_camera_config_is_free_cam_enabled(UNUSED lua_State* L) {
+int smlua_func_camera_config_is_free_cam_enabled(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -31136,7 +31350,7 @@ int smlua_func_camera_config_is_free_cam_enabled(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_camera_config_is_analog_cam_enabled(UNUSED lua_State* L) {
+int smlua_func_camera_config_is_analog_cam_enabled(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -31151,7 +31365,7 @@ int smlua_func_camera_config_is_analog_cam_enabled(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_camera_config_is_dpad_enabled(UNUSED lua_State* L) {
+int smlua_func_camera_config_is_dpad_enabled(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -31166,7 +31380,7 @@ int smlua_func_camera_config_is_dpad_enabled(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_camera_config_is_collision_enabled(UNUSED lua_State* L) {
+int smlua_func_camera_config_is_collision_enabled(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -31181,7 +31395,7 @@ int smlua_func_camera_config_is_collision_enabled(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_camera_config_is_mouse_look_enabled(UNUSED lua_State* L) {
+int smlua_func_camera_config_is_mouse_look_enabled(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -31196,7 +31410,7 @@ int smlua_func_camera_config_is_mouse_look_enabled(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_camera_config_is_x_inverted(UNUSED lua_State* L) {
+int smlua_func_camera_config_is_x_inverted(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -31211,7 +31425,7 @@ int smlua_func_camera_config_is_x_inverted(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_camera_config_is_y_inverted(UNUSED lua_State* L) {
+int smlua_func_camera_config_is_y_inverted(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -31226,7 +31440,7 @@ int smlua_func_camera_config_is_y_inverted(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_camera_config_get_x_sensitivity(UNUSED lua_State* L) {
+int smlua_func_camera_config_get_x_sensitivity(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -31241,7 +31455,7 @@ int smlua_func_camera_config_get_x_sensitivity(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_camera_config_get_y_sensitivity(UNUSED lua_State* L) {
+int smlua_func_camera_config_get_y_sensitivity(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -31256,7 +31470,7 @@ int smlua_func_camera_config_get_y_sensitivity(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_camera_config_get_aggression(UNUSED lua_State* L) {
+int smlua_func_camera_config_get_aggression(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -31271,7 +31485,7 @@ int smlua_func_camera_config_get_aggression(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_camera_config_get_pan_level(UNUSED lua_State* L) {
+int smlua_func_camera_config_get_pan_level(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -31286,7 +31500,7 @@ int smlua_func_camera_config_get_pan_level(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_camera_config_get_deceleration(UNUSED lua_State* L) {
+int smlua_func_camera_config_get_deceleration(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -31301,7 +31515,7 @@ int smlua_func_camera_config_get_deceleration(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_camera_config_get_centering(UNUSED lua_State* L) {
+int smlua_func_camera_config_get_centering(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -31537,7 +31751,7 @@ int smlua_func_camera_config_set_deceleration(lua_State* L) {
     return 1;
 }
 
-int smlua_func_camera_get_checking_surfaces(UNUSED lua_State* L) {
+int smlua_func_camera_get_checking_surfaces(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -31565,6 +31779,21 @@ int smlua_func_camera_set_checking_surfaces(lua_State* L) {
     if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "camera_set_checking_surfaces"); return 0; }
 
     camera_set_checking_surfaces(value);
+
+    return 1;
+}
+
+int smlua_func_center_free_camera(lua_State* L) {
+    if (L == NULL) { return 0; }
+
+    int top = lua_gettop(L);
+    if (top != 0) {
+        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "center_free_camera", 0, top);
+        return 0;
+    }
+
+
+    center_free_camera();
 
     return 1;
 }
@@ -31615,7 +31844,7 @@ int smlua_func_collision_find_ceil(lua_State* L) {
     return 1;
 }
 
-int smlua_func_get_water_surface_pseudo_floor(UNUSED lua_State* L) {
+int smlua_func_get_water_surface_pseudo_floor(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -31647,7 +31876,7 @@ int smlua_func_smlua_collision_util_get(lua_State* L) {
     return 1;
 }
 
-int smlua_func_collision_get_temp_wall_collision_data(UNUSED lua_State* L) {
+int smlua_func_collision_get_temp_wall_collision_data(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -31681,7 +31910,7 @@ int smlua_func_get_surface_from_wcd_index(lua_State* L) {
     return 1;
 }
 
-int smlua_func_smlua_collision_util_get_current_terrain_collision(UNUSED lua_State* L) {
+int smlua_func_smlua_collision_util_get_current_terrain_collision(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -31728,6 +31957,83 @@ int smlua_func_smlua_collision_util_find_surface_types(lua_State* L) {
     if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "smlua_collision_util_find_surface_types"); return 0; }
 
     smlua_collision_util_find_surface_types(data);
+
+    return 1;
+}
+
+int smlua_func_smlua_collision_add_surface(lua_State* L) {
+    if (L == NULL) { return 0; }
+
+    int top = lua_gettop(L);
+    if (top != 5) {
+        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "smlua_collision_add_surface", 5, top);
+        return 0;
+    }
+
+    bool dynamic = smlua_to_boolean(L, 1);
+    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "smlua_collision_add_surface"); return 0; }
+    s16 surfaceType = smlua_to_integer(L, 2);
+    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 2, "smlua_collision_add_surface"); return 0; }
+
+    Vec3s vertex1;
+    smlua_get_vec3s(vertex1, 3);
+    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 3, "smlua_collision_add_surface"); return 0; }
+
+    Vec3s vertex2;
+    smlua_get_vec3s(vertex2, 4);
+    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 4, "smlua_collision_add_surface"); return 0; }
+
+    Vec3s vertex3;
+    smlua_get_vec3s(vertex3, 5);
+    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 5, "smlua_collision_add_surface"); return 0; }
+
+    smlua_push_object(L, LOT_SURFACE, smlua_collision_add_surface(dynamic, surfaceType, vertex1, vertex2, vertex3), NULL);
+
+    return 1;
+}
+
+int smlua_func_smlua_collision_move_surface(lua_State* L) {
+    if (L == NULL) { return 0; }
+
+    int top = lua_gettop(L);
+    if (top != 4) {
+        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "smlua_collision_move_surface", 4, top);
+        return 0;
+    }
+
+    struct Surface* surface = (struct Surface*)smlua_to_cobject(L, 1, LOT_SURFACE);
+    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "smlua_collision_move_surface"); return 0; }
+
+    Vec3s vertex1;
+    smlua_get_vec3s(vertex1, 2);
+    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 2, "smlua_collision_move_surface"); return 0; }
+
+    Vec3s vertex2;
+    smlua_get_vec3s(vertex2, 3);
+    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 3, "smlua_collision_move_surface"); return 0; }
+
+    Vec3s vertex3;
+    smlua_get_vec3s(vertex3, 4);
+    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 4, "smlua_collision_move_surface"); return 0; }
+
+    smlua_collision_move_surface(surface, vertex1, vertex2, vertex3);
+
+    return 1;
+}
+
+int smlua_func_smlua_collision_delete_surface(lua_State* L) {
+    if (L == NULL) { return 0; }
+
+    int top = lua_gettop(L);
+    if (top != 1) {
+        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "smlua_collision_delete_surface", 1, top);
+        return 0;
+    }
+
+    struct Surface* surface = (struct Surface*)smlua_to_cobject(L, 1, LOT_SURFACE);
+    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "smlua_collision_delete_surface"); return 0; }
+
+    smlua_collision_delete_surface(surface);
 
     return 1;
 }
@@ -31914,6 +32220,157 @@ int smlua_func_network_player_palette_to_color(lua_State* L) {
   ///////////////////////
  // smlua_gfx_utils.h //
 ///////////////////////
+
+int smlua_func_get_shader_flag_enabled(lua_State* L) {
+    if (L == NULL) { return 0; }
+
+    int top = lua_gettop(L);
+    if (top != 1) {
+        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "get_shader_flag_enabled", 1, top);
+        return 0;
+    }
+
+    int flag = smlua_to_integer(L, 1);
+    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "get_shader_flag_enabled"); return 0; }
+
+    lua_pushboolean(L, get_shader_flag_enabled(flag));
+
+    return 1;
+}
+
+int smlua_func_set_shader_flag_enabled(lua_State* L) {
+    if (L == NULL) { return 0; }
+
+    int top = lua_gettop(L);
+    if (top != 2) {
+        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "set_shader_flag_enabled", 2, top);
+        return 0;
+    }
+
+    int flag = smlua_to_integer(L, 1);
+    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "set_shader_flag_enabled"); return 0; }
+    bool enabled = smlua_to_boolean(L, 2);
+    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 2, "set_shader_flag_enabled"); return 0; }
+
+    set_shader_flag_enabled(flag, enabled);
+
+    return 1;
+}
+
+int smlua_func_get_shader_flag_value(lua_State* L) {
+    if (L == NULL) { return 0; }
+
+    int top = lua_gettop(L);
+    if (top != 1) {
+        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "get_shader_flag_value", 1, top);
+        return 0;
+    }
+
+    int flag = smlua_to_integer(L, 1);
+    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "get_shader_flag_value"); return 0; }
+
+    lua_pushnumber(L, get_shader_flag_value(flag));
+
+    return 1;
+}
+
+int smlua_func_set_shader_flag_value(lua_State* L) {
+    if (L == NULL) { return 0; }
+
+    int top = lua_gettop(L);
+    if (top != 2) {
+        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "set_shader_flag_value", 2, top);
+        return 0;
+    }
+
+    int flag = smlua_to_integer(L, 1);
+    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "set_shader_flag_value"); return 0; }
+    f32 value = smlua_to_number(L, 2);
+    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 2, "set_shader_flag_value"); return 0; }
+
+    set_shader_flag_value(flag, value);
+
+    return 1;
+}
+
+int smlua_func_get_global_shader_flags_enabled(lua_State* L) {
+    if (L == NULL) { return 0; }
+
+    int top = lua_gettop(L);
+    if (top != 0) {
+        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "get_global_shader_flags_enabled", 0, top);
+        return 0;
+    }
+
+
+    lua_pushboolean(L, get_global_shader_flags_enabled());
+
+    return 1;
+}
+
+int smlua_func_set_global_shader_flags_enabled(lua_State* L) {
+    if (L == NULL) { return 0; }
+
+    int top = lua_gettop(L);
+    if (top != 1) {
+        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "set_global_shader_flags_enabled", 1, top);
+        return 0;
+    }
+
+    bool enabled = smlua_to_boolean(L, 1);
+    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "set_global_shader_flags_enabled"); return 0; }
+
+    set_global_shader_flags_enabled(enabled);
+
+    return 1;
+}
+
+int smlua_func_clear_all_shader_flags(lua_State* L) {
+    if (L == NULL) { return 0; }
+
+    int top = lua_gettop(L);
+    if (top != 0) {
+        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "clear_all_shader_flags", 0, top);
+        return 0;
+    }
+
+
+    clear_all_shader_flags();
+
+    return 1;
+}
+
+int smlua_func_get_shading_fullbright_enabled(lua_State* L) {
+    if (L == NULL) { return 0; }
+
+    int top = lua_gettop(L);
+    if (top != 0) {
+        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "get_shading_fullbright_enabled", 0, top);
+        return 0;
+    }
+
+
+    lua_pushboolean(L, get_shading_fullbright_enabled());
+
+    return 1;
+}
+
+int smlua_func_set_shading_fullbright_enabled(lua_State* L) {
+    if (L == NULL) { return 0; }
+
+    int top = lua_gettop(L);
+    if (top != 1) {
+        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "set_shading_fullbright_enabled", 1, top);
+        return 0;
+    }
+
+    bool enabled = smlua_to_boolean(L, 1);
+    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "set_shading_fullbright_enabled"); return 0; }
+
+    set_shading_fullbright_enabled(enabled);
+
+    return 1;
+}
 
 int smlua_func_set_override_fov(lua_State* L) {
     if (L == NULL) { return 0; }
@@ -32146,7 +32603,7 @@ int smlua_func_set_fog_color(lua_State* L) {
     return 1;
 }
 
-int smlua_func_get_fog_intensity(UNUSED lua_State* L) {
+int smlua_func_get_fog_intensity(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -32178,7 +32635,7 @@ int smlua_func_set_fog_intensity(lua_State* L) {
     return 1;
 }
 
-int smlua_func_get_skybox(UNUSED lua_State* L) {
+int smlua_func_get_skybox(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -32517,7 +32974,7 @@ int smlua_func_gfx_delete(lua_State* L) {
     return 1;
 }
 
-int smlua_func_gfx_delete_all(UNUSED lua_State* L) {
+int smlua_func_gfx_delete_all(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -32699,7 +33156,7 @@ int smlua_func_vtx_delete(lua_State* L) {
     return 1;
 }
 
-int smlua_func_vtx_delete_all(UNUSED lua_State* L) {
+int smlua_func_vtx_delete_all(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -32878,7 +33335,7 @@ int smlua_func_warp_to_level(lua_State* L) {
     return 1;
 }
 
-int smlua_func_warp_restart_level(UNUSED lua_State* L) {
+int smlua_func_warp_restart_level(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -32893,7 +33350,7 @@ int smlua_func_warp_restart_level(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_warp_to_start_level(UNUSED lua_State* L) {
+int smlua_func_warp_to_start_level(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -32946,7 +33403,7 @@ int smlua_func_warp_to_castle(lua_State* L) {
  // smlua_misc_utils.h //
 ////////////////////////
 
-int smlua_func_get_network_area_timer(UNUSED lua_State* L) {
+int smlua_func_get_network_area_timer(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -32961,7 +33418,7 @@ int smlua_func_get_network_area_timer(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_get_area_update_counter(UNUSED lua_State* L) {
+int smlua_func_get_area_update_counter(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -33029,7 +33486,7 @@ int smlua_func_djui_popup_create_global(lua_State* L) {
     return 1;
 }
 
-int smlua_func_djui_is_popup_disabled(UNUSED lua_State* L) {
+int smlua_func_djui_is_popup_disabled(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -33061,7 +33518,7 @@ int smlua_func_djui_set_popup_disabled_override(lua_State* L) {
     return 1;
 }
 
-int smlua_func_djui_reset_popup_disabled_override(UNUSED lua_State* L) {
+int smlua_func_djui_reset_popup_disabled_override(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -33076,7 +33533,7 @@ int smlua_func_djui_reset_popup_disabled_override(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_djui_is_playerlist_open(UNUSED lua_State* L) {
+int smlua_func_djui_is_playerlist_open(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -33091,7 +33548,7 @@ int smlua_func_djui_is_playerlist_open(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_djui_attempting_to_open_playerlist(UNUSED lua_State* L) {
+int smlua_func_djui_attempting_to_open_playerlist(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -33106,7 +33563,7 @@ int smlua_func_djui_attempting_to_open_playerlist(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_djui_get_playerlist_page_index(UNUSED lua_State* L) {
+int smlua_func_djui_get_playerlist_page_index(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -33121,7 +33578,7 @@ int smlua_func_djui_get_playerlist_page_index(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_djui_is_chatbox_open(UNUSED lua_State* L) {
+int smlua_func_djui_is_chatbox_open(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -33136,7 +33593,7 @@ int smlua_func_djui_is_chatbox_open(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_djui_menu_get_font(UNUSED lua_State* L) {
+int smlua_func_djui_menu_get_font(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -33151,7 +33608,7 @@ int smlua_func_djui_menu_get_font(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_djui_menu_get_theme(UNUSED lua_State* L) {
+int smlua_func_djui_menu_get_theme(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -33166,7 +33623,7 @@ int smlua_func_djui_menu_get_theme(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_djui_is_playerlist_ping_visible(UNUSED lua_State* L) {
+int smlua_func_djui_is_playerlist_ping_visible(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -33181,7 +33638,7 @@ int smlua_func_djui_is_playerlist_ping_visible(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_get_dialog_box_state(UNUSED lua_State* L) {
+int smlua_func_get_dialog_box_state(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -33196,7 +33653,7 @@ int smlua_func_get_dialog_box_state(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_get_dialog_id(UNUSED lua_State* L) {
+int smlua_func_get_dialog_id(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -33211,7 +33668,7 @@ int smlua_func_get_dialog_id(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_get_last_star_or_key(UNUSED lua_State* L) {
+int smlua_func_get_last_star_or_key(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -33243,7 +33700,7 @@ int smlua_func_set_last_star_or_key(lua_State* L) {
     return 1;
 }
 
-int smlua_func_get_last_completed_course_num(UNUSED lua_State* L) {
+int smlua_func_get_last_completed_course_num(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -33275,7 +33732,7 @@ int smlua_func_set_last_completed_course_num(lua_State* L) {
     return 1;
 }
 
-int smlua_func_get_last_completed_star_num(UNUSED lua_State* L) {
+int smlua_func_get_last_completed_star_num(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -33307,7 +33764,7 @@ int smlua_func_set_last_completed_star_num(lua_State* L) {
     return 1;
 }
 
-int smlua_func_get_got_file_coin_hi_score(UNUSED lua_State* L) {
+int smlua_func_get_got_file_coin_hi_score(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -33339,7 +33796,7 @@ int smlua_func_set_got_file_coin_hi_score(lua_State* L) {
     return 1;
 }
 
-int smlua_func_get_save_file_modified(UNUSED lua_State* L) {
+int smlua_func_get_save_file_modified(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -33371,7 +33828,7 @@ int smlua_func_set_save_file_modified(lua_State* L) {
     return 1;
 }
 
-int smlua_func_hud_hide(UNUSED lua_State* L) {
+int smlua_func_hud_hide(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -33386,7 +33843,7 @@ int smlua_func_hud_hide(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_hud_show(UNUSED lua_State* L) {
+int smlua_func_hud_show(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -33401,7 +33858,7 @@ int smlua_func_hud_show(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_hud_is_hidden(UNUSED lua_State* L) {
+int smlua_func_hud_is_hidden(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -33510,7 +33967,7 @@ int smlua_func_hud_render_power_meter_interpolated(lua_State* L) {
     return 1;
 }
 
-int smlua_func_hud_get_flash(UNUSED lua_State* L) {
+int smlua_func_hud_get_flash(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -33593,7 +34050,7 @@ int smlua_func_act_select_hud_is_hidden(lua_State* L) {
     return 1;
 }
 
-int smlua_func_is_game_paused(UNUSED lua_State* L) {
+int smlua_func_is_game_paused(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -33608,7 +34065,7 @@ int smlua_func_is_game_paused(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_is_pause_menu_hidden(UNUSED lua_State* L) {
+int smlua_func_is_pause_menu_hidden(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -33640,7 +34097,7 @@ int smlua_func_set_pause_menu_hidden(lua_State* L) {
     return 1;
 }
 
-int smlua_func_game_pause(UNUSED lua_State* L) {
+int smlua_func_game_pause(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -33655,7 +34112,7 @@ int smlua_func_game_pause(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_game_unpause(UNUSED lua_State* L) {
+int smlua_func_game_unpause(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -33670,7 +34127,7 @@ int smlua_func_game_unpause(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_is_transition_playing(UNUSED lua_State* L) {
+int smlua_func_is_transition_playing(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -33681,6 +34138,36 @@ int smlua_func_is_transition_playing(UNUSED lua_State* L) {
 
 
     lua_pushboolean(L, is_transition_playing());
+
+    return 1;
+}
+
+int smlua_func_get_current_play_mode(lua_State* L) {
+    if (L == NULL) { return 0; }
+
+    int top = lua_gettop(L);
+    if (top != 0) {
+        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "get_current_play_mode", 0, top);
+        return 0;
+    }
+
+
+    lua_pushinteger(L, get_current_play_mode());
+
+    return 1;
+}
+
+int smlua_func_get_delayed_warp_op(lua_State* L) {
+    if (L == NULL) { return 0; }
+
+    int top = lua_gettop(L);
+    if (top != 0) {
+        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "get_delayed_warp_op", 0, top);
+        return 0;
+    }
+
+
+    lua_pushinteger(L, get_delayed_warp_op());
 
     return 1;
 }
@@ -33809,7 +34296,7 @@ int smlua_func_get_mario_anim_part_rot(lua_State* L) {
     return 1;
 }
 
-int smlua_func_get_current_save_file_num(UNUSED lua_State* L) {
+int smlua_func_get_current_save_file_num(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -33824,7 +34311,7 @@ int smlua_func_get_current_save_file_num(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_save_file_get_using_backup_slot(UNUSED lua_State* L) {
+int smlua_func_save_file_get_using_backup_slot(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -33934,7 +34421,7 @@ int smlua_func_course_is_main_course(lua_State* L) {
     return 1;
 }
 
-int smlua_func_get_ttc_speed_setting(UNUSED lua_State* L) {
+int smlua_func_get_ttc_speed_setting(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -33966,7 +34453,7 @@ int smlua_func_set_ttc_speed_setting(lua_State* L) {
     return 1;
 }
 
-int smlua_func_get_time(UNUSED lua_State* L) {
+int smlua_func_get_time(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -33981,7 +34468,7 @@ int smlua_func_get_time(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_get_date_and_time(UNUSED lua_State* L) {
+int smlua_func_get_date_and_time(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -33996,7 +34483,7 @@ int smlua_func_get_date_and_time(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_get_envfx(UNUSED lua_State* L) {
+int smlua_func_get_envfx(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -34028,7 +34515,7 @@ int smlua_func_set_override_envfx(lua_State* L) {
     return 1;
 }
 
-int smlua_func_get_global_timer(UNUSED lua_State* L) {
+int smlua_func_get_global_timer(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -34043,7 +34530,7 @@ int smlua_func_get_global_timer(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_get_dialog_response(UNUSED lua_State* L) {
+int smlua_func_get_dialog_response(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -34058,7 +34545,7 @@ int smlua_func_get_dialog_response(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_get_time_stop_flags(UNUSED lua_State* L) {
+int smlua_func_get_time_stop_flags(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -34073,7 +34560,7 @@ int smlua_func_get_time_stop_flags(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_get_local_discord_id(UNUSED lua_State* L) {
+int smlua_func_get_local_discord_id(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -34105,7 +34592,7 @@ int smlua_func_get_coopnet_id(lua_State* L) {
     return 1;
 }
 
-int smlua_func_get_volume_master(UNUSED lua_State* L) {
+int smlua_func_get_volume_master(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -34120,7 +34607,7 @@ int smlua_func_get_volume_master(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_get_volume_level(UNUSED lua_State* L) {
+int smlua_func_get_volume_level(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -34135,7 +34622,7 @@ int smlua_func_get_volume_level(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_get_volume_sfx(UNUSED lua_State* L) {
+int smlua_func_get_volume_sfx(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -34150,7 +34637,7 @@ int smlua_func_get_volume_sfx(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_get_volume_env(UNUSED lua_State* L) {
+int smlua_func_get_volume_env(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -34286,7 +34773,7 @@ int smlua_func_mod_file_exists(lua_State* L) {
     return 1;
 }
 
-int smlua_func_get_active_mod(UNUSED lua_State* L) {
+int smlua_func_get_active_mod(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -34297,6 +34784,28 @@ int smlua_func_get_active_mod(UNUSED lua_State* L) {
 
 
     smlua_push_object(L, LOT_MOD, get_active_mod(), NULL);
+
+    return 1;
+}
+
+int smlua_func_get_mod_files(lua_State* L) {
+    if (L == NULL) { return 0; }
+
+    int top = lua_gettop(L);
+    if (top < 1 || top > 2) {
+        LOG_LUA_LINE("Improper param count for '%s': Expected between %u and %u, Received %u", "get_mod_files", 1, 2, top);
+        return 0;
+    }
+
+    struct Mod* mod = (struct Mod*)smlua_to_cobject(L, 1, LOT_MOD);
+    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "get_mod_files"); return 0; }
+    const char* subDirectory = (const char*) NULL;
+    if (top >= 2) {
+        subDirectory = smlua_to_string(L, 2);
+        if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 2, "get_mod_files"); return 0; }
+    }
+
+    smlua_push_lua_table(L, get_mod_files(mod, subDirectory));
 
     return 1;
 }
@@ -34318,7 +34827,7 @@ int smlua_func_set_window_title(lua_State* L) {
     return 1;
 }
 
-int smlua_func_reset_window_title(UNUSED lua_State* L) {
+int smlua_func_reset_window_title(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -34333,7 +34842,7 @@ int smlua_func_reset_window_title(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_get_os_name(UNUSED lua_State* L) {
+int smlua_func_get_os_name(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -34348,7 +34857,7 @@ int smlua_func_get_os_name(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_geo_get_current_root(UNUSED lua_State* L) {
+int smlua_func_geo_get_current_root(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -34363,7 +34872,7 @@ int smlua_func_geo_get_current_root(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_geo_get_current_master_list(UNUSED lua_State* L) {
+int smlua_func_geo_get_current_master_list(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -34378,7 +34887,7 @@ int smlua_func_geo_get_current_master_list(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_geo_get_current_perspective(UNUSED lua_State* L) {
+int smlua_func_geo_get_current_perspective(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -34393,7 +34902,7 @@ int smlua_func_geo_get_current_perspective(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_geo_get_current_camera(UNUSED lua_State* L) {
+int smlua_func_geo_get_current_camera(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -34408,7 +34917,7 @@ int smlua_func_geo_get_current_camera(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_geo_get_current_held_object(UNUSED lua_State* L) {
+int smlua_func_geo_get_current_held_object(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -34646,7 +35155,7 @@ int smlua_func_get_trajectory(lua_State* L) {
     return 1;
 }
 
-int smlua_func_geo_get_current_object(UNUSED lua_State* L) {
+int smlua_func_geo_get_current_object(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -34661,7 +35170,7 @@ int smlua_func_geo_get_current_object(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_get_current_object(UNUSED lua_State* L) {
+int smlua_func_get_current_object(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -34676,7 +35185,7 @@ int smlua_func_get_current_object(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_get_dialog_object(UNUSED lua_State* L) {
+int smlua_func_get_dialog_object(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -34691,7 +35200,7 @@ int smlua_func_get_dialog_object(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_get_cutscene_focus(UNUSED lua_State* L) {
+int smlua_func_get_cutscene_focus(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -34706,7 +35215,7 @@ int smlua_func_get_cutscene_focus(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_get_secondary_camera_focus(UNUSED lua_State* L) {
+int smlua_func_get_secondary_camera_focus(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -35162,7 +35671,7 @@ int smlua_func_obj_get_temp_water_droplet_params(lua_State* L) {
     return 1;
 }
 
-int smlua_func_get_temp_object_hitbox(UNUSED lua_State* L) {
+int smlua_func_get_temp_object_hitbox(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -35489,7 +35998,7 @@ int smlua_func_obj_anim_skip_interpolation(lua_State* L) {
  // smlua_text_utils.h //
 ////////////////////////
 
-int smlua_func_smlua_text_utils_reset_all(UNUSED lua_State* L) {
+int smlua_func_smlua_text_utils_reset_all(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -35582,7 +36091,7 @@ int smlua_func_smlua_text_utils_dialog_is_replaced(lua_State* L) {
     return 1;
 }
 
-int smlua_func_smlua_text_utils_allocate_dialog(UNUSED lua_State* L) {
+int smlua_func_smlua_text_utils_allocate_dialog(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -35812,7 +36321,7 @@ int smlua_func_smlua_text_utils_castle_secret_stars_replace(lua_State* L) {
     return 1;
 }
 
-int smlua_func_smlua_text_utils_castle_secret_stars_get(UNUSED lua_State* L) {
+int smlua_func_smlua_text_utils_castle_secret_stars_get(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -35827,7 +36336,7 @@ int smlua_func_smlua_text_utils_castle_secret_stars_get(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_smlua_text_utils_castle_secret_stars_mod_index(UNUSED lua_State* L) {
+int smlua_func_smlua_text_utils_castle_secret_stars_mod_index(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -35842,7 +36351,7 @@ int smlua_func_smlua_text_utils_castle_secret_stars_mod_index(UNUSED lua_State* 
     return 1;
 }
 
-int smlua_func_smlua_text_utils_castle_secret_stars_reset(UNUSED lua_State* L) {
+int smlua_func_smlua_text_utils_castle_secret_stars_reset(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -35927,7 +36436,7 @@ int smlua_func_smlua_text_utils_extra_text_reset(lua_State* L) {
     return 1;
 }
 
-int smlua_func_smlua_text_utils_get_language(UNUSED lua_State* L) {
+int smlua_func_smlua_text_utils_get_language(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -35946,7 +36455,7 @@ int smlua_func_smlua_text_utils_get_language(UNUSED lua_State* L) {
  // sound_init.h //
 //////////////////
 
-int smlua_func_reset_volume(UNUSED lua_State* L) {
+int smlua_func_reset_volume(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -35995,7 +36504,7 @@ int smlua_func_lower_background_noise(lua_State* L) {
     return 1;
 }
 
-int smlua_func_disable_background_sound(UNUSED lua_State* L) {
+int smlua_func_disable_background_sound(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -36010,7 +36519,7 @@ int smlua_func_disable_background_sound(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_enable_background_sound(UNUSED lua_State* L) {
+int smlua_func_enable_background_sound(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -36042,7 +36551,7 @@ int smlua_func_play_menu_sounds(lua_State* L) {
     return 1;
 }
 
-int smlua_func_play_painting_eject_sound(UNUSED lua_State* L) {
+int smlua_func_play_painting_eject_sound(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -36057,7 +36566,7 @@ int smlua_func_play_painting_eject_sound(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_play_infinite_stairs_music(UNUSED lua_State* L) {
+int smlua_func_play_infinite_stairs_music(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -36144,7 +36653,7 @@ int smlua_func_play_cutscene_music(lua_State* L) {
     return 1;
 }
 
-int smlua_func_play_shell_music(UNUSED lua_State* L) {
+int smlua_func_play_shell_music(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -36159,7 +36668,7 @@ int smlua_func_play_shell_music(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_stop_shell_music(UNUSED lua_State* L) {
+int smlua_func_stop_shell_music(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -36191,7 +36700,7 @@ int smlua_func_play_cap_music(lua_State* L) {
     return 1;
 }
 
-int smlua_func_fadeout_cap_music(UNUSED lua_State* L) {
+int smlua_func_fadeout_cap_music(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -36206,7 +36715,7 @@ int smlua_func_fadeout_cap_music(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_stop_cap_music(UNUSED lua_State* L) {
+int smlua_func_stop_cap_music(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -36573,7 +37082,7 @@ int smlua_func_closest_point_to_triangle(lua_State* L) {
  // surface_load.h //
 ////////////////////
 
-int smlua_func_load_object_collision_model(UNUSED lua_State* L) {
+int smlua_func_load_object_collision_model(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -36588,7 +37097,7 @@ int smlua_func_load_object_collision_model(UNUSED lua_State* L) {
     return 1;
 }
 
-int smlua_func_load_static_object_collision(UNUSED lua_State* L) {
+int smlua_func_load_static_object_collision(lua_State* L) {
     if (L == NULL) { return 0; }
 
     int top = lua_gettop(L);
@@ -36637,6 +37146,23 @@ int smlua_func_get_static_object_surface(lua_State* L) {
     if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 2, "get_static_object_surface"); return 0; }
 
     smlua_push_object(L, LOT_SURFACE, get_static_object_surface(col, index), NULL);
+
+    return 1;
+}
+
+int smlua_func_remove_static_object_collision(lua_State* L) {
+    if (L == NULL) { return 0; }
+
+    int top = lua_gettop(L);
+    if (top != 1) {
+        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "remove_static_object_collision", 1, top);
+        return 0;
+    }
+
+    struct StaticObjectCollision* col = (struct StaticObjectCollision*)smlua_to_cobject(L, 1, LOT_STATICOBJECTCOLLISION);
+    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "remove_static_object_collision"); return 0; }
+
+    remove_static_object_collision(col);
 
     return 1;
 }
@@ -37328,12 +37854,14 @@ void smlua_bind_functions_autogen(void) {
     smlua_bind_function(L, "obj_update_gfx_pos_and_angle", smlua_func_obj_update_gfx_pos_and_angle);
     smlua_bind_function(L, "position_based_random_u16", smlua_func_position_based_random_u16);
     smlua_bind_function(L, "position_based_random_float_position", smlua_func_position_based_random_float_position);
+    smlua_bind_function(L, "draw_distance_scalar_is_infinite", smlua_func_draw_distance_scalar_is_infinite);
     smlua_bind_function(L, "draw_distance_scalar", smlua_func_draw_distance_scalar);
 
     // behavior_table.h
     smlua_bind_function(L, "get_id_from_behavior", smlua_func_get_id_from_behavior);
     smlua_bind_function(L, "get_id_from_vanilla_behavior", smlua_func_get_id_from_vanilla_behavior);
     smlua_bind_function(L, "get_behavior_from_id", smlua_func_get_behavior_from_id);
+    smlua_bind_function(L, "get_vanilla_behavior_from_id", smlua_func_get_vanilla_behavior_from_id);
     smlua_bind_function(L, "get_behavior_name_from_id", smlua_func_get_behavior_name_from_id);
     smlua_bind_function(L, "get_id_from_behavior_name", smlua_func_get_id_from_behavior_name);
 
@@ -37446,6 +37974,10 @@ void smlua_bind_functions_autogen(void) {
 
     // djui_console.h
     smlua_bind_function(L, "djui_console_toggle", smlua_func_djui_console_toggle);
+    smlua_bind_function(L, "djui_console_is_open", smlua_func_djui_console_is_open);
+
+    // djui_gfx.h
+    smlua_bind_function(L, "djui_gfx_get_scale", smlua_func_djui_gfx_get_scale);
 
     // djui_hud_utils.h
     smlua_bind_function(L, "djui_hud_get_resolution", smlua_func_djui_hud_get_resolution);
@@ -37457,6 +37989,9 @@ void smlua_bind_functions_autogen(void) {
     smlua_bind_function(L, "djui_hud_get_color", smlua_func_djui_hud_get_color);
     smlua_bind_function(L, "djui_hud_set_color", smlua_func_djui_hud_set_color);
     smlua_bind_function(L, "djui_hud_reset_color", smlua_func_djui_hud_reset_color);
+    smlua_bind_function(L, "djui_hud_get_text_color", smlua_func_djui_hud_get_text_color);
+    smlua_bind_function(L, "djui_hud_set_text_color", smlua_func_djui_hud_set_text_color);
+    smlua_bind_function(L, "djui_hud_reset_text_color", smlua_func_djui_hud_reset_text_color);
     smlua_bind_function(L, "djui_hud_get_rotation", smlua_func_djui_hud_get_rotation);
     smlua_bind_function(L, "djui_hud_set_rotation", smlua_func_djui_hud_set_rotation);
     smlua_bind_function(L, "djui_hud_set_rotation_interpolated", smlua_func_djui_hud_set_rotation_interpolated);
@@ -37481,8 +38016,6 @@ void smlua_bind_functions_autogen(void) {
     smlua_bind_function(L, "djui_hud_set_scissor", smlua_func_djui_hud_set_scissor);
     smlua_bind_function(L, "djui_hud_reset_scissor", smlua_func_djui_hud_reset_scissor);
     smlua_bind_function(L, "djui_hud_measure_text", smlua_func_djui_hud_measure_text);
-    smlua_bind_function(L, "djui_hud_print_text", smlua_func_djui_hud_print_text);
-    smlua_bind_function(L, "djui_hud_print_text_interpolated", smlua_func_djui_hud_print_text_interpolated);
     smlua_bind_function(L, "djui_hud_render_texture", smlua_func_djui_hud_render_texture);
     smlua_bind_function(L, "djui_hud_render_texture_tile", smlua_func_djui_hud_render_texture_tile);
     smlua_bind_function(L, "djui_hud_render_texture_interpolated", smlua_func_djui_hud_render_texture_interpolated);
@@ -37653,6 +38186,7 @@ void smlua_bind_functions_autogen(void) {
     smlua_bind_function(L, "le_get_ambient_color", smlua_func_le_get_ambient_color);
     smlua_bind_function(L, "le_set_ambient_color", smlua_func_le_set_ambient_color);
     smlua_bind_function(L, "le_set_max_lights_per_vertex", smlua_func_le_set_max_lights_per_vertex);
+    smlua_bind_function(L, "le_set_enabled", smlua_func_le_set_enabled);
     smlua_bind_function(L, "le_calculate_lighting_color", smlua_func_le_calculate_lighting_color);
     smlua_bind_function(L, "le_calculate_lighting_color_with_normal", smlua_func_le_calculate_lighting_color_with_normal);
     smlua_bind_function(L, "le_calculate_lighting_dir", smlua_func_le_calculate_lighting_dir);
@@ -37785,6 +38319,7 @@ void smlua_bind_functions_autogen(void) {
     smlua_bind_function(L, "common_death_handler", smlua_func_common_death_handler);
     smlua_bind_function(L, "launch_mario_until_land", smlua_func_launch_mario_until_land);
     smlua_bind_function(L, "stuck_in_ground_handler", smlua_func_stuck_in_ground_handler);
+    //smlua_bind_function(L, "jumbo_star_offset", smlua_func_jumbo_star_offset); <--- UNIMPLEMENTED
     smlua_bind_function(L, "generate_yellow_sparkles", smlua_func_generate_yellow_sparkles);
     smlua_bind_function(L, "mario_execute_cutscene_action", smlua_func_mario_execute_cutscene_action);
 
@@ -37838,7 +38373,6 @@ void smlua_bind_functions_autogen(void) {
     smlua_bind_function(L, "stopping_step", smlua_func_stopping_step);
     smlua_bind_function(L, "landing_step", smlua_func_landing_step);
     smlua_bind_function(L, "check_common_landing_cancels", smlua_func_check_common_landing_cancels);
-    smlua_bind_function(L, "mario_exit_palette_editor", smlua_func_mario_exit_palette_editor);
     smlua_bind_function(L, "check_common_stationary_cancels", smlua_func_check_common_stationary_cancels);
     smlua_bind_function(L, "mario_execute_stationary_action", smlua_func_mario_execute_stationary_action);
 
@@ -37857,6 +38391,7 @@ void smlua_bind_functions_autogen(void) {
     smlua_bind_function(L, "bhv_unlock_door_star_loop", smlua_func_bhv_unlock_door_star_loop);
     smlua_bind_function(L, "geo_get_mario_state", smlua_func_geo_get_mario_state);
     smlua_bind_function(L, "geo_get_body_state", smlua_func_geo_get_body_state);
+    smlua_bind_function(L, "geo_get_mario_object", smlua_func_geo_get_mario_object);
 
     // mario_step.h
     smlua_bind_function(L, "get_additive_y_vel_for_jumps", smlua_func_get_additive_y_vel_for_jumps);
@@ -38036,14 +38571,17 @@ void smlua_bind_functions_autogen(void) {
     smlua_bind_function(L, "mod_fs_file_erase", smlua_func_mod_fs_file_erase);
     smlua_bind_function(L, "mod_fs_file_set_text_mode", smlua_func_mod_fs_file_set_text_mode);
     smlua_bind_function(L, "mod_fs_file_set_public", smlua_func_mod_fs_file_set_public);
+    smlua_bind_function(L, "mod_fs_file_set_compression", smlua_func_mod_fs_file_set_compression);
     smlua_bind_function(L, "mod_fs_hide_errors", smlua_func_mod_fs_hide_errors);
     smlua_bind_function(L, "mod_fs_get_last_error", smlua_func_mod_fs_get_last_error);
 
     // mod_storage.h
     smlua_bind_function(L, "mod_storage_save", smlua_func_mod_storage_save);
+    smlua_bind_function(L, "mod_storage_save_integer", smlua_func_mod_storage_save_integer);
     smlua_bind_function(L, "mod_storage_save_number", smlua_func_mod_storage_save_number);
     smlua_bind_function(L, "mod_storage_save_bool", smlua_func_mod_storage_save_bool);
     smlua_bind_function(L, "mod_storage_load", smlua_func_mod_storage_load);
+    smlua_bind_function(L, "mod_storage_load_integer", smlua_func_mod_storage_load_integer);
     smlua_bind_function(L, "mod_storage_load_number", smlua_func_mod_storage_load_number);
     smlua_bind_function(L, "mod_storage_load_bool", smlua_func_mod_storage_load_bool);
     smlua_bind_function(L, "mod_storage_load_all", smlua_func_mod_storage_load_all);
@@ -38240,7 +38778,6 @@ void smlua_bind_functions_autogen(void) {
     smlua_bind_function(L, "cur_obj_check_if_at_animation_end", smlua_func_cur_obj_check_if_at_animation_end);
     smlua_bind_function(L, "cur_obj_check_anim_frame", smlua_func_cur_obj_check_anim_frame);
     smlua_bind_function(L, "cur_obj_check_anim_frame_in_range", smlua_func_cur_obj_check_anim_frame_in_range);
-    smlua_bind_function(L, "cur_obj_check_frame_prior_current_frame", smlua_func_cur_obj_check_frame_prior_current_frame);
     smlua_bind_function(L, "mario_is_in_air_action", smlua_func_mario_is_in_air_action);
     smlua_bind_function(L, "mario_is_dive_sliding", smlua_func_mario_is_dive_sliding);
     smlua_bind_function(L, "cur_obj_set_y_vel_and_animation", smlua_func_cur_obj_set_y_vel_and_animation);
@@ -38448,6 +38985,7 @@ void smlua_bind_functions_autogen(void) {
     // smlua_audio_utils.h
     smlua_bind_function(L, "smlua_audio_utils_reset_all", smlua_func_smlua_audio_utils_reset_all);
     smlua_bind_function(L, "smlua_audio_utils_replace_sequence", smlua_func_smlua_audio_utils_replace_sequence);
+    smlua_bind_function(L, "smlua_audio_utils_allocate_sequence", smlua_func_smlua_audio_utils_allocate_sequence);
     smlua_bind_function(L, "audio_stream_load", smlua_func_audio_stream_load);
     smlua_bind_function(L, "audio_stream_destroy", smlua_func_audio_stream_destroy);
     smlua_bind_function(L, "audio_stream_play", smlua_func_audio_stream_play);
@@ -38462,6 +39000,8 @@ void smlua_bind_functions_autogen(void) {
     smlua_bind_function(L, "audio_stream_set_frequency", smlua_func_audio_stream_set_frequency);
     smlua_bind_function(L, "audio_stream_get_volume", smlua_func_audio_stream_get_volume);
     smlua_bind_function(L, "audio_stream_set_volume", smlua_func_audio_stream_set_volume);
+    smlua_bind_function(L, "audio_stream_get_volume_channel", smlua_func_audio_stream_get_volume_channel);
+    smlua_bind_function(L, "audio_stream_set_volume_channel", smlua_func_audio_stream_set_volume_channel);
     smlua_bind_function(L, "audio_sample_load", smlua_func_audio_sample_load);
     smlua_bind_function(L, "audio_sample_destroy", smlua_func_audio_sample_destroy);
     smlua_bind_function(L, "audio_sample_stop", smlua_func_audio_sample_stop);
@@ -38474,7 +39014,7 @@ void smlua_bind_functions_autogen(void) {
     smlua_bind_function(L, "camera_is_frozen", smlua_func_camera_is_frozen);
     smlua_bind_function(L, "camera_romhack_allow_only_mods", smlua_func_camera_romhack_allow_only_mods);
     smlua_bind_function(L, "camera_set_romhack_override", smlua_func_camera_set_romhack_override);
-    smlua_bind_function(L, "camera_romhack_allow_centering", smlua_func_camera_romhack_allow_centering);
+    smlua_bind_function(L, "camera_romhack_allow_switchable", smlua_func_camera_romhack_allow_switchable);
     smlua_bind_function(L, "camera_allow_toxic_gas_camera", smlua_func_camera_allow_toxic_gas_camera);
     smlua_bind_function(L, "camera_romhack_allow_dpad_usage", smlua_func_camera_romhack_allow_dpad_usage);
     smlua_bind_function(L, "camera_romhack_set_collisions", smlua_func_camera_romhack_set_collisions);
@@ -38487,7 +39027,7 @@ void smlua_bind_functions_autogen(void) {
     smlua_bind_function(L, "camera_romhack_get_zoomed_in_height", smlua_func_camera_romhack_get_zoomed_in_height);
     smlua_bind_function(L, "camera_romhack_get_zoomed_out_height", smlua_func_camera_romhack_get_zoomed_out_height);
     smlua_bind_function(L, "camera_get_romhack_override", smlua_func_camera_get_romhack_override);
-    smlua_bind_function(L, "camera_romhack_get_allow_centering", smlua_func_camera_romhack_get_allow_centering);
+    smlua_bind_function(L, "camera_romhack_get_allow_switchable", smlua_func_camera_romhack_get_allow_switchable);
     smlua_bind_function(L, "camera_get_allow_toxic_gas_camera", smlua_func_camera_get_allow_toxic_gas_camera);
     smlua_bind_function(L, "camera_romhack_get_allow_dpad_usage", smlua_func_camera_romhack_get_allow_dpad_usage);
     smlua_bind_function(L, "camera_romhack_get_collisions", smlua_func_camera_romhack_get_collisions);
@@ -38519,6 +39059,7 @@ void smlua_bind_functions_autogen(void) {
     smlua_bind_function(L, "camera_config_set_deceleration", smlua_func_camera_config_set_deceleration);
     smlua_bind_function(L, "camera_get_checking_surfaces", smlua_func_camera_get_checking_surfaces);
     smlua_bind_function(L, "camera_set_checking_surfaces", smlua_func_camera_set_checking_surfaces);
+    smlua_bind_function(L, "center_free_camera", smlua_func_center_free_camera);
 
     // smlua_collision_utils.h
     smlua_bind_function(L, "collision_find_floor", smlua_func_collision_find_floor);
@@ -38530,6 +39071,9 @@ void smlua_bind_functions_autogen(void) {
     smlua_bind_function(L, "smlua_collision_util_get_current_terrain_collision", smlua_func_smlua_collision_util_get_current_terrain_collision);
     smlua_bind_function(L, "smlua_collision_util_get_level_collision", smlua_func_smlua_collision_util_get_level_collision);
     smlua_bind_function(L, "smlua_collision_util_find_surface_types", smlua_func_smlua_collision_util_find_surface_types);
+    smlua_bind_function(L, "smlua_collision_add_surface", smlua_func_smlua_collision_add_surface);
+    smlua_bind_function(L, "smlua_collision_move_surface", smlua_func_smlua_collision_move_surface);
+    smlua_bind_function(L, "smlua_collision_delete_surface", smlua_func_smlua_collision_delete_surface);
     smlua_bind_function(L, "surface_is_quicksand", smlua_func_surface_is_quicksand);
     smlua_bind_function(L, "surface_is_not_hard", smlua_func_surface_is_not_hard);
     smlua_bind_function(L, "surface_is_painting_warp", smlua_func_surface_is_painting_warp);
@@ -38543,6 +39087,15 @@ void smlua_bind_functions_autogen(void) {
     smlua_bind_function(L, "network_player_palette_to_color", smlua_func_network_player_palette_to_color);
 
     // smlua_gfx_utils.h
+    smlua_bind_function(L, "get_shader_flag_enabled", smlua_func_get_shader_flag_enabled);
+    smlua_bind_function(L, "set_shader_flag_enabled", smlua_func_set_shader_flag_enabled);
+    smlua_bind_function(L, "get_shader_flag_value", smlua_func_get_shader_flag_value);
+    smlua_bind_function(L, "set_shader_flag_value", smlua_func_set_shader_flag_value);
+    smlua_bind_function(L, "get_global_shader_flags_enabled", smlua_func_get_global_shader_flags_enabled);
+    smlua_bind_function(L, "set_global_shader_flags_enabled", smlua_func_set_global_shader_flags_enabled);
+    smlua_bind_function(L, "clear_all_shader_flags", smlua_func_clear_all_shader_flags);
+    smlua_bind_function(L, "get_shading_fullbright_enabled", smlua_func_get_shading_fullbright_enabled);
+    smlua_bind_function(L, "set_shading_fullbright_enabled", smlua_func_set_shading_fullbright_enabled);
     smlua_bind_function(L, "set_override_fov", smlua_func_set_override_fov);
     smlua_bind_function(L, "set_override_near", smlua_func_set_override_near);
     smlua_bind_function(L, "set_override_far", smlua_func_set_override_far);
@@ -38649,6 +39202,8 @@ void smlua_bind_functions_autogen(void) {
     smlua_bind_function(L, "game_pause", smlua_func_game_pause);
     smlua_bind_function(L, "game_unpause", smlua_func_game_unpause);
     smlua_bind_function(L, "is_transition_playing", smlua_func_is_transition_playing);
+    smlua_bind_function(L, "get_current_play_mode", smlua_func_get_current_play_mode);
+    smlua_bind_function(L, "get_delayed_warp_op", smlua_func_get_delayed_warp_op);
     smlua_bind_function(L, "allocate_mario_action", smlua_func_allocate_mario_action);
     smlua_bind_function(L, "get_hand_foot_pos_x", smlua_func_get_hand_foot_pos_x);
     smlua_bind_function(L, "get_hand_foot_pos_y", smlua_func_get_hand_foot_pos_y);
@@ -38685,6 +39240,7 @@ void smlua_bind_functions_autogen(void) {
     smlua_bind_function(L, "set_environment_region", smlua_func_set_environment_region);
     smlua_bind_function(L, "mod_file_exists", smlua_func_mod_file_exists);
     smlua_bind_function(L, "get_active_mod", smlua_func_get_active_mod);
+    smlua_bind_function(L, "get_mod_files", smlua_func_get_mod_files);
     smlua_bind_function(L, "set_window_title", smlua_func_set_window_title);
     smlua_bind_function(L, "reset_window_title", smlua_func_reset_window_title);
     smlua_bind_function(L, "get_os_name", smlua_func_get_os_name);
@@ -38825,6 +39381,7 @@ void smlua_bind_functions_autogen(void) {
     smlua_bind_function(L, "load_static_object_collision", smlua_func_load_static_object_collision);
     smlua_bind_function(L, "toggle_static_object_collision", smlua_func_toggle_static_object_collision);
     smlua_bind_function(L, "get_static_object_surface", smlua_func_get_static_object_surface);
+    smlua_bind_function(L, "remove_static_object_collision", smlua_func_remove_static_object_collision);
     smlua_bind_function(L, "obj_get_surface_from_index", smlua_func_obj_get_surface_from_index);
     smlua_bind_function(L, "surface_has_force", smlua_func_surface_has_force);
 

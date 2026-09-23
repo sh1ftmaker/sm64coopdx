@@ -217,7 +217,7 @@ static bool ssgi_enabled = true;
 unsigned int gSSGI_AoIntensity = 15;  // ÷10 → 1.5
 unsigned int gSSGI_Radius      = 15;  // ÷10 → 1.5
 unsigned int gSSGI_Thickness   = 3;   // ÷10 → 0.3
-unsigned int gSSGI_Enabled     = 0;   // 0=off, 1=on (disabled by default)
+bool gSSGI_Enabled             = false;   // 0=off, 1=on (disabled by default)
 
 static GLuint ssgi_scene_fbo;
 static GLuint ssgi_scene_color_tex;

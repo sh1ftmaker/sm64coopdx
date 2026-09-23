@@ -22,6 +22,11 @@ DEBUG ?= 0
 # Enable development/testing flags
 DEVELOPMENT ?= 0
 
+# Enable this if you want to use some very unsafe and potentially harmful code from the Lua standard libs
+# that is normally disabled to prevent catastrophic accidents.
+# Only enable this if you know exactly why you need it and will take measures to mitigate the risks.
+LUA_UNSAFE ?= 0
+
 # Build for the N64 (turn this off for ports)
 TARGET_N64 = 0
 
@@ -46,6 +51,8 @@ ENHANCE_LEVEL_TEXTURES ?= 1
 DISCORD_SDK ?= 1
 # Enable CoopNet SDK (used for CoopNet server hosting)
 COOPNET ?= 1
+# Enable Updater (used for automatic updates)
+UPDATER ?= 1
 # Enable docker build workarounds
 DOCKERBUILD ?= 0
 # Sets your optimization level for building.
@@ -57,8 +64,6 @@ DEBUG_INFO_LEVEL ?= 2
 PROFILE ?= 0
 # Enable address sanitizer
 ASAN ?= 0
-# Compile headless
-HEADLESS ?= 0
 # Enable Game ICON
 ICON ?= 1
 # Use .app (for macOS)
@@ -74,17 +79,6 @@ TARGET_WEB ?= 0
 NO_BZERO_BCOPY ?= 0
 NO_LDIV ?= 0
 
-# Backend selection
-
-# Renderers: GL, GL_LEGACY, D3D11, DUMMY
-RENDER_API ?= GL
-# Window managers: SDL1, SDL2, DXGI (forced if RENDER_API is D3D11), DUMMY (forced if RENDER_API is DUMMY)
-WINDOW_API ?= SDL2
-# Audio backends: SDL1, SDL2, DUMMY
-AUDIO_API ?= SDL2
-# Controller backends (can have multiple, space separated): SDL2, SDL1
-CONTROLLER_API ?= SDL2
-
 # Automatic settings for PC port(s)
 
 WINDOWS_BUILD ?= 0
@@ -94,7 +88,7 @@ WINDOWS_AUTO_BUILDER ?= 0
 # Setup extra cflags
 EXTRA_CFLAGS ?=
 EXTRA_CPP_FLAGS ?=
-EXTRA_CFLAGS += -Wno-format-security -Wno-trigraphs
+EXTRA_CFLAGS += -Wno-format-security -Wno-trigraphs -Wno-missing-braces -Wno-missing-field-initializers
 
 dev:; @$(MAKE) DEVELOPMENT=1
 
@@ -376,7 +370,7 @@ endif
 # Check for certain target types.
 
 ifeq ($(TARGET_RPI),1) # Define RPi to change SDL2 title & GLES2 hints
-     DEFINES += USE_GLES=1
+  DEFINES += USE_GLES=1
 endif
 
 ifeq ($(TARGET_RK3588),1) # Define RK3588 to change SDL2 title & GLES2 hints
@@ -388,42 +382,7 @@ ifeq ($(TARGET_WEB),1) # WebGL uses GLES2 shader path
 endif
 
 ifeq ($(OSX_BUILD),1) # Modify GFX & SDL2 for OSX GL
-     DEFINES += OSX_BUILD=1
-endif
-
-# Check backends
-
-ifneq (,$(filter $(RENDER_API),D3D11))
-  ifneq ($(WINDOWS_BUILD),1)
-    $(error DirectX is only supported on Windows)
-  endif
-  ifneq ($(WINDOW_API),DXGI)
-    $(warning DirectX renderers require DXGI, forcing WINDOW_API value)
-    WINDOW_API := DXGI
-  endif
-else
-  ifeq ($(WINDOW_API),DXGI)
-    $(error DXGI can only be used with DirectX renderers)
-  endif
-  ifneq ($(WINDOW_API),DUMMY)
-    ifeq ($(RENDER_API),DUMMY)
-      $(warning Dummy renderer requires dummy window API, forcing WINDOW_API value)
-      WINDOW_API := DUMMY
-    endif
-  else
-    ifneq ($(RENDER_API),DUMMY)
-      $(warning Dummy window API requires dummy renderer, forcing RENDER_API value)
-      RENDER_API := DUMMY
-    endif
-  endif
-endif
-
-ifeq ($(HEADLESS),1)
-  $(info Compiling headless)
-  RENDER_API := DUMMY
-  WINDOW_API := DUMMY
-  AUDIO_API := DUMMY
-  CONTROLLER_API :=
+  DEFINES += OSX_BUILD=1
 endif
 
 # NON_MATCHING - whether to build a matching, identical copy of the ROM
@@ -786,7 +745,7 @@ else
   LD := $(CXX)
 endif
 
-AR        := $(CROSS)ar
+AR := $(CROSS)ar
 
 ifeq ($(TARGET_N64),1)
   TARGET_CFLAGS := -nostdinc -DTARGET_N64 -D_LANGUAGE_C
@@ -804,87 +763,54 @@ else
   INCLUDE_DIRS += sound lib/lua/include lib/coopnet/include $(EXTRA_INCLUDES)
 endif
 
-# Connfigure backend flags
+# Configure backend flags
 
-SDLCONFIG := $(CROSS)sdl2-config
+BACKEND_LDFLAGS :=
 
-BACKEND_CFLAGS := -DRAPI_$(RENDER_API)=1 -DWAPI_$(WINDOW_API)=1 -DAAPI_$(AUDIO_API)=1
-# can have multiple controller APIs
-BACKEND_CFLAGS += $(foreach capi,$(CONTROLLER_API),-DCAPI_$(capi)=1)
-BACKEND_LDFLAG0S :=
-
-SDL1_USED := 0
-SDL2_USED := 0
-
-# for now, it's either SDL+GL or DXGI+DirectX, so choose based on WAPI
-ifeq ($(WINDOW_API),DXGI)
+# D3D11 flags
+ifeq ($(WINDOWS_BUILD),1)
   DXBITS := `cat $(ENDIAN_BITWIDTH) | tr ' ' '\n' | tail -1`
   BACKEND_LDFLAGS += -ld3dcompiler -ldxgi -ldxguid
   BACKEND_LDFLAGS += -lsetupapi -ldinput8 -luser32 -lgdi32 -limm32 -lole32 -loleaut32 -lshell32 -lwinmm -lversion -luuid -static
-else ifeq ($(findstring SDL,$(WINDOW_API)),SDL)
-  ifeq ($(TARGET_WEB),1)
-    # Emscripten provides GL/SDL via -s flags in LDFLAGS; no native libs needed here
-  else ifeq ($(WINDOWS_BUILD),1)
-    BACKEND_LDFLAGS += -lglew32 -lglu32 -lopengl32
-  else ifeq ($(TARGET_RPI),1)
-    BACKEND_LDFLAGS += -lGLESv2
-  else ifeq ($(TARGET_RK3588),1)
-    BACKEND_LDFLAGS += -lGLESv2
-  else ifeq ($(OSX_BUILD),1)
-    BACKEND_LDFLAGS += -framework OpenGL `pkg-config --libs glew` -mmacosx-version-min=$(MIN_MACOS_VERSION)
-    EXTRA_CPP_FLAGS += -stdlib=libc++ -std=c++17 -mmacosx-version-min=$(MIN_MACOS_VERSION)
-  else
-    BACKEND_LDFLAGS += -lGL
-   endif
 endif
 
-ifeq ($(WINDOW_API),DUMMY)
-  ifeq ($(WINDOWS_BUILD),1)
-    BACKEND_LDFLAGS += -lole32 -luuid -lshlwapi
-  endif
-endif
-
-ifneq (,$(findstring SDL2,$(AUDIO_API)$(WINDOW_API)$(CONTROLLER_API)))
-  SDL2_USED := 1
-endif
-
-ifneq (,$(findstring SDL1,$(AUDIO_API)$(WINDOW_API)$(CONTROLLER_API)))
-  SDL1_USED := 1
-endif
-
-ifeq ($(SDL1_USED)$(SDL2_USED),11)
-  $(error Cannot link both SDL1 and SDL2 at the same time)
+# SDL2 Flags
+ifeq ($(TARGET_WEB),1)
+  # GL is provided by Emscripten.
+else ifeq ($(WINDOWS_BUILD),1)
+  BACKEND_LDFLAGS += -lglew32 -lglu32 -lopengl32
+else ifeq ($(TARGET_RPI),1)
+  BACKEND_LDFLAGS += -lGLESv2
+else ifeq ($(TARGET_RK3588),1)
+  BACKEND_LDFLAGS += -lGLESv2
+else ifeq ($(OSX_BUILD),1)
+  BACKEND_LDFLAGS += -framework OpenGL `pkg-config --libs glew` -mmacosx-version-min=$(MIN_MACOS_VERSION)
+  EXTRA_CPP_FLAGS += -stdlib=libc++ -std=c++17 -mmacosx-version-min=$(MIN_MACOS_VERSION)
+else
+  BACKEND_LDFLAGS += -lGL
 endif
 
 # SDL can be used by different systems, so we consolidate all of that shit into this
 
-ifeq ($(SDL2_USED),1)
-  SDLCONFIG := $(CROSS)sdl2-config
-  BACKEND_CFLAGS += -DHAVE_SDL2=1
-else ifeq ($(SDL1_USED),1)
-  SDLCONFIG := $(CROSS)sdl-config
-  BACKEND_CFLAGS += -DHAVE_SDL1=1
+SDLCONFIG := $(CROSS)sdl2-config
+BACKEND_CFLAGS += -DHAVE_SDL2=1
+
+ifeq ($(TARGET_WEB),1)
+  BACKEND_CFLAGS += -s USE_SDL=2 -s USE_ZLIB=1
+else ifeq ($(OSX_BUILD),1)
+  # on OSX at least the homebrew version of sdl-config gives include path as `.../include/SDL2` instead of `.../include`
+  OSX_PREFIX := $(shell $(SDLCONFIG) --prefix)
+  BACKEND_CFLAGS += -I$(OSX_PREFIX)/include $(shell $(SDLCONFIG) --cflags)
+else
+  BACKEND_CFLAGS += `$(SDLCONFIG) --cflags`
 endif
 
-ifneq ($(SDL1_USED)$(SDL2_USED),00)
-  ifeq ($(TARGET_WEB),1)
-    # Emscripten provides SDL2 and zlib via -s flags; no sdl2-config/pkg-config needed
-    BACKEND_CFLAGS += -s USE_SDL=2 -s USE_ZLIB=1
-  else ifeq ($(OSX_BUILD),1)
-    # on OSX at least the homebrew version of sdl-config gives include path as `.../include/SDL2` instead of `.../include`
-    OSX_PREFIX := $(shell $(SDLCONFIG) --prefix)
-    BACKEND_CFLAGS += -I$(OSX_PREFIX)/include $(shell $(SDLCONFIG) --cflags)
-  else
-    BACKEND_CFLAGS += `$(SDLCONFIG) --cflags`
-  endif
-
-  ifneq ($(TARGET_WEB),1)
-    ifeq ($(WINDOWS_BUILD),1)
-      BACKEND_LDFLAGS += `$(SDLCONFIG) --static-libs` -lsetupapi -luser32 -limm32 -lole32 -loleaut32 -lshell32 -lshlwapi -lwinmm -lversion
-    else
-      BACKEND_LDFLAGS += `$(SDLCONFIG) --libs`
-    endif
-  endif
+ifeq ($(TARGET_WEB),1)
+  # SDL is provided by Emscripten.
+else ifeq ($(WINDOWS_BUILD),1)
+  BACKEND_LDFLAGS += `$(SDLCONFIG) --static-libs` -lsetupapi -luser32 -limm32 -lole32 -loleaut32 -lshell32 -lshlwapi -lwinmm -lversion
+else
+  BACKEND_LDFLAGS += `$(SDLCONFIG) --libs`
 endif
 
 C_DEFINES += $(foreach d,$(DEFINES),-D$(d))
@@ -1095,6 +1021,22 @@ ifneq ($(TARGET_WEB),1)
   endif
 endif
 
+# Updater
+UPDATER_EXEC :=
+ifeq ($(UPDATER),1)
+  ifeq ($(WINDOWS_BUILD),1)
+    UPDATER_EXEC += ./updater/win64/coopdx_updater.exe
+  else ifeq ($(OSX_BUILD),1)
+    ifeq ($(shell uname -m),arm64)
+      UPDATER_EXEC += ./updater/mac_arm/coopdx_updater
+    else
+      UPDATER_EXEC += ./updater/mac_intel/coopdx_updater
+    endif
+  else ifeq ($(TARGET_RPI),0)
+    UPDATER_EXEC += ./updater/linux/coopdx_updater
+  endif
+endif
+
 IS_DEV_OR_DEBUG := $(or $(filter 1,$(DEVELOPMENT)),$(filter 1,$(DEBUG)),0)
 ifeq ($(IS_DEV_OR_DEBUG),0)
   CFLAGS += -fno-ident -fno-common -ffile-prefix-map="$(PWD)"=. -D__DATE__="\"\"" -D__TIME__="\"\"" -Wno-builtin-macro-redefined
@@ -1165,6 +1107,16 @@ ifeq ($(DEVELOPMENT),1)
   CFLAGS += -DDEVELOPMENT
 endif
 
+# Check for unsafe mode option
+ifeq ($(LUA_UNSAFE),1)
+  ifeq ($(DEVELOPMENT),1)
+    CC_CHECK_CFLAGS += -DLUA_UNSAFE
+    CFLAGS += -DLUA_UNSAFE
+  else
+    $(error LUA_UNSAFE cannot be enabled outside of development mode)
+  endif
+endif
+
 # Check for rpi option
 ifeq ($(TARGET_RPI),1)
   CC_CHECK_CFLAGS += -DTARGET_RPI
@@ -1211,12 +1163,6 @@ endif
 ifeq ($(NO_LDIV),1)
   CC_CHECK_CFLAGS += -DNO_LDIV
   CFLAGS += -DNO_LDIV
-endif
-
-# Use OpenGL 1.3
-ifeq ($(LEGACY_GL),1)
-  CC_CHECK_CFLAGS += -DLEGACY_GL
-  CFLAGS += -DLEGACY_GL
 endif
 
 #==============================================================================#
@@ -1290,9 +1236,9 @@ MAPFILE = $(BUILD_DIR)/coop.map
 exemap: $(EXE)
 	@$(PRINT) "$(GREEN)Creating map file: $(BLUE)$(MAPFILE) $(NO_COL)\n"
 	$(V)$(OBJDUMP) -t $(EXE) > $(MAPFILE)
+ifeq ($(IS_DEV_OR_DEBUG),0)
 	@cp $(EXE) $(EXE).bak && cp $(MAPFILE) $(MAPFILE).bak
 	$(V)$(PYTHON) $(TOOLS_DIR)/clean_mapfile.py $(EXE) $(MAPFILE)
-ifeq ($(IS_DEV_OR_DEBUG),0)
 	$(V)$(OBJCOPY) -p --strip-unneeded $(EXE)
 endif
 all: exemap
@@ -1323,6 +1269,9 @@ $(BUILD_DIR)/$(DISCORD_SDK_LIBS):
 
 $(BUILD_DIR)/$(COOPNET_LIBS):
 	@$(CP) -f $(COOPNET_LIBS) $(BUILD_DIR)
+
+$(BUILD_DIR)/$(UPDATER_EXEC):
+	@$(CP) -f $(UPDATER_EXEC) $(BUILD_DIR)
 
 $(BUILD_DIR)/$(LANG_DIR):
 	@$(CP) -f -r $(LANG_DIR) $(BUILD_DIR)
@@ -1679,7 +1628,7 @@ ifeq ($(TARGET_N64),1)
   $(BUILD_DIR)/$(TARGET).objdump: $(ELF)
 	$(OBJDUMP) -D $< > $@
 else
-  $(EXE): $(O_FILES) $(MIO0_FILES:.mio0=.o) $(ULTRA_O_FILES) $(GODDARD_O_FILES) $(BUILD_DIR)/$(RPC_LIBS) $(BUILD_DIR)/$(DISCORD_SDK_LIBS) $(BUILD_DIR)/$(COOPNET_LIBS) $(BUILD_DIR)/$(LANG_DIR) $(BUILD_DIR)/$(MOD_DIR) $(BUILD_DIR)/$(PALETTES_DIR)
+  $(EXE): $(O_FILES) $(MIO0_FILES:.mio0=.o) $(ULTRA_O_FILES) $(GODDARD_O_FILES) $(BUILD_DIR)/$(RPC_LIBS) $(BUILD_DIR)/$(DISCORD_SDK_LIBS) $(BUILD_DIR)/$(COOPNET_LIBS) $(BUILD_DIR)/$(UPDATER_EXEC) $(BUILD_DIR)/$(LANG_DIR) $(BUILD_DIR)/$(MOD_DIR) $(BUILD_DIR)/$(PALETTES_DIR)
 	@$(PRINT) "$(GREEN)Linking executable: $(BLUE)$@ $(NO_COL)\n"
 	$(V)$(LD) $(PROF_FLAGS) -L $(BUILD_DIR) -o $@ $(O_FILES) $(ULTRA_O_FILES) $(GODDARD_O_FILES) $(LDFLAGS)
 endif
@@ -1717,6 +1666,7 @@ all:
 		cp build/us_pc/discord_game_sdk.dylib $(APP_MACOS_DIR); \
     cp build/us_pc/libdiscord_game_sdk.dylib $(APP_MACOS_DIR); \
     cp build/us_pc/libcoopnet.dylib $(APP_MACOS_DIR); \
+    cp build/us_pc/coopdx_updater $(APP_MACOS_DIR); \
     cp build/us_pc/libjuice.1.6.2.dylib $(APP_MACOS_DIR); \
     cp $(SDL2_LIB) $(APP_MACOS_DIR)/libSDL2.dylib; \
     install_name_tool -change $(BREW_PREFIX)/lib/libSDL2-2.0.0.dylib @executable_path/libSDL2.dylib $(APP_MACOS_DIR)/sm64coopdx > /dev/null 2>&1; \
