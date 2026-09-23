@@ -8,7 +8,7 @@ Feel free to report bugs or contribute to the project.
 
 ## Play in Your Browser
 
-**[Play sm64coopdx on the Web](https://zalo.github.io/sm64coopdx/)** — no downloads or installation required.
+**[Play sm64coopdx on the Web](https://sh1ftmaker.github.io/sm64coopdx/)** — no downloads or installation required.
 
 The web port runs natively in your browser using WebAssembly. Provide a Super Mario 64 US ROM on your first visit (it's cached locally for future sessions), then play solo or with friends via peer-to-peer multiplayer. Works on desktop and mobile (iOS and Android).
 
